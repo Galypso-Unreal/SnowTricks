@@ -1,0 +1,16 @@
+<h1>Ici</H1>
+
+<html>
+    <head></head>
+    <body>
+        {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.trickGroup) }}
+            {{ form_row(form.illustrations) }}
+            {{ form_row(form.videos) }}
+
+            <button type="submit" class="btn btn-primary">Créer</button>
+        {{ form_end(form) }}
+    </body>
+</html>
