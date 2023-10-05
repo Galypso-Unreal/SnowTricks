@@ -1,16 +1,54 @@
-<h1>Ici</H1>
+{% extends 'page.html.twig' %}
 
-<html>
-    <head></head>
-    <body>
-        {{ form_start(form) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.trickGroup) }}
-            {{ form_row(form.illustrations) }}
-            {{ form_row(form.videos) }}
+{% block title %}
+    Ajouter une nouvelle figure
+{% endblock %}
 
-            <button type="submit" class="btn btn-primary">Créer</button>
-        {{ form_end(form) }}
-    </body>
-</html>
+{% block content %}
+<div class="container">
+        {{ form_start(form, {
+                    'attr': {
+                        'novalidate': 'novalidate',
+                        'class': 'col-lg-5'
+                        }
+                    })
+                }}
+<div class="input">
+    <label for="trick_name">Nom de la figure</label>
+    {{ form_widget(form.name) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<div class="input">
+    <label for="trick_description">Description de la figure</label>
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<label for="trick_illustrations">illustrations de la figure</label>
+     {{ form_row(form.pictures) }}
+</div>
+
+{# <div class="input">
+<label for="trick_group">groupe de la figure</label>
+    {{ form_widget(form.trickGroup) }}
+    {{ form_errors(form.trickGroup) }}
+</div>
+
+<div class="input">
+
+
+<div class="input">
+<label for="trick_videos">vidéos de la figure</label>
+    {{ form_widget(form.videos) }}
+    {{ form_errors(form.videos) }}
+</div> #}
+
+
+
+<button type="submit" class="btn btn-primary">Créer</button>
+{{ form_end(form) }}
+</div>
+
+{% endblock %}
+

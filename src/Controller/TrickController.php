@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\TrickType;
 use App\Entity\Trick;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TrickController extends AbstractController
 {   
+
     #[Route('/trick/new', name: 'trickform')]
-    public function new(Request $request)
+    public function new(Request $request, EntityManagerInterface $entityManager)
     {
         $trick = new Trick();
         // $trick->setName('name');
@@ -26,6 +28,9 @@ class TrickController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) { 
             var_dump($trick);
+            die();
+            // $entityManager->persist($trick);
+            // $entityManager->flush();
         }
 
         return $this->render('trick/new.html.twig', array(
