@@ -36,4 +36,9 @@ class TrickController extends AbstractController
             'form' => $form->createView(),
         ));
     }
+
+    #[Route('/', name: 'index')]
+    public function index(){
+        return $this->render('index.html.twig');
+    }
 }
