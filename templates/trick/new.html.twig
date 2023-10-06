@@ -25,9 +25,20 @@
     {{ form_errors(form.description) }}
 </div>
 
+{# <div>
 <label for="trick_illustrations">illustrations de la figure</label>
-     {{ form_row(form.pictures) }}
-</div>
+    <div id="picture_list">
+        {% for row in form.pictures %}
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    {{ form_row(row) }}
+                </div>
+            </div>
+        
+     {% endfor %}
+    </div>
+
+</div> #}
 
 {# <div class="input">
 <label for="trick_group">groupe de la figure</label>
@@ -44,9 +55,6 @@
     {{ form_errors(form.videos) }}
 </div> #}
 
-
-
-<button type="submit" class="btn btn-primary">Créer</button>
 {{ form_end(form) }}
 </div>
 
