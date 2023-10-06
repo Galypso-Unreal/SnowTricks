@@ -8,6 +8,7 @@
         <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
     </head>
     <body>
+        {% include "elements/arrow.html.twig" %}
         <div class="main_content">
                                     {% include 'global/header.html.twig' %}
         {% block content %}{% endblock %}

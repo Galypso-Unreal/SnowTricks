@@ -4,21 +4,36 @@ let $addNewItem = $('<a href="#" class="btn btn-info">Ajouter une image</a>');
 
 $(document).ready(()=>{
 
+    // button go down to tricks homepage
+
+    let button_go_down = $('.arrow-go-down');
+    console.log($('.arrow-go-down'))
+    let tricks_homepage = $('#tricks-homepage');
+
+    button_go_down.on('click',()=>{
+        console.log("clicked")
+        console.log(tricks_homepage.offset().top)
+        $('body').animate({
+            scrollTop: tricks_homepage.offset().top
+        }, 300);
+    })
+
     // scroll homepage
 
     let hero_background = $('.hero .hero_background');
-    let hero_postion = $(".hero").position().top;
-    let hero_heigth = $('.hero').height();
-    console.log(hero_heigth)
+    let hero_height = $('.hero').height();
+    let hero_body = $('.hero .text_hero')
 
     $(document).on('scroll',()=>{
         let positionClient = $(document).scrollTop();
-        if(positionClient < hero_heigth){
-            hero_background.css('opacity',((positionClient/hero_heigth) + 0.2))
+        if(positionClient < hero_height){
+            hero_background.css('opacity',((positionClient/hero_height) + 0.2))
+            hero_body.css('opacity',(1 - positionClient/hero_height))
         }
     })
 
-    console.log($(".hero").position().top)
+    
+
 
     // get collection
 
@@ -27,6 +42,8 @@ $(document).ready(()=>{
     $collectionHolder.find('.panel').each(function(item){
         addRemoveButton(item);
     })
+
+
     
 
 })
