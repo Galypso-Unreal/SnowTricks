@@ -23,6 +23,13 @@
 
     <div class="tricks-homepage" id="tricks-homepage">
 
+        <div class="container tricks d-flex flex-row flex-wrap">
+            {% for trick in tricks %}
+            {% include "teasers/trick.html.twig" with {'trick' : trick} %}
+        {% endfor %}
+        </div>
+        
+
     </div>
     
 {% endblock %}

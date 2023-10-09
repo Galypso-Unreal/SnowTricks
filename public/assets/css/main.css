@@ -1,6 +1,7 @@
 /* globals */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('./trick-teaser.css');
 
 body,html{
     font-size: 10px;
@@ -100,3 +101,12 @@ p,div,.text_style{
     bottom: 2rem;
     z-index: 100;
 }
+
+/* homepage tricks*/
+
+#tricks-homepage .tricks{
+    padding: 5rem 2rem;
+    gap: 5rem;
+}
+
+/* end homepage tricks */

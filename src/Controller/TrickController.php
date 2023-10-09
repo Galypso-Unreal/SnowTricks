@@ -38,7 +38,9 @@ class TrickController extends AbstractController
     }
 
     #[Route('/', name: 'index')]
-    public function index(){
-        return $this->render('index.html.twig');
+    public function index(EntityManagerInterface $entityManager){
+        $repository = $entityManager->getRepository(Trick::class);
+        $tricks = $repository->findAll();
+        return $this->render('index.html.twig',array("tricks"=>$tricks));
     }
 }
