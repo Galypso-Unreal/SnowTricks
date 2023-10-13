@@ -1,62 +1,9 @@
 /* globals */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('./globals.css');
 @import url('./trick-teaser.css');
 
-body,html{
-    font-size: 10px;
-    font-family: 'Roboto';
-}
-h1,.h1_style{
-font-size: 4rem;
-font-weight: 900;
-}
 
-h2,.h2_style{
-font-size: 2.8rem;
-font-weight: 600;
-}
-
-h3,.h3_style{
-font-size: 2.2rem;
-font-weight: 400;
-}
-
-h4,.h4_style,
-h5,.h5_style,
-h6,.h6_style{
-    font-size: 2rem;
-    font-weight: 400;
-}
-
-p,div,.text_style{
-    font-size: 2rem;
-    font-weight: 400;
-}
-
-@media screen and (min-width: 992px) {
-    h1,.h1_style{
-        font-size: 6rem;
-        }
-        
-        h2,.h2_style{
-        font-size: 3.2rem;
-        }
-        
-        h3,.h3_style{
-        font-size: 2.5rem;
-        }
-        
-        h4,.h4_style,
-        h5,.h5_style,
-        h6,.h6_style{
-            font-size: 2.2rem;
-        }
-        
-        p,div{
-            font-size: 2rem;
-        }
-}
 
 /* hero css */
 .hero_background{
@@ -91,9 +38,9 @@ p,div,.text_style{
     font-size: 9rem;
 }
 
-#tricks-homepage{
+/* #tricks-homepage{
     height: 200vh;
-}
+} */
 
 .arrow-go-down{
     position: fixed;
@@ -102,11 +49,30 @@ p,div,.text_style{
     z-index: 100;
 }
 
+.arrow-go-up{
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    display: none;
+    z-index: 100;
+}
+
+.arrow-go-up svg{
+    transform: rotate(180deg);
+}
+
 /* homepage tricks*/
 
-#tricks-homepage .tricks{
+#tricks-homepage .container{
     padding: 5rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#tricks-homepage .tricks{
     gap: 5rem;
+    margin-bottom: 2rem;
 }
 
 /* end homepage tricks */

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-
+    {% include "elements/arrow.html.twig" %}
     <div class="hero">
         <div class="">
             <div class="hero_background"></div>
@@ -23,13 +23,31 @@
 
     <div class="tricks-homepage" id="tricks-homepage">
 
-        <div class="container tricks d-flex flex-row flex-wrap">
-            {% for trick in tricks %}
-            {% include "teasers/trick.html.twig" with {'trick' : trick} %}
-        {% endfor %}
+        <div class="container">
+            
+            <div class="d-flex flex-row flex-wrap tricks">
+
+                {% for trick in tricks %}
+                    {% include "teasers/trick.html.twig" with {'trick' : trick} %}
+                {% endfor %}
+
+            </div>
+
+            <div class="loader-container">
+                
+                <div class="inner-container">
+                    <span class="loader"></span>
+                    <div class="h2_style">Chargement en cours des figures suivantes ...</div>
+                </div>
+            </div>
+            
+
+            <div class="btn btn-primary loadmore text_style"  data-page="1" data-all-page="{{number_page}}">Voir plus de tricks ! </div>
+            
+        
         </div>
         
 
     </div>
-    
+
 {% endblock %}

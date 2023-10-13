@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\TrickType;
 use App\Entity\Trick;
+use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TrickController extends AbstractController
 {   
@@ -40,7 +42,33 @@ class TrickController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(EntityManagerInterface $entityManager){
         $repository = $entityManager->getRepository(Trick::class);
-        $tricks = $repository->findAll();
-        return $this->render('index.html.twig',array("tricks"=>$tricks));
+        $page=1;
+        $all_tricks_count = $repository->getAllTricksCount() / 15;
+        $tricks = $repository->findTenTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        return $this->render('index.html.twig',array("tricks"=>$tricks, 'number_page'=>$all_tricks_count));
+    }
+
+    #[Route('/trick/page/{page}', name: 'getTricksPaged')]
+    public function getTricksPaged(EntityManagerInterface $entityManager, Request $request){
+        $repository = $entityManager->getRepository(Trick::class);
+        $page=$request->attributes->get('page');
+        $tricks = $repository->findTenTrick($page);
+        $response = $tricks->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+        $exit = array();
+
+        foreach ($response as $key) {
+            $exit[] = '
+            <div class="trick-teaser col-md-2 col-lg-2">
+                <h2 class="name h3_style">
+                    ' . $key['name'] .'
+                </h2>
+                <div>'.
+                    $key['description'] .'
+                </div>
+            </div>
+            ';
+        }
+        return new JsonResponse($exit);
     }
 }
