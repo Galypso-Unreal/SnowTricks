@@ -44,6 +44,16 @@ class TrickRepository extends ServiceEntityRepository
         return $query;
     }
 
+    public function findOneBySomeField($value): ?Trick
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.slug = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Trick[] Returns an array of Trick objects
 //     */
@@ -59,13 +69,5 @@ class TrickRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Trick
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
 }

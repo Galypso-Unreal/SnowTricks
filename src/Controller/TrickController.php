@@ -10,6 +10,7 @@ use App\Form\TrickType;
 use App\Entity\Trick;
 use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TrickController extends AbstractController
@@ -48,6 +49,14 @@ class TrickController extends AbstractController
         return $this->render('index.html.twig',array("tricks"=>$tricks, 'number_page'=>$all_tricks_count));
     }
 
+    #[Route('/trick/{slug}', name: 'trick')]
+    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug){
+        $repository = $entityManager->getRepository(Trick::class);
+        $slug = $request->attributes->get('slug');
+        $trick = $repository->findOneBySomeField($slug);
+        return $this->render('trick/trick.html.twig',array("trick"=>$trick));
+    }
+
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
     public function getTricksPaged(EntityManagerInterface $entityManager, Request $request){
         $repository = $entityManager->getRepository(Trick::class);
@@ -60,9 +69,9 @@ class TrickController extends AbstractController
         foreach ($response as $key) {
             $exit[] = '
             <div class="trick-teaser col-md-2 col-lg-2">
-                <h2 class="name h3_style">
-                    ' . $key['name'] .'
-                </h2>
+                <a class="name h3_style" href="'. $this->generateUrl('trick',array('slug'=>$key['slug'])) .'">
+                    <h2>'. $key['name'] .'</h2>
+                </a>
                 <div>'.
                     $key['description'] .'
                 </div>

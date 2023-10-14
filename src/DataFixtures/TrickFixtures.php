@@ -4,10 +4,20 @@ namespace App\DataFixtures;
 
 use App\Entity\Trick;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+;
 
 class TrickFixtures extends Fixture
 {
+    protected $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     public function load(ObjectManager $manager): void
     {
         for ($count = 0; $count < 50; $count++) {
@@ -18,6 +28,7 @@ class TrickFixtures extends Fixture
 
             $trick->setName($name);
             $trick->setDescription($description);
+            $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
 
             $manager->persist($trick);
         }
