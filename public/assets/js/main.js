@@ -1,6 +1,6 @@
 $(document).ready(()=>{
     let contentAjax = $('#tricks-homepage .container .tricks')
-    $('.loadmore').on('click', function (evt) {
+    $('#tricks-homepage .loadmore').on('click', function (evt) {
         evt.preventDefault();
         page = $(this).attr('data-page');
         page ++;
@@ -16,10 +16,38 @@ $(document).ready(()=>{
           
         )
         .done(function (reponse) {
+        console.log('here tricks')
           contentAjax.append(reponse);
           $('.loader-container').hide()
           checkLoadMore();
           current_page = $('#tricks-homepage .loadmore').attr('data-page')
+        }).fail(function (reponse) {
+        })
+ 
+      })
+
+      let contentAjaxComment = $('.trick-single #comments-trick')
+    $('.single-trick .loadmore').on('click', function (evt) {
+        evt.preventDefault();
+        page = $(this).attr('data-page');
+        page ++;
+        $(this).attr('data-page',page)
+        $.ajax(
+          {
+            type: "GET",
+            url: "/comment/page/" + page,
+            beforeSend: function(){
+                $('.loader-container').show()
+            },
+          }
+          
+        )
+        .done(function (reponse) {
+            console.log('here comments');
+          contentAjaxComment.append(reponse);
+          $('.loader-container').hide()
+          checkLoadMore();
+          current_page = $('#comments-trick .loadmore').attr('data-page')
         }).fail(function (reponse) {
         })
  

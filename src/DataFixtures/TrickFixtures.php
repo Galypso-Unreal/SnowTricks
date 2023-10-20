@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
+use App\Entity\Picture;
 use App\Entity\Trick;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -30,7 +32,28 @@ class TrickFixtures extends Fixture
             $trick->setDescription($description);
             $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
 
+            if($count < 5){
+                $image = new Picture();
+                $image->setUrl('firstpicture.jpg');
+                $image->setTrick($trick);
+                
+            }
+
+            
+
+            for ($count2 = 0; $count2 < 30; $count2++) {
+
+                $comment = new Comment();
+                $comment->setContent('Je suis le commentaire numéro : ' . $count2);
+                $comment->setIsValid(1);
+                $comment->setTrick($trick);
+                $manager->persist($comment);
+            }
+            
+
             $manager->persist($trick);
+            $manager->persist($image);
+            
         }
         $manager->flush();
     }

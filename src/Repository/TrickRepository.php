@@ -23,7 +23,7 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    public function findTenTrick($page){
+    public function findByLimitTrick($page){
         $page = $page;
         $limit = 15;
         $start = ($page * $limit) - $limit;

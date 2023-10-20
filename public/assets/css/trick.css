@@ -1,0 +1,35 @@
+.trick-single .trick-name{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.trick-single .gallery{
+    display: flex;
+    margin: 5rem 0;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+
+.trick-single .gallery img{
+    width: 100%;
+    max-width: 30rem;
+    max-height: 20rem;
+    height: 20rem;
+    object-fit: cover;
+}
+
+.trick-single .description{
+    margin: 5rem 0;
+}
+
+.trick-single .meta{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}

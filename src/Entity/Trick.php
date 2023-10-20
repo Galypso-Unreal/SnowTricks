@@ -50,6 +50,9 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
     private Collection $pictures;
 
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
+    private Collection $comments;
+
 
 
     public function __construct()
@@ -58,9 +61,10 @@ class Trick
         $utc_timezone = new \DateTimeZone("Europe/Paris");
         $date = new \DateTime("now",$utc_timezone);
 
-        $this->setCreateAt($date);
+        $this->setCreatedAt($date);
         $this->setModifiedAt($date);
         $this->pictures = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(){
@@ -115,11 +119,11 @@ class Trick
     //     $this->videos = $videos;
     // }
 
-    public function getCreateAt(){
+    public function getCreatedAt(){
         return $this->created_at;
     }
 
-    public function setCreateAt($created_at){
+    public function setCreatedAt($created_at){
         $this->created_at = $created_at;
     }
 
@@ -131,11 +135,11 @@ class Trick
         $this->modified_at = $modified_at;
     }
 
-    public function getDeleteAt(){
+    public function getDeletedAt(){
         return $this->deleted_at;
     }
 
-    public function setDeleteAt($deleted_at){
+    public function setDeletedAt($deleted_at){
         $this->deleted_at = $deleted_at;
     }
 
@@ -177,6 +181,36 @@ class Trick
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
+            }
+        }
 
         return $this;
     }

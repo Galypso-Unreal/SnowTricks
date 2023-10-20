@@ -10,4 +10,8 @@ return function (RoutingConfigurator $routes): void {
     $routes->add('getTricksPaged', '/go')
         ->controller([TrickController::class, 'getTricksPaged'])
     ;
+    // $routes->add('getCommentsPaged', '/go')
+    //     ->controller([TrickController::class, 'getTricksPaged'])
+    // ;
+    
 };

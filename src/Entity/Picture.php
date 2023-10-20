@@ -18,6 +18,9 @@ class Picture
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
 
+    #[ORM\Column(length: 500)]
+    private ?string $url = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,6 +34,18 @@ class Picture
     public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): static
+    {
+        $this->url = $url;
 
         return $this;
     }
