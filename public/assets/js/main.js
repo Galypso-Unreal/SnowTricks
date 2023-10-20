@@ -26,16 +26,18 @@ $(document).ready(()=>{
  
       })
 
-      let contentAjaxComment = $('.trick-single #comments-trick')
-    $('.single-trick .loadmore').on('click', function (evt) {
+      let contentAjaxComment = $('.trick-single #comments-trick .comments')
+    $('.trick-single .loadmore').on('click', function (evt) {
+        console.log('clicked');
         evt.preventDefault();
         page = $(this).attr('data-page');
+        trick_id = $(this).attr('data-trick')
         page ++;
         $(this).attr('data-page',page)
         $.ajax(
           {
             type: "GET",
-            url: "/comment/page/" + page,
+            url: "/comment/" +trick_id+ "/page/" + page,
             beforeSend: function(){
                 $('.loader-container').show()
             },

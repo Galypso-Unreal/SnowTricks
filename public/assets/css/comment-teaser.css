@@ -1,0 +1,31 @@
+.comment-teaser{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+}
+.comment-teaser .left{
+    width: 25%;
+    max-width: 25%;
+    display: flex;
+    justify-content: center;
+}
+.comment-teaser .left img{
+    width: 100%;
+    max-width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 100%;
+}
+.comment-teaser .right{
+    width: 75%;
+    max-width: 75%;
+}
+
+.comment-teaser .user-name{
+    font-weight: bold;
+}
+.comment-teaser .created-at{
+    font-weight: 300;
+    font-size: 1.4rem;
+}

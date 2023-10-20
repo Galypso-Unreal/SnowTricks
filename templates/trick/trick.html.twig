@@ -49,14 +49,13 @@
 
         <div class="comments-trick" id="comments-trick">
 
+                <div class="h2_style text-center title">
+                    Les commentaires
+                </div>
                 
                 <div class="d-flex flex-row flex-wrap comments">
-                    <pre>
-                        {{ dump(comments) }}
-                    </pre>
                     {% for comment in comments %}
-                        {{comment.content}}
-                        {# {% include "teasers/trick.html.twig" with {'trick' : trick} %} #}
+                        {% include "teasers/comment.html.twig" with {'comment' : comment} %}
                     {% endfor %}
                     
     
@@ -66,12 +65,12 @@
                     
                     <div class="inner-container">
                         <span class="loader"></span>
-                        <div class="h2_style">Chargement en cours des figures suivantes ...</div>
+                        <div class="h2_style">Chargement en cours des commentaires suivants ...</div>
                     </div>
                 </div>
                 
     
-                <div class="btn btn-primary loadmore text_style"  data-page="1" data-all-page="{{number_page}}">Voir plus de tricks ! </div>
+                <div class="btn btn-primary loadmore text_style"  data-page="1" data-trick="{{trick.id}}" data-all-page="{{number_page}}">Voir plus de commentaires ! </div>
                 
             
     
