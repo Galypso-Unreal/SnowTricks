@@ -15,12 +15,16 @@
 }
 
 
-.trick-single .gallery img{
+.trick-single .gallery img,.trick-single .gallery iframe{
     width: 100%;
     max-width: 30rem;
-    max-height: 20rem;
-    height: 20rem;
+    max-height: 20rem !important;
+    height: 20rem !important;
     object-fit: cover;
+    position: relative !important;
+}
+.trick-single .gallery > p, .trick-single .gallery > div{
+    display: none;
 }
 
 .trick-single .description{

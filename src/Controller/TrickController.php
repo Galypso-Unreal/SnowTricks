@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\TrickType;
 use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\BrowserKit\Response;
@@ -63,6 +64,9 @@ class TrickController extends AbstractController
         $repositoryImage = $entityManager->getRepository((Picture::class));
         $images = $repositoryImage->findByTrickId($trickId);
 
+        $repositoryVideo = $entityManager->getRepository((Video::class));
+        $videos = $repositoryVideo->findByTrickId($trickId);
+
         $repositoryComment = $entityManager->getRepository((Comment::class));
 
         $page=1;
@@ -72,7 +76,7 @@ class TrickController extends AbstractController
         
         
 
-        return $this->render('trick/trick.html.twig',array("trick"=>$trick,'images'=>$images,'comments'=>$comments, 'number_page'=>$all_comments_count));
+        return $this->render('trick/trick.html.twig',array("trick"=>$trick,'images'=>$images,'videos'=>$videos,'comments'=>$comments, 'number_page'=>$all_comments_count));
     }
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
