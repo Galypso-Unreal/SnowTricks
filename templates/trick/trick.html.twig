@@ -1,0 +1,93 @@
+{% extends "page.html.twig" %}
+
+{% block title %}{{trick.name}}{% endblock %}
+
+{% block content %}
+
+<div class="trick-single">
+    <div class="hero">
+        <div>
+            <div class="hero_background"></div>
+            <div class="text_hero column flex position-absolute">
+                <h1 class="title">
+                    {{trick.name}}
+                </h1>
+            </div>
+            {% if images %}
+            <img src="{{asset('assets/img/')}}{{images.0.url}}" alt="">
+            {% else %}
+            <img src="{{asset('assets/img/default.jpg')}}" alt="">
+            {% endif %}
+            
+            
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gallery">
+            {% for image in images %}
+                <img src="{{asset('assets/img/')}}{{image.url}}" alt="" srcset="">
+            {% endfor %}
+
+            
+
+            {% for video in videos %}
+                    {{video.embed|raw}}
+            {% endfor %}
+
+        </div>
+
+        <div class="description">
+            {{trick.description}}
+        </div>
+
+        <div class="meta">
+            <div class="created-at">
+                Crée le : {{trick.createdAt|date('d-M-Y')}}
+            </div>
+            
+            {% if trick.createdAt != trick.modifiedAt %}
+                <div class="modified-at">
+                    Modifié le : {{trick.modifiedAt|date('d-M-Y')}}
+                </div>
+            {% endif %}
+            
+        </div>
+
+        <div class="comments-trick" id="comments-trick">
+
+                <div class="h2_style text-center title">
+                    Les commentaires
+                </div>
+                
+                <div class="d-flex flex-row flex-wrap comments">
+                    {% for comment in comments %}
+                        {% include "teasers/comment.html.twig" with {'comment' : comment} %}
+                    {% endfor %}
+                    
+    
+                </div>
+    
+                <div class="loader-container">
+                    
+                    <div class="inner-container">
+                        <span class="loader"></span>
+                        <div class="h2_style">Chargement en cours des commentaires suivants ...</div>
+                    </div>
+                </div>
+                
+    
+                <div class="btn btn-primary loadmore text_style"  data-page="1" data-trick="{{trick.id}}" data-all-page="{{number_page}}">Voir plus de commentaires ! </div>
+                
+            
+    
+        </div>
+
+    </div>
+</div>
+
+
+        
+
+
+{% endblock %}

@@ -1,0 +1,63 @@
+.trick-single .trick-name{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.trick-single .gallery{
+    display: flex;
+    margin: 5rem 0;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+
+.trick-single .gallery img,.trick-single .gallery iframe{
+    width: 100%;
+    max-width: 30rem;
+    max-height: 20rem !important;
+    height: 20rem !important;
+    object-fit: cover;
+    position: relative !important;
+}
+.trick-single .gallery > p, .trick-single .gallery > div{
+    display: none;
+}
+
+.trick-single .description{
+    margin: 5rem 0;
+}
+
+.trick-single .meta{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.trick-single .comments-trick{
+    max-width: 96rem;
+    margin: 10rem auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.comments-trick .title{
+    margin-bottom: 5rem;
+}
+
+.trick-single .comments-trick .comments{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.trick-single .comments-trick .loadmore{
+    margin-top: 5rem;
+    text-align: center;
+}
