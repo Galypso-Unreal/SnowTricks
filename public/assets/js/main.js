@@ -100,6 +100,12 @@ $(document).ready(()=>{
         }
     })
 
+    //Flash button close
+
+    $('.alert-dismissible .btn-close').on('click',function(){
+        $(this).parent().remove();
+    })
+
     
 
 

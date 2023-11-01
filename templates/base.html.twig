@@ -10,7 +10,18 @@
     <body>
         
         <div class="main_content">
-                                    {% include 'global/header.html.twig' %}
+        {% include 'global/header.html.twig' %}
+        <div class="alert-container">
+                {% include "component/flash.html.twig" %}
+        {% if app.user and app.user.isVerified == false %}
+            <div class="alert alert-dismissible alert-warning" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert-message">
+                    <strong>Your account is not activated !</strong> <a href="{{path('app_send_email_verif')}}">Resend activation link</a>
+                </div>
+            </div>
+        {% endif %}
+        </div>
         {% block body %}{% endblock %}
         {% include 'global/footer.html.twig' %}
             
