@@ -1,0 +1,21 @@
+<h1>Welcome ! </h1>
+
+<p>Dear <strong>{{user.username}},</strong></p>
+
+<p>Welcome to SnowTricks!</p>
+
+<p>We are thrilled that you've joined our community of snowboarding and freestyle skiing enthusiasts. To complete your registration and activate your account, please click the following link or copy and paste it into your web browser:</p>
+
+<p><a href="{{absolute_url(path('app_verify_email',{token: token}))}}">Confirm your account !</a> (this link expires in 4 hours)</p>
+
+<p>
+
+If you didn't request this account, please ignore this email. Your account will not be activated until you confirm your registration.
+
+Thank you for choosing SnowTricks as your go-to platform for all things snow sports. If you have any questions or need assistance, don't hesitate to contact our support team at [Support Email Address].
+
+Happy shredding!
+
+Best regards,
+The SnowTricks Team
+</p>
