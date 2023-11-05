@@ -19,7 +19,7 @@ class TrickType extends AbstractType
         $builder
             ->add('name')
             ->add('description', TextareaType::class)
-            // ->add('trickGroup', TextType::class)
+            ->add('trickGroup')
             
             // ->add('videos', TextType::class)
             ->add('pictures', CollectionType::class, [

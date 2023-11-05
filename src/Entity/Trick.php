@@ -26,9 +26,9 @@ class Trick
     #[Assert\NotBlank(message:"La description ne doit pas être vide")]
     private string $description;
 
-    // #[ORM\Column(type:"string")]
-    // #[Assert\NotBlank(message:"Le group de figure ne doit pas être vide")]
-    // private string $trick_group;
+    #[ORM\Column(type:"string")]
+    #[Assert\NotBlank(message:"Le group de figure ne doit pas être vide")]
+    private string $trick_group;
 
 
 
@@ -95,13 +95,13 @@ class Trick
         $this->description = $description;
     }
 
-    // public function getTrickGroup(){
-    //     return $this->trick_group;
-    // }
+    public function getTrickGroup(){
+        return $this->trick_group;
+    }
 
-    // public function setTrickGroup($trick_group){
-    //     $this->trick_group = $trick_group;
-    // }
+    public function setTrickGroup($trick_group){
+        $this->trick_group = $trick_group;
+    }
 
 
     // public function setPicture(Picture $picture):self{
