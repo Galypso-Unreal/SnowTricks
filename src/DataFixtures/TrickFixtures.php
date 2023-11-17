@@ -35,7 +35,7 @@ class TrickFixtures extends Fixture
 
             if($count < 5){
                 $image = new Picture();
-                $image->setUrl('firstpicture.jpg');
+                $image->setName('firstpicture.jpg');
                 $image->setTrick($trick);
                 
             }

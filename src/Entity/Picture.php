@@ -19,7 +19,7 @@ class Picture
     private ?Trick $trick = null;
 
     #[ORM\Column(length: 500)]
-    private ?string $url = null;
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -38,14 +38,14 @@ class Picture
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getName(): ?string
     {
-        return $this->url;
+        return $this->name;
     }
 
-    public function setUrl(string $url): static
+    public function setName(string $name): static
     {
-        $this->url = $url;
+        $this->name = $name;
 
         return $this;
     }

@@ -10,31 +10,57 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\TrickType;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Service\PictureService;
 use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickController extends AbstractController
 {   
 
+    protected $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     #[Route('/trick/new', name: 'trickform')]
-    public function new(Request $request, EntityManagerInterface $entityManager)
+    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService)
     {
         $trick = new Trick();
         
+        
 
-        $picture = new Picture();
 
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
+
         
-        if ($form->isSubmitted() && $form->isValid()) { 
-            var_dump($trick);
-            die();
-            // $entityManager->persist($trick);
-            // $entityManager->flush();
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /* Get all input pictures */
+            $images = $form->get('images')->getData();
+            
+            foreach ($images as $image) {
+                /* Destination folder */
+                $folder = 'tricks';
+
+                $fichier = $pictureService->add($image,$folder,300,300);
+
+                $picture = new Picture();
+                $picture->setTrick($trick);
+                $picture->setName($fichier);
+                $trick->addPicture($picture);
+                $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
+
+            }
+            $entityManager->persist($trick);
+            $entityManager->flush();
         }
 
         return $this->render('trick/new.html.twig', array(

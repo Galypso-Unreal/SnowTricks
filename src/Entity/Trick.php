@@ -47,7 +47,7 @@ class Trick
     #[ORM\Column(type:"datetime",nullable:true)]
     private datetime $deleted_at;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class,cascade:['persist'])]
     private Collection $pictures;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
@@ -102,18 +102,6 @@ class Trick
     public function setTrickGroup($trick_group){
         $this->trick_group = $trick_group;
     }
-
-
-    // public function setPicture(Picture $picture):self{
-    //     if(!$this->pictures->contains($picture)){
-    //         $this->pictures[] = $picture;
-    //     }
-    //     return $this;
-    // }
-
-    // public function setIllustrations($illustrations){
-    //     $this->illustrations = $illustrations;
-    // }
 
     // public function getVideos(){
     //     return $this->videos;

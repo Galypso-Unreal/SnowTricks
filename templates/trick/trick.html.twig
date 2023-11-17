@@ -14,7 +14,7 @@
                 </h1>
             </div>
             {% if images %}
-            <img src="{{asset('assets/img/')}}{{images.0.url}}" alt="">
+            <img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
             {% else %}
             <img src="{{asset('assets/img/default.jpg')}}" alt="">
             {% endif %}
@@ -26,7 +26,7 @@
     <div class="container">
         <div class="gallery">
             {% for image in images %}
-                <img src="{{asset('assets/img/')}}{{image.url}}" alt="" srcset="">
+                <img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
             {% endfor %}
 
             
