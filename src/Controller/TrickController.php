@@ -31,18 +31,13 @@ class TrickController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService)
     {
         $trick = new Trick();
-        
-        
-
-
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-
         
         
         if ($form->isSubmitted() && $form->isValid()) {
-
+            
             /* Get all input pictures */
             $images = $form->get('images')->getData();
             
@@ -56,11 +51,14 @@ class TrickController extends AbstractController
                 $picture->setTrick($trick);
                 $picture->setName($fichier);
                 $trick->addPicture($picture);
-                $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
+                
 
             }
+            $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
             $entityManager->persist($trick);
             $entityManager->flush();
+            $this->addFlash('success','the new trick has been correctly added');
+            return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
         }
 
         return $this->render('trick/new.html.twig', array(

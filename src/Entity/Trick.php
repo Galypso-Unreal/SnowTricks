@@ -18,7 +18,7 @@ class Trick
     #[ORM\Column(type:"integer")]
     private int $id;
 
-    #[ORM\Column(type:"string")]
+    #[ORM\Column(type:"string",unique:true)]
     #[Assert\NotBlank(message:"Le nom ne doit pas être vide")]
     private string $name;
 
@@ -26,9 +26,7 @@ class Trick
     #[Assert\NotBlank(message:"La description ne doit pas être vide")]
     private string $description;
 
-    #[ORM\Column(type:"string")]
-    #[Assert\NotBlank(message:"Le group de figure ne doit pas être vide")]
-    private string $trick_group;
+
 
 
 
@@ -55,6 +53,10 @@ class Trick
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
     private Collection $videos;
+
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TrickGroup $trick_group = null;
 
 
 
@@ -95,13 +97,6 @@ class Trick
         $this->description = $description;
     }
 
-    public function getTrickGroup(){
-        return $this->trick_group;
-    }
-
-    public function setTrickGroup($trick_group){
-        $this->trick_group = $trick_group;
-    }
 
     // public function getVideos(){
     //     return $this->videos;
@@ -233,6 +228,18 @@ class Trick
                 $video->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTrickGroup(): ?TrickGroup
+    {
+        return $this->trick_group;
+    }
+
+    public function setTrickGroup(?TrickGroup $trick_group): static
+    {
+        $this->trick_group = $trick_group;
 
         return $this;
     }
