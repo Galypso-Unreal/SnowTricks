@@ -25,6 +25,23 @@
     {{ form_errors(form.description) }}
 </div>
 
+<div class="input">
+    <label for="trick_group">Trick group : </label>
+    {{ form_widget(form.trickGroup) }}
+    {{ form_errors(form.trickGroup) }}
+</div>
+
+<div class="input">
+    <label for="images">Trick images : </label>
+    {{ form_widget(form.images) }}
+    {{ form_errors(form.images) }}
+</div>
+
+<div id="videos" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
+    {{form_row(form.videos)}}
+    <span></span>
+</div>
+
 {# <div>
 <label for="trick_illustrations">illustrations de la figure</label>
     <div id="picture_list">
