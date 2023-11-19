@@ -22,7 +22,7 @@ class TrickType extends AbstractType
         $builder
             ->add('name')
             ->add('description', TextareaType::class)
-            ->add('TrickGroup',EntityType::class,[
+            ->add('trickGroup',EntityType::class,[
                 'class'=>TrickGroup::class,
                 'choice_label'=>'name',
                 'label'=>'Choose a group trick : ',
@@ -35,6 +35,15 @@ class TrickType extends AbstractType
                 'multiple'=> true,
                 'mapped'=>false,
                 'required'=>false,
+            ])
+            ->add('videos',CollectionType::class,[
+                'entry_type'=>VideoFormType::class,
+                'label'=>'videos',
+                'entry_options'=>['label' =>false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false
+
             ])
             ->add('Sauvegarder',SubmitType::class,[
                 'attr'=>[

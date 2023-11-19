@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Comment;
 use App\Entity\Picture;
 use App\Entity\Trick;
+use App\Entity\TrickGroup;
 use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -19,10 +20,13 @@ class TrickFixtures extends Fixture
     public function __construct(SluggerInterface $slugger)
     {
         $this->slugger = $slugger;
+        
     }
 
     public function load(ObjectManager $manager): void
     {
+        $trickGroup = new TrickGroup();
+        $trickGroup->setName('testinit');
         for ($count = 0; $count < 50; $count++) {
             $trick = new Trick();
 
@@ -37,6 +41,7 @@ class TrickFixtures extends Fixture
                 $image = new Picture();
                 $image->setName('firstpicture.jpg');
                 $image->setTrick($trick);
+                
                 
             }
 
@@ -74,7 +79,7 @@ class TrickFixtures extends Fixture
                 $manager->persist($comment);
             }
             
-
+            $trick->setTrickGroup($trickGroup);
             $manager->persist($trick);
             $manager->persist($image);
             
