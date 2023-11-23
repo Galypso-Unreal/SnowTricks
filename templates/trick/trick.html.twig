@@ -42,13 +42,20 @@
         </div>
 
         <div class="meta">
+
+            {% if trick.trickGroup %}
+            <div class="group-trick">
+                group trick : {{trick.trickGroup.name}}
+            </div>
+            {% endif %}
+
             <div class="created-at">
-                Crée le : {{trick.createdAt|date('d-M-Y')}}
+                create at : {{trick.createdAt|date('d-M-Y')}}
             </div>
             
             {% if trick.createdAt != trick.modifiedAt %}
                 <div class="modified-at">
-                    Modifié le : {{trick.modifiedAt|date('d-M-Y')}}
+                    modified at : {{trick.modifiedAt|date('d-M-Y')}}
                 </div>
             {% endif %}
             
@@ -57,7 +64,11 @@
         <div class="comments-trick" id="comments-trick">
 
                 <div class="h2_style text-center title">
-                    Les commentaires
+                    All Comments
+                </div>
+
+                <div class="add_comment">
+                    {{form(form)}}
                 </div>
                 
                 <div class="d-flex flex-row flex-wrap comments">
@@ -72,12 +83,12 @@
                     
                     <div class="inner-container">
                         <span class="loader"></span>
-                        <div class="h2_style">Chargement en cours des commentaires suivants ...</div>
+                        <div class="h2_style">Loading the following comments ...</div>
                     </div>
                 </div>
                 
     
-                <div class="btn btn-primary loadmore text_style"  data-page="1" data-trick="{{trick.id}}" data-all-page="{{number_page}}">Voir plus de commentaires ! </div>
+                <div class="btn btn-primary loadmore text_style"  data-page="1" data-trick="{{trick.id}}" data-all-page="{{number_page}}">See more comments ! </div>
                 
             
     
