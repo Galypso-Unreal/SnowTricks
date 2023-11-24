@@ -44,7 +44,9 @@
     .hero .text_hero .title{
         font-size: 9rem;
     }
-
+    header .close-menu, header .open-menu{
+        display: none;
+    }
 }
 
 /* #tricks-homepage{

@@ -3,6 +3,9 @@ body,html{
     font-size: 10px;
     font-family: 'Roboto';
 }
+.main_content{
+    padding-top: 9.2rem;
+}
 h1,.h1_style{
 font-size: 4rem;
 font-weight: 900;
