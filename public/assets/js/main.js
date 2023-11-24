@@ -1,4 +1,19 @@
 $(document).ready(()=>{
+    /* Start See medias button display */
+
+        $('.trick-single .see_media').on('click', function(){
+            $('.trick-single .gallery').addClass('visible');
+            $('.trick-single .no_see_media').show();
+            $('.trick-single .see_media').hide();
+        })
+
+        $('.trick-single .no_see_media').on('click', function(){
+            $('.trick-single .gallery').removeClass('visible');
+            $('.trick-single .no_see_media').hide();
+            $('.trick-single .see_media').show();
+        })
+
+    /* End see medias button display */
     let contentAjax = $('#tricks-homepage .container .tricks')
     $('#tricks-homepage .loadmore').on('click', function (evt) {
         evt.preventDefault();

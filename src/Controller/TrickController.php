@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\TrickType;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Form\CommentFormType;
+use App\Repository\TrickRepository;
 use App\Service\PictureService;
 use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,7 +78,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'trick')]
-    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug){
+    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository){
         
         $slug = $request->attributes->get('slug');
         
@@ -98,9 +100,35 @@ class TrickController extends AbstractController
         $comments = $repositoryComment->findByLimitComment($page,$trickId)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
         
-        
 
-        return $this->render('trick/trick.html.twig',array("trick"=>$trick,'images'=>$images,'videos'=>$videos,'comments'=>$comments, 'number_page'=>$all_comments_count));
+        // $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
+
+        
+        $form = $this->createForm(CommentFormType::class);
+        $form->handleRequest($request);
+
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($this->isGranted('ROLE_USER') == false){
+                
+                $user = $this->getUser();
+                if($user->isVerified() == false){
+                    $this->addFlash('warning','You need to be verified to leave a comment');
+                    return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
+                }
+                $this->addFlash('warning','You need to be connected to leave a comment');
+                return $this->redirectToRoute('app_login');
+            }
+            $comment = new Comment();
+            $comment->setContent($form->get('content')->getData());
+            $comment->setTrick($trick);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success','the new comment has been correctly added');
+            return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
+        }
+
+        return $this->render('trick/trick.html.twig',array("trick"=>$trick,'images'=>$images,'videos'=>$videos,'comments'=>$comments, 'number_page'=>$all_comments_count,'form'=>$form));
     }
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]

@@ -140,6 +140,14 @@ p,div,.text_style{
     background-position: 0px 12px, 145px 12px;
     animation: earLift 3s linear infinite alternate;
   }
+
+  body .btn{
+    font-size: 1.8rem;
+  }
+
+  body .container, body .container-fluid, body .container-lg, body .container-md, body .container-sm, body .container-xl, body .container-xxl{
+    --bs-gutter-x: 4rem;
+  }
   
   @keyframes faceLift {
     0% {

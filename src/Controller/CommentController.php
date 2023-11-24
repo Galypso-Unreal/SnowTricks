@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Form\CommentFormType;
+use App\Repository\TrickRepository;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,5 +49,29 @@ class CommentController extends AbstractController
             </div>';
         }
         return new JsonResponse($exit);
+    }
+    #[Route('/comment/add/{trick_id}', name: 'createComment')]
+    public function createComment(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository){
+
+        $comment = new Comment();
+
+        $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
+
+        dd($trick);
+
+        $form = $this->createForm(CommentFormType::class, $comment);
+        $form->handleRequest($request);
+        
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $comment->setContent($form->get('content')->getData());
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success','the new comment has been correctly added');
+            return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
+        }
+
+        
     }
 }

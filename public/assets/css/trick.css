@@ -5,7 +5,7 @@
 }
 
 .trick-single .gallery{
-    display: flex;
+    display: none;
     margin: 5rem 0;
     flex-direction: row;
     align-items: center;
@@ -14,17 +14,44 @@
     flex-wrap: wrap;
 }
 
+.see_media{
+    display: block;
+    max-width: 20rem;
+    margin: 5rem auto;
+    
+}
+.no_see_media{
+    display: none;
+    max-width: 20rem;
+    margin: 5rem auto;
+}
+
+
 
 .trick-single .gallery img,.trick-single .gallery iframe{
     width: 100%;
-    max-width: 30rem;
-    max-height: 20rem !important;
+    max-width: calc(100%);
+    max-height: 20rem !important;max-width: calc(100% - 2.25rem);
     height: 20rem !important;
     object-fit: cover;
     position: relative !important;
 }
+@media screen and (min-width: 992px) {
+    .trick-single .gallery img,.trick-single .gallery iframe{
+        max-width: calc(33% - 1.7rem);
+    }
+}
+@media screen and (min-width: 768px and max-width: 991px) {
+    .trick-single .gallery img,.trick-single .gallery iframe{
+        max-width: calc(50% - 1.5rem);
+    }
+}
 .trick-single .gallery > p, .trick-single .gallery > div{
     display: none;
+}
+
+.trick-single .gallery.visible{
+    display: flex;
 }
 
 .trick-single .description{
@@ -33,11 +60,14 @@
 
 .trick-single .meta{
     display: flex;
+    text-align: center;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
 }
-
+.trick-single .comments{
+    max-width: 100%;
+}
 .trick-single .comments-trick{
     max-width: 96rem;
     margin: 10rem auto;
@@ -57,7 +87,32 @@
     gap: 3rem;
 }
 
+
 .trick-single .comments-trick .loadmore{
     margin-top: 5rem;
     text-align: center;
+}
+
+.trick-single .add_comment{
+    width: 100%;
+}
+
+.trick-single .add_comment textarea{
+    min-height: 20rem;
+    resize: none;
+}
+
+.trick-single .add_comment{
+    border-bottom: 0.1rem solid black;
+    border-top: 0.1rem solid black;
+    padding: 5rem 0rem 2rem;
+}
+
+@media screen and (min-width: 992px) {
+    .trick-single .see_media, .trick-single .no_see_media{
+        display: none;
+    }
+    .trick-single .gallery{
+        display: flex;
+    }
 }
