@@ -102,6 +102,7 @@ class RegistrationController extends AbstractController
             /* Check if user exist and doesn't confirm account */
             if($user && !$user->isVerified()){
                 $user->setIsVerified(true);
+                $user->setRoles(['ROLE_USER']);
                 $entityManagerInterface->flush($user);
                 $this->addFlash('success', 'Your account has been activated!');
                 return $this->redirectToRoute('index');

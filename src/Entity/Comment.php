@@ -28,7 +28,7 @@ class Comment
     #[ORM\Column]
     private ?\DateTime $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\ManyToOne(inversedBy: 'comments',cascade:['persist'])]
     private ?Trick $trick = null;
 
     public function __construct()
@@ -37,6 +37,7 @@ class Comment
         $date = new \DateTime("now",$utc_timezone);
 
         $this->setCreatedAt($date);
+        $this->setIsValid(1);
     }
 
     public function getId(): ?int

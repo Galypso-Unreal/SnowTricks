@@ -29,6 +29,7 @@ class CommentRepository extends ServiceEntityRepository
                ->createQueryBuilder('c')
                ->andWhere('c.trick = :val')
                ->setParameter('val', $value)
+               ->orderBy('c.createdAt','DESC')
                ->getQuery();
         $result = $query->setFirstResult($start)->setMaxResults($limit);
         return $result;
@@ -43,6 +44,7 @@ class CommentRepository extends ServiceEntityRepository
                ->select('count(c.id)')
                ->andWhere('c.trick = :val')
                ->setParameter('val', $value)
+               ->orderBy('c.createdAt','DESC')
                ->getQuery()
                ->getSingleScalarResult();
         return $query;

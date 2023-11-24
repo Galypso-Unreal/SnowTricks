@@ -36,7 +36,14 @@
 }
 
 .hero .text_hero .title{
-    font-size: 9rem;
+    font-size: 6rem;
+    text-align: center;
+}
+
+@media screen and (min-width: 992px) {
+    .hero .text_hero .title{
+        font-size: 9rem;
+    }
 }
 
 /* #tricks-homepage{
