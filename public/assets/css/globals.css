@@ -4,8 +4,14 @@ body,html{
     font-family: 'Roboto';
 }
 .main_content{
-    padding-top: 9.2rem;
+    padding-top: 7.4rem;
 }
+@media screen and (min-width: 992px) {
+    .main_content{
+        padding-top: 10rem;
+    }
+}
+
 h1,.h1_style{
 font-size: 4rem;
 font-weight: 900;
@@ -188,9 +194,15 @@ p,div,.text_style{
   }
 
   header .left .logo img{
-    width: 10rem;
+    width: 8rem;
     object-fit: contain;
     
+  }
+
+  @media screen and (min-width: 992px) {
+    header .left .logo img{
+        width: 12rem;
+      }
   }
 
   header .menu{
