@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Service\AuthorizedService;
 use App\Entity\Picture;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +79,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'trick')]
-    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository){
+    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository, AuthorizedService $authorizedService){
         
         $slug = $request->attributes->get('slug');
         
@@ -119,6 +120,15 @@ class TrickController extends AbstractController
                 $this->addFlash('warning','You need to be connected to leave a comment');
                 return $this->redirectToRoute('app_login');
             }
+            $authorizedService->AuthorizedUser(
+                'ROLE_USER',
+                'You need to be verified to leave a comment',
+                'trick',
+                array('slug'=>$trick->getSlug()),
+                'You need to be connected to leave a comment',
+                'app_login'
+            );
+            
             $comment = new Comment();
             $comment->setContent($form->get('content')->getData());
             $comment->setTrick($trick);
