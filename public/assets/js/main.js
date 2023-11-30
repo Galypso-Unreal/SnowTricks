@@ -1,4 +1,20 @@
 $(document).ready(()=>{
+    /* Open Menu mobile */
+
+    $('.open-menu').on('click',function(){
+        $('header .menu').addClass('display')
+        $('header .close-menu').show();
+        $('header .open-menu').hide();
+    })
+
+    $('.close-menu').on('click',function(){
+        $('header .menu').removeClass('display')
+        $('header .close-menu').hide();
+        $('header .open-menu').show();
+    })
+
+    /* End open menu mobile */
+
     /* Start See medias button display */
 
         $('.trick-single .see_media').on('click', function(){

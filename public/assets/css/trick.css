@@ -41,7 +41,7 @@
         max-width: calc(33% - 1.7rem);
     }
 }
-@media screen and (min-width: 768px and max-width: 991px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
     .trick-single .gallery img,.trick-single .gallery iframe{
         max-width: calc(50% - 1.5rem);
     }
