@@ -20,6 +20,10 @@ body,html{
     min-height: calc(100vh - 17rem);
 }
 
+body .form-control{
+    padding: 0.5rem;
+}
+
 h1,.h1_style{
 font-size: 4rem;
 font-weight: 900;

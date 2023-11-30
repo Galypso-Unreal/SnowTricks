@@ -23,10 +23,10 @@ class Comment
     private ?bool $is_valid = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTime $deletedAt = null;
+    private ?\DateTime $deleted_at = null;
 
     #[ORM\Column]
-    private ?\DateTime $createdAt = null;
+    private ?\DateTime $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments',cascade:['persist'])]
     private ?Trick $trick = null;
@@ -71,24 +71,24 @@ class Comment
 
     public function getDeletedAt(): ?\DateTime
     {
-        return $this->deletedAt;
+        return $this->deleted_at;
     }
 
-    public function setDeletedAt(?\DateTime $deletedAt): static
+    public function setDeletedAt(?\DateTime $deleted_at): static
     {
-        $this->deletedAt = $deletedAt;
+        $this->deleted_at = $deleted_at;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): static
+    public function setCreatedAt(\DateTime $created_at): static
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
 
         return $this;
     }

@@ -37,6 +37,11 @@ class TrickFixtures extends Fixture
             $trick->setDescription($description);
             $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
 
+            $utc_timezone = new \DateTimeZone("Europe/Paris");
+            $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count.'day')),$utc_timezone);
+
+            $trick->setCreatedAt($date);
+
             if($count < 5){
                 $image = new Picture();
                 $image->setName('firstpicture.jpg');

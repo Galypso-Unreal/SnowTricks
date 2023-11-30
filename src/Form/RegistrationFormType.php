@@ -11,9 +11,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegistrationFormType extends AbstractType
 {
+
+    public function __construct(
+        private UrlGeneratorInterface $router,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -21,6 +28,8 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'I agree with the <a target="_blank" href='. $this->router->generate('app_legal') .'>terms of the site</a>',
+                'label_html' => true,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
