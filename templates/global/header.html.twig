@@ -3,7 +3,7 @@
     <div class="container row">
 
         <div class="left col-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="logo"><img src="{{asset('assets/img/global/snowtricks.png')}}"></div>
+            <a class="logo" href="{{path('index')}}"><img src="{{asset('assets/img/global/snowtricks.png')}}"></a>
         </div>
 
         <div class="right col-8 col-sm-8 col-md-8 col-lg-8">
@@ -23,8 +23,12 @@
             <ul class="menu">
                 <li><a href="{{path('index')}}">Home</a></li>
                 <li><a href="{{path('index')}}#tricks-homepage">Tricks</a></li>
+                {% if not is_granted('ROLE_USER') %}
                 <li><a href="{{path('app_login')}}">Sign in</a></li>
                 <li><a href="{{path('app_register')}}">Sign up</a></li>
+                {% else %}
+                <li><a href="{{path('app_logout')}}">Logout</a></li>
+                {% endif %}
             </ul>
         </div>
 
