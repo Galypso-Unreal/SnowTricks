@@ -3,6 +3,6 @@
         <h2>{{trick.name}}</h2>
     </a>
     <div>
-        {{trick.description}}
+        {{ trick.description|length > 80 ? trick.description|slice(0, 80) ~ '...' : trick.description  }}
     </div>
 </div>

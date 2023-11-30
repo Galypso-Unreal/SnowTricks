@@ -5,11 +5,23 @@ body,html{
 }
 .main_content{
     padding-top: 7.4rem;
+    min-height: 100vh;
+}
+.form-custom > *{
+    width: 100%;
 }
 @media screen and (min-width: 992px) {
     .main_content{
         padding-top: 10rem;
     }
+}
+
+.min-height{
+    min-height: calc(100vh - 17rem);
+}
+
+body .form-control{
+    padding: 0.5rem;
 }
 
 h1,.h1_style{

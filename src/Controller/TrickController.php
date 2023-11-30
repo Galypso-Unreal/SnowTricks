@@ -73,7 +73,7 @@ class TrickController extends AbstractController
         $repository = $entityManager->getRepository(Trick::class);
         $page=1;
         $all_tricks_count = $repository->getAllTricksCount() / 15;
-        $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY); 
         return $this->render('index.html.twig',array("tricks"=>$tricks, 'number_page'=>$all_tricks_count));
     }
 
