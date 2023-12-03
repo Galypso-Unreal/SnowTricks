@@ -28,7 +28,7 @@ class CommentController extends AbstractController
         $exit = array();
 
         foreach ($response as $key) {
-        $datetime = $key['createdAt']->format('d-M-Y');
+        $datetime = $key['created_at']->format('d-M-Y');
             $exit[] = '
             <div class="comment-teaser col-md-12 col-lg-12">
                 <div class="left">

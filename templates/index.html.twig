@@ -7,7 +7,7 @@
 {% block body %}
     {% include "elements/arrow.html.twig" %}
     <div class="hero">
-        <div>
+        <div class="content">
             <div class="hero_background"></div>
             <div class="text_hero column flex position-absolute">
                 <h1 class="title">
@@ -48,6 +48,19 @@
         </div>
         
 
+    </div>
+
+    <div class="modal-trick position-fixed">
+        <div class="modal-container">
+            <div class="text-modal">
+                Are you sure to delete this trick ?
+            </div>
+
+            <div class="control-modal display-flex flex-direction-column">
+                <a href="#" class="btn btn-danger">Delete Trick</a>
+                <span class="close-modal btn btn-dark">Cancel</span>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

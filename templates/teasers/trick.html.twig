@@ -7,13 +7,13 @@
     </div>
     {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
         <div class="modify-panel">
-            <a>
+            <a href="{{path('modifyTrick',{id:trick.id})}}">
                 <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
             </a>
 
-            <a>
+            <span class="open-modal" data-url = {{path('deleteTrick',{id:trick.id})}}>
                 <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
-            </a>
+            </span>
             
         </div>
     {% endif %}

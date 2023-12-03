@@ -6,7 +6,14 @@
 
 .container-panel{
     top: 2rem;
-    left: 2rem;
+    right: 2rem;
+    background-color: white;
+    padding: 1rem 2rem;
+    z-index: 10;
+}
+
+.container-panel a{
+    text-decoration: none;
 }
 
 .trick-single .gallery{

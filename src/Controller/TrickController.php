@@ -151,4 +151,16 @@ class TrickController extends AbstractController
         }
         return new JsonResponse($exit);
     }
+
+    #[Route('/trick/modify/{id}', name: 'modifyTrick')]
+    public function modifyTrick(EntityManagerInterface $entityManager, Request $request, int $id){
+        $id = $request->attributes->get('id');
+        return $id;
+    }
+
+    #[Route('/trick/delete/{id}', name: 'deleteTrick')]
+    public function deleteTrick(EntityManagerInterface $entityManager, Request $request, int $id){
+        $id = $request->attributes->get('id');
+        return $id;
+    }
 }

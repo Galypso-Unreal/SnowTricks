@@ -1,4 +1,19 @@
 $(document).ready(()=>{
+
+    /* Modal system */
+
+    $('.close-modal').on('click',function(){
+        $(this).parent().parent().parent().css('display','none');
+    })
+
+    $('.open-modal').on('click',function(){
+        $('.modal-trick').css('display','flex');
+        let url = $(this).data('url');
+        $(".modal-trick a").attr("href", url)
+    })
+
+    /* end modal system */
+
     /* Open Menu mobile */
 
     $('.open-menu').on('click',function(){
