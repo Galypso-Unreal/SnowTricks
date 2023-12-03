@@ -5,4 +5,17 @@
     <div>
         {{ trick.description|length > 80 ? trick.description|slice(0, 80) ~ '...' : trick.description  }}
     </div>
+    {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+        <div class="modify-panel">
+            <a>
+                <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+            </a>
+
+            <a>
+                <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+            </a>
+            
+        </div>
+    {% endif %}
+
 </div>

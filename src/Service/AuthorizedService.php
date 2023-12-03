@@ -2,19 +2,43 @@
 
 namespace App\Service;
 
-class AuthorizedService{
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-    public function AuthorizedUser($grantedRole, $errorVerified, $errorVerifiedRoute, $errorVerifiedRouteParams = null, $errorGranted, $errorGrantedRoute, $errorGrantedRouteParams = null){
+class AuthorizedService extends AbstractController{
 
-        if($this->isGranted($grantedRole) == false){
+    public function isAuthorizedUserAndVerified(UserInterface $user){
+
+        if($this->isGranted('ROLE_USER') === false){
                 
-            $user = $this->getUser();
-            if($user->isVerified() == false){
-                $this->addFlash('warning',$errorVerified);
-                return $this->redirectToRoute($errorVerifiedRoute,$errorVerifiedRouteParams);
+            if($user->isVerified() === false){
+                return false;
             }
-            $this->addFlash('warning',$errorGranted);
-            return $this->redirectToRoute($errorGrantedRoute,$errorGrantedRouteParams);
+            
+            return false;
+            
+        }
+        else{
+            return true;
+        }
+    }
+
+    public function isUserConnected(): bool{
+        if($this->isGranted('ROLE_USER') === true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function isUserVerified(UserInterface $user): bool{
+        if($user->isVerified() === true){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }

@@ -17,11 +17,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use App\Service\AuthorizedService;
 
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, AuthorizedService $authorizedService): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
@@ -31,8 +32,15 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        
+        // if($this->isGranted('ROLE_USER')){
+        //     return $this->redirectToRoute('index');
+        // }
+        if($authorizedService->isUserConnected() === true){
+            return $this->redirectToRoute('index');
+        }
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

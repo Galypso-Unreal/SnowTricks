@@ -6,7 +6,7 @@
 
 <div class="trick-single">
     <div class="hero">
-        <div>
+        <div class="content">
             <div class="hero_background"></div>
             <div class="text_hero column flex position-absolute">
                 <h1 class="title">
@@ -21,6 +21,21 @@
             
             
         </div>
+        {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+        <div class="container-panel position-absolute">
+            <div class="modify-panel ">
+                <a>
+                    <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+                </a>
+
+                <a>
+                    <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+                </a>
+                
+            </div>
+        </div>
+        
+    {% endif %}
     </div>
 
     <div class="container">

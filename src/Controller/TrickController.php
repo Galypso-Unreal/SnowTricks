@@ -110,24 +110,11 @@ class TrickController extends AbstractController
 
         
         if ($form->isSubmitted() && $form->isValid()) {
-            if($this->isGranted('ROLE_USER') == false){
-                
-                $user = $this->getUser();
-                if($user->isVerified() == false){
-                    $this->addFlash('warning','You need to be verified to leave a comment');
-                    return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
-                }
-                $this->addFlash('warning','You need to be connected to leave a comment');
-                return $this->redirectToRoute('app_login');
+
+            if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === false){
+                $this->addFlash('warning', 'You need to be connected and have a verified account to leave a comment');
+                return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
             }
-            $authorizedService->AuthorizedUser(
-                'ROLE_USER',
-                'You need to be verified to leave a comment',
-                'trick',
-                array('slug'=>$trick->getSlug()),
-                'You need to be connected to leave a comment',
-                'app_login'
-            );
             
             $comment = new Comment();
             $comment->setContent($form->get('content')->getData());

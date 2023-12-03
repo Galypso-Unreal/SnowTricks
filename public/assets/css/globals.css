@@ -7,9 +7,15 @@ body,html{
     padding-top: 7.4rem;
     min-height: 100vh;
 }
+
 .form-custom > *{
     width: 100%;
 }
+
+.icon{
+    width: 2rem;
+}
+
 @media screen and (min-width: 992px) {
     .main_content{
         padding-top: 10rem;
@@ -78,9 +84,18 @@ p,div,.text_style{
 .alert-container{
     position: absolute;
     width: 100%;
-    top: 0;
+    top: 7.4rem;
     left: 0;
     z-index: 2000;
+    
+}
+.alert-container .alert{
+    border-radius: 0;
+}
+@media screen and (min-width: 992px) {
+    .alert-container{
+        top: 10rem;
+    }
 }
 
 
