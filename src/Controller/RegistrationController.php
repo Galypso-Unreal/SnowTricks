@@ -80,12 +80,8 @@ class RegistrationController extends AbstractController
                 'register',
                 compact('user','token')
             );
-
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            $this->addFlash('success','Your account has been created ! Check your e-mail address to confirm your account');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('registration/register.html.twig', [
