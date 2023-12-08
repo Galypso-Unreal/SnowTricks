@@ -37,7 +37,7 @@
     {{ form_errors(form.images) }}
 </div>
 
-<div id="videos" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
+<div id="videos" class="py-3" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
     {{form_row(form.videos)}}
     <span></span>
 </div>
@@ -75,5 +75,9 @@
 {{ form_end(form) }}
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('assets/js/form.js')}}"></script>
 {% endblock %}
 

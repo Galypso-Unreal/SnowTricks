@@ -8,11 +8,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthorizedService extends AbstractController{
 
-    public function isAuthorizedUserAndVerified(UserInterface $user){
+    public function isAuthorizedUserAndVerified($user){
 
         if($this->isGranted('ROLE_USER') === false){
                 
-            if($user->isVerified() === false){
+            if(isset($user) && $user->isVerified() === false){
                 return false;
             }
             

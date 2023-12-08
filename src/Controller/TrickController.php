@@ -31,42 +31,47 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/new', name: 'trickform')]
-    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService)
+    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, AuthorizedService $authorizedService)
     {
-        $trick = new Trick();
+        if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
 
-        $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request);
-        
-        
-        if ($form->isSubmitted() && $form->isValid()) {
+            $trick = new Trick();
+
+            $form = $this->createForm(TrickType::class, $trick);
+            $form->handleRequest($request);
             
-            /* Get all input pictures */
-            $images = $form->get('images')->getData();
             
-            foreach ($images as $image) {
-                /* Destination folder */
-                $folder = 'tricks';
-
-                $fichier = $pictureService->add($image,$folder,300,300);
-
-                $picture = new Picture();
-                $picture->setTrick($trick);
-                $picture->setName($fichier);
-                $trick->addPicture($picture);
+            if ($form->isSubmitted() && $form->isValid()) {
                 
+                /* Get all input pictures */
+                $images = $form->get('images')->getData();
+                
+                foreach ($images as $image) {
+                    /* Destination folder */
+                    $folder = 'tricks';
 
+                    $fichier = $pictureService->add($image,$folder,300,300);
+
+                    $picture = new Picture();
+                    $picture->setTrick($trick);
+                    $picture->setName($fichier);
+                    $trick->addPicture($picture);
+                    
+
+                }
+                $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
+                $entityManager->persist($trick);
+                $entityManager->flush();
+                $this->addFlash('success','the new trick has been correctly added');
+                return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
             }
-            $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
-            $entityManager->persist($trick);
-            $entityManager->flush();
-            $this->addFlash('success','the new trick has been correctly added');
-            return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
-        }
 
-        return $this->render('trick/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+            return $this->render('trick/new.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
+        return $this->redirectToRoute('app_login');
+        
     }
 
     #[Route('/', name: 'index')]
