@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Service\AuthorizedService;
 
 class RegistrationController extends AbstractController
 {
@@ -31,8 +32,12 @@ class RegistrationController extends AbstractController
     // }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $sendMailService, JWTService $jwtService): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $sendMailService, JWTService $jwtService, AuthorizedService $authorizedService): Response
     {
+        if($authorizedService->isUserConnected() === true){
+            return $this->redirectToRoute('index');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -75,12 +80,8 @@ class RegistrationController extends AbstractController
                 'register',
                 compact('user','token')
             );
-
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            $this->addFlash('success','Your account has been created ! Check your e-mail address to confirm your account');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('registration/register.html.twig', [

@@ -5,4 +5,17 @@
     <div>
         {{ trick.description|length > 80 ? trick.description|slice(0, 80) ~ '...' : trick.description  }}
     </div>
+    {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+        <div class="modify-panel">
+            <a href="{{path('modifyTrick',{id:trick.id})}}">
+                <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+            </a>
+
+            <span class="open-modal" data-url = {{path('deleteTrick',{id:trick.id})}}>
+                <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+            </span>
+            
+        </div>
+    {% endif %}
+
 </div>

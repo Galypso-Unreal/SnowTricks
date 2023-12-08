@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Service\AuthorizedService;
 use App\Entity\Picture;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +79,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'trick')]
-    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository){
+    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository, AuthorizedService $authorizedService){
         
         $slug = $request->attributes->get('slug');
         
@@ -109,16 +110,12 @@ class TrickController extends AbstractController
 
         
         if ($form->isSubmitted() && $form->isValid()) {
-            if($this->isGranted('ROLE_USER') == false){
-                
-                $user = $this->getUser();
-                if($user->isVerified() == false){
-                    $this->addFlash('warning','You need to be verified to leave a comment');
-                    return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
-                }
-                $this->addFlash('warning','You need to be connected to leave a comment');
-                return $this->redirectToRoute('app_login');
+
+            if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === false){
+                $this->addFlash('warning', 'You need to be connected and have a verified account to leave a comment');
+                return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
             }
+            
             $comment = new Comment();
             $comment->setContent($form->get('content')->getData());
             $comment->setTrick($trick);
@@ -153,5 +150,17 @@ class TrickController extends AbstractController
             ';
         }
         return new JsonResponse($exit);
+    }
+
+    #[Route('/trick/modify/{id}', name: 'modifyTrick')]
+    public function modifyTrick(EntityManagerInterface $entityManager, Request $request, int $id){
+        $id = $request->attributes->get('id');
+        return $id;
+    }
+
+    #[Route('/trick/delete/{id}', name: 'deleteTrick')]
+    public function deleteTrick(EntityManagerInterface $entityManager, Request $request, int $id){
+        $id = $request->attributes->get('id');
+        return $id;
     }
 }

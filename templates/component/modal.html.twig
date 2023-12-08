@@ -1,0 +1,14 @@
+{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+<div class="modal-trick position-fixed">
+        <div class="modal-container">
+            <div class="text-modal">
+                Are you sure to delete this trick ?
+            </div>
+
+            <div class="control-modal display-flex flex-direction-column">
+                <a href="#" class="btn btn-danger">Delete Trick</a>
+                <span class="close-modal btn btn-dark">Cancel</span>
+            </div>
+        </div>
+</div>
+{% endif %}

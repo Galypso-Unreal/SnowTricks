@@ -7,7 +7,7 @@
 {% block body %}
     {% include "elements/arrow.html.twig" %}
     <div class="hero">
-        <div>
+        <div class="content">
             <div class="hero_background"></div>
             <div class="text_hero column flex position-absolute">
                 <h1 class="title">
@@ -49,5 +49,7 @@
         
 
     </div>
+
+    {% include 'component/modal.html.twig'%}
 
 {% endblock %}
