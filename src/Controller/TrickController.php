@@ -30,7 +30,7 @@ class TrickController extends AbstractController
         $this->slugger = $slugger;
     }
 
-    #[Route('/trick/new', name: 'trickform')]
+    #[Route('/trick/new', name: 'createTrick')]
     public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, AuthorizedService $authorizedService)
     {
         if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
