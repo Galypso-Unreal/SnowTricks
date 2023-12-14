@@ -29,6 +29,7 @@ class TrickRepository extends ServiceEntityRepository
         $start = ($page * $limit) - $limit;
         $query = $this
                ->createQueryBuilder('t')
+               ->andWhere('t.deleted_at IS NULL')
                ->orderBy('t.created_at','DESC')
                ->getQuery();
         $result = $query->setFirstResult($start)->setMaxResults($limit);
@@ -40,6 +41,7 @@ class TrickRepository extends ServiceEntityRepository
         $query = $this
                ->createQueryBuilder('t')
                ->select('count(t.id)')
+               ->andWhere('t.deleted_at IS NULL')
                ->getQuery()
                ->getSingleScalarResult();
         return $query;
@@ -48,7 +50,7 @@ class TrickRepository extends ServiceEntityRepository
     public function findOneBySomeField($value): ?Trick
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.slug = :val')
+            ->andWhere('t.slug = :val and t.deleted_at IS NULL')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
@@ -58,7 +60,7 @@ class TrickRepository extends ServiceEntityRepository
     public function findOneById($value): ?Trick
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.id = :val')
+            ->andWhere('t.id = :val and t.deleted_at IS NULL')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

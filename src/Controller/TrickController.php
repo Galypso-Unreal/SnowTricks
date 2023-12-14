@@ -134,38 +134,112 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
-    public function getTricksPaged(EntityManagerInterface $entityManager, Request $request){
+    public function getTricksPaged(EntityManagerInterface $entityManager, Request $request, AuthorizedService $authorizedService){
         $repository = $entityManager->getRepository(Trick::class);
         $page=$request->attributes->get('page');
         $tricks = $repository->findByLimitTrick($page);
         $response = $tricks->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
-        $exit = array();
+        $exitall = array();
 
         foreach ($response as $key) {
-            $exit[] = '
-            <div class="trick-teaser col-md-2 col-lg-2">
-                <a class="name h3_style" href="'. $this->generateUrl('trick',array('slug'=>$key['slug'])) .'">
-                    <h2>'. $key['name'] .'</h2>
+            $exit = "
+            <div class='trick-teaser col-md-2 col-lg-2'>
+                <a class='name h3_style' href='". $this->generateUrl('trick',array('slug'=>$key['slug'])) ."'>
+                    <h2>". $key['name'] ."</h2>
                 </a>
-                <div>'.
-                    $key['description'] .'
-                </div>
-            </div>
-            ';
+                <div>".
+                    $key['description'] ."
+                </div>";
+            if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
+                $exit .=    
+                "<div class='modify-panel'>
+                    <a href='". $this->generateUrl('modifyTrick',array('slug'=>$key['slug'])) ."'>
+                        <img class='icon' src='/assets/img/svg/crayon.svg'>
+                    </a>
+
+                    <span class='open-modal' data-url='". $this->generateUrl('deleteTrick',array('slug'=>$key['slug']))  ."'>
+                        <img class='icon' src='/assets/img/svg/trash.svg'>
+                    </span>
+                    
+                </div>";
+            }
+            $exit.= "</div>";
+            $exitall[] = $exit;
         }
-        return new JsonResponse($exit);
+
+        return new JsonResponse($exitall);
     }
 
-    #[Route('/trick/modify/{id}', name: 'modifyTrick')]
-    public function modifyTrick(EntityManagerInterface $entityManager, Request $request, int $id){
-        $id = $request->attributes->get('id');
-        return $id;
+    #[Route('/trick/modify/{slug}', name: 'modifyTrick')]
+    public function modifyTrick(EntityManagerInterface $entityManager, Request $request, string $slug, PictureService $pictureService){
+
+        $slug = $request->attributes->get('slug');
+        
+        $repository = $entityManager->getRepository(Trick::class);
+        $trick = $repository->findOneBySomeField($slug);
+
+        $trickId = $trick->getId();
+
+        $repositoryImage = $entityManager->getRepository((Picture::class));
+        $images = $repositoryImage->findByTrickId($trickId);
+
+        $repositoryVideo = $entityManager->getRepository((Video::class));
+        $videos = $repositoryVideo->findByTrickId($trickId);
+
+            $form = $this->createForm(TrickType::class, $trick);
+            $form->handleRequest($request);
+            
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                
+                /* Get all input pictures */
+                $images = $form->get('images')->getData();
+                
+                foreach ($images as $image) {
+                    /* Destination folder */
+                    $folder = 'tricks';
+
+                    $fichier = $pictureService->add($image,$folder,300,300);
+
+                    $picture = new Picture();
+                    $picture->setTrick($trick);
+                    $picture->setName($fichier);
+                    $trick->addPicture($picture);
+                    
+
+                }
+                $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
+                $entityManager->persist($trick);
+                $entityManager->flush();
+                $this->addFlash('success','Trick has been correctly modified');
+                return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
+            }
+
+        return $this->render(
+            'trick/modify.html.twig',
+            array(
+                "trick"=>$trick,
+                "images"=>$images,
+                "videos"=>$videos,
+            )
+        );
     }
 
-    #[Route('/trick/delete/{id}', name: 'deleteTrick')]
-    public function deleteTrick(EntityManagerInterface $entityManager, Request $request, int $id){
-        $id = $request->attributes->get('id');
-        return $id;
+    #[Route('/trick/delete/{slug}', name: 'deleteTrick')]
+    public function deleteTrick(EntityManagerInterface $entityManager, Request $request, string $slug){
+        $slug = $request->attributes->get('slug');
+        
+        $repository = $entityManager->getRepository(Trick::class);
+        $trick = $repository->findOneBySomeField($slug);
+
+        $utc_timezone = new \DateTimeZone("Europe/Paris");
+        $date = new \DateTime("now",$utc_timezone);
+
+        $trick->setDeletedAt($date);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('index');
     }
 }
