@@ -23,7 +23,7 @@ class PictureService{
         /* Get informations about the picture */
 
         $picture_infos = getimagesize($picture);
-
+        
         if($picture_infos === false){
             throw new Exception('Incorrect image format');
         }

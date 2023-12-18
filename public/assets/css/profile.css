@@ -1,4 +1,60 @@
-.profile .picture a,
-.profile .trick a{
+.profile .picture .btn,
+.profile .trick .btn{
     width: 25rem;
+}
+
+.profile .picture form{
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+    padding: 4rem;
+}
+
+.profile .btn-row{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.profile .picture-profile{
+    text-align: center;
+}
+
+.profile .picture-profile img,
+.profile .picture-profile svg{
+    width: 14rem;
+    height: 14rem;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.profile .picture form .input{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 5rem;
+}
+
+.profile .menu{
+    gap: 5rem;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 992px) {
+    .profile .menu{
+        flex-direction: row;
+    }
+    .profile .btn-row{
+        flex-direction: row;
+    }
 }

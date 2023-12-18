@@ -1,5 +1,17 @@
 $(document).ready(()=>{
 
+    /* Open Modal change picture */
+
+    $('.profile .picture .btn').on('click',function(){
+        $(this).parent().find('form').css('display','flex')
+    })
+
+    $('.profile .picture .cancel').on('click',function(){
+        $('.profile .picture form').css('display','none') 
+    })
+
+    /* End open Modal change picture */
+
     /* Modal system */
 
     $('.close-modal').on('click',function(){

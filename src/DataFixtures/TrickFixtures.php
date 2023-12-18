@@ -6,9 +6,11 @@ use App\Entity\Comment;
 use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Entity\TrickGroup;
+use App\Entity\User;
 use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 ;
@@ -16,15 +18,27 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class TrickFixtures extends Fixture
 {
     protected $slugger;
+    protected $userPasswordHasher;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->slugger = $slugger;
+        $this->userPasswordHasher = $userPasswordHasher;
         
     }
 
     public function load(ObjectManager $manager): void
     {
+        $user = new User();
+        $user->setUsername('John');
+        $user->setIsVerified('1');
+        $user->setEmail("john@test.com");
+        $user->setRoles(array('ROLE_USER'));
+        $user->setPicture('default.webp');
+        $user->setPassword($this->userPasswordHasher->hashPassword(
+            $user,"john"
+        ));
+
         $trickGroup = new TrickGroup();
         $trickGroup->setName('testinit');
         for ($count = 0; $count < 50; $count++) {
@@ -81,6 +95,7 @@ class TrickFixtures extends Fixture
                 $comment->setContent('Je suis le commentaire numéro : ' . $count2);
                 $comment->setIsValid(1);
                 $comment->setTrick($trick);
+                $comment->setUser($user);
                 $manager->persist($comment);
             }
             

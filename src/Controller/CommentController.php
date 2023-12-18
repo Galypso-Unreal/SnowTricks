@@ -32,12 +32,12 @@ class CommentController extends AbstractController
             $exit[] = '
             <div class="comment-teaser col-md-12 col-lg-12">
                 <div class="left">
-                    <img src="'. $assetPackage->getUrl('assets/img/default.jpg'). '">
+                    <img src="'. $assetPackage->getUrl('assets/img/users/') . $key['picture'] .'">
                 </div>
 
                 <div class="right">
                     <div class="user-name">
-                        USERNAME
+                        '. $key['username'] .'
                     </div>
                     <div class="created-at">
                         '. $datetime . '
@@ -50,28 +50,26 @@ class CommentController extends AbstractController
         }
         return new JsonResponse($exit);
     }
-    #[Route('/comment/add/{trick_id}', name: 'createComment')]
-    public function createComment(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository){
+    // #[Route('/comment/add/{trick_id}', name: 'createComment')]
+    // public function createComment(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository){
 
-        $comment = new Comment();
+    //     $comment = new Comment();
 
-        $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
+    //     $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
 
-        dd($trick);
-
-        $form = $this->createForm(CommentFormType::class, $comment);
-        $form->handleRequest($request);
+    //     $form = $this->createForm(CommentFormType::class, $comment);
+    //     $form->handleRequest($request);
         
-        
-        if ($form->isSubmitted() && $form->isValid()) {
+    //     if ($form->isSubmitted() && $form->isValid()) {
             
-            $comment->setContent($form->get('content')->getData());
-            $entityManager->persist($comment);
-            $entityManager->flush();
-            $this->addFlash('success','the new comment has been correctly added');
-            return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
-        }
+    //         $comment->setContent($form->get('content')->getData());
+
+    //         $entityManager->persist($comment);
+    //         $entityManager->flush();
+    //         $this->addFlash('success','the new comment has been correctly added');
+    //         return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
+    //     }
 
         
-    }
+    // }
 }

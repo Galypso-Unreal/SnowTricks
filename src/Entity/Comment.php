@@ -31,6 +31,10 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments',cascade:['persist'])]
     private ?Trick $trick = null;
 
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $utc_timezone = new \DateTimeZone("Europe/Paris");
@@ -101,6 +105,18 @@ class Comment
     public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
