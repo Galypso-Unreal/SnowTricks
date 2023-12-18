@@ -155,5 +155,6 @@ class SecurityController extends AbstractController
         $this->addFlash('danger','Invalid Token');
         return $this->redirectToRoute('app_login');
     }
+    
 
 }

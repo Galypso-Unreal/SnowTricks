@@ -23,7 +23,7 @@ class PictureService{
         /* Get informations about the picture */
 
         $picture_infos = getimagesize($picture);
-
+        
         if($picture_infos === false){
             throw new Exception('Incorrect image format');
         }
@@ -53,13 +53,14 @@ class PictureService{
 
         /* Checking orientation picture */
 
+
         switch ($imageWidth <=> $imageHeight){
             case -1: /* vertical side */
                 $squareSize = $imageWidth;
                 $src_x = 0;
                 $src_y = ($imageHeight - $squareSize) / 2;
                 break;
-            case 1: /* square side */
+            case 0: /* square side */
                 $squareSize = $imageWidth;
                 $src_x = 0;
                 $src_y = 0;
@@ -73,6 +74,8 @@ class PictureService{
 
         /* Create new picture */
         $resized_picture = imagecreatetruecolor($width,$height);
+
+        
 
         imagecopyresampled($resized_picture,$picture_source,0,0,$src_x,$src_y,$width,$height,$squareSize,$squareSize);
 

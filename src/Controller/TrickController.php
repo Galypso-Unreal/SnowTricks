@@ -30,7 +30,7 @@ class TrickController extends AbstractController
         $this->slugger = $slugger;
     }
 
-    #[Route('/trick/new', name: 'trickform')]
+    #[Route('/trick/new', name: 'createTrick')]
     public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, AuthorizedService $authorizedService)
     {
         if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
@@ -105,6 +105,7 @@ class TrickController extends AbstractController
         $all_comments_count = $repositoryComment->getAllCommentCount($trickId) / 10;
         $comments = $repositoryComment->findByLimitComment($page,$trickId)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
+        //dd($comments);
         
 
         // $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
@@ -122,6 +123,7 @@ class TrickController extends AbstractController
             }
             
             $comment = new Comment();
+            // $comment->setUser($this->getUser());
             $comment->setContent($form->get('content')->getData());
             $comment->setTrick($trick);
             $entityManager->persist($comment);

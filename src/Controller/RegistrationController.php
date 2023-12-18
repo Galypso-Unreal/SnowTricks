@@ -50,7 +50,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $user->setPicture('default.webp');
             $entityManager->persist($user);
             $entityManager->flush();
 
