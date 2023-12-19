@@ -1,5 +1,7 @@
 $(document).ready(function (){
 
+    /* Start collection videos */
+
    let collection, buttonAdd, span;
    collection = document.querySelector('#videos');
    span = collection.querySelector('#videos span');
@@ -21,8 +23,60 @@ $(document).ready(function (){
    })
 
    function addButton(collection, newButton){
-    let prototype = collection.dataset.prototype;
-    let index = collection.dataset.index;
+        let prototype = collection.dataset.prototype;
+        let index = collection.dataset.index;
+
+        prototype = prototype.replace(/__name__/g, index);
+
+        let content = document.createElement("html");
+        content.innerHTML = prototype;
+        let newForm = content.querySelector("div");
+
+        let buttonRemove = document.createElement("div");
+        buttonRemove.type= "button";
+        buttonRemove.className = "btn btn-danger";
+        buttonRemove.id = 'delete-video-' + index;
+        buttonRemove.innerText = "Remove video";
+
+        newForm.append(buttonRemove);
+
+        collection.dataset.index++;
+
+        let buttonAdd = collection.querySelector('.add-video');
+
+        span.insertBefore(newForm, buttonAdd);
+
+        buttonRemove.addEventListener('click',function(){
+            this.previousElementSibling.parentElement.remove();
+            console.log('remove');
+        })
+    }
+    /* End collection videos */
+
+
+    /* Start collection pictures */
+
+   let collectionPictures, buttonAddPicture, spanPicture;
+   collectionPictures = document.querySelector('#pictures');
+   spanPicture = collectionPictures.querySelector('#pictures span');
+
+   buttonAddPicture = document.createElement('div');
+   buttonAddPicture.className = "add-picture btn btn-dark";
+   buttonAddPicture.innerText = "Add picture";
+
+
+   let newButtonPicture = spanPicture.append(buttonAddPicture);
+
+   collectionPictures.dataset.index = collectionPictures.querySelectorAll("input").length;
+   
+
+   buttonAddPicture.addEventListener('click',function(){
+    addButtonPictures(collectionPictures, newButtonPicture);
+   })
+
+   function addButtonPictures(collectionPictures, newButtonPicture){
+    let prototype = collectionPictures.dataset.prototype;
+    let index = collectionPictures.dataset.index;
 
     prototype = prototype.replace(/__name__/g, index);
 
@@ -33,23 +87,26 @@ $(document).ready(function (){
     let buttonRemove = document.createElement("div");
     buttonRemove.type= "button";
     buttonRemove.className = "btn btn-danger";
-    buttonRemove.id = 'delete-video-' + index;
-    buttonRemove.innerText = "Remove video";
+    buttonRemove.id = 'delete-picture-' + index;
+    buttonRemove.innerText = "Remove picture";
 
     newForm.append(buttonRemove);
 
-    collection.dataset.index++;
+    collectionPictures.dataset.index++;
 
-    let buttonAdd = collection.querySelector('.add-video');
+    let buttonAddPicture = collectionPictures.querySelector('.add-picture');
 
-    span.insertBefore(newForm, buttonAdd);
+    spanPicture.insertBefore(newForm, buttonAddPicture);
 
     buttonRemove.addEventListener('click',function(){
         this.previousElementSibling.parentElement.remove();
         console.log('remove');
     })
+
     
-}
+    
+    }
+    /* End collection videos */
 
 });
 

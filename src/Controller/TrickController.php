@@ -222,6 +222,7 @@ class TrickController extends AbstractController
             'trick/modify.html.twig',
             array(
                 "trick"=>$trick,
+                'form'=>$form,
                 "images"=>$images,
                 "videos"=>$videos,
             )
@@ -243,5 +244,36 @@ class TrickController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('index');
+    }
+
+    #[Route('/trick/delete/image/{id}', name: 'deleteTrickImage', methods:['DELETE'])]
+    public function deleteImage(Picture $image, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService){
+        /**
+         * Get data from request
+         */
+        
+        $data = json_decode($request->getContent(), true);
+
+        if($this->isCsrfTokenValid('delete' . $image->getId(), $data['_token'])){
+            /**
+             * Token is valid, get name of picture
+             */
+            $name = $image->getName();
+
+            if($pictureService->delete($name,'tricks',300,300)){
+                /**
+                 * Delete picture from database
+                 */
+                
+                $entityManager->remove($image);
+                $entityManager->flush();
+                return new JsonResponse(['success' => true], 200);
+            }
+            /**
+             * Delete failed
+             */
+            return new JsonResponse(['error' => 'Failed to delete picture'],400);
+        }
+        return new JsonResponse(['error' => 'Invalid Token'],400);
     }
 }

@@ -110,7 +110,7 @@ class PictureService{
             $original = $path . '/' .$fichier;
 
             if(file_exists($original)){
-                unlink($mini); // original ?
+                unlink($original); // original ?
                 $success = true;
             }
             return $success;
