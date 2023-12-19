@@ -135,7 +135,7 @@ $(document).ready(()=>{
     // scroll homepage
     let current_page = $('#tricks-homepage .loadmore').attr('data-page');
     let hero_background = $('.hero .hero_background');
-    let hero_height = $('.hero').height();
+    let hero_height = $('.hero:not(.inmodifie)').height();
     let hero_body = $('.hero .text_hero')
 
     

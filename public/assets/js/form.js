@@ -1,5 +1,12 @@
 $(document).ready(function (){
 
+    /* Start modify form */
+    $('.input .modify .icon').on('click',function(){
+        $(this).parent().parent().find('.input-form').addClass('modifing')
+    })
+    /* End modify form */
+
+
     /* Start collection videos */
 
    let collection, buttonAdd, span;
@@ -107,6 +114,8 @@ $(document).ready(function (){
     
     }
     /* End collection videos */
+
+
 
 });
 

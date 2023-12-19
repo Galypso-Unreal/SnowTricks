@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="trick-single">
-<div class="container">
         {{ form_start(form, {
                     'attr': {
                         'novalidate': 'novalidate',
@@ -14,11 +14,47 @@
                         }
                     })
                 }}
-<div class="input">
-    <label for="trick_name">Nom de la figure</label>
-    {{ form_widget(form.name) }}
-    {{ form_errors(form.name) }}
+<div class="hero inmodifie">
+    <div class="content">
+        <div class="hero_background"></div>
+        <div class="text_hero column flex position-absolute">
+            <h1 class="title">
+                {{trick.name}}
+            </h1>
+            <div class="input">
+                    <div class="modify">
+                        <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+                    </div>
+                    <div class="input-form">
+                        <label for="trick_name">Nom de la figure</label>
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    
+            </div>
+        </div>
+        {% if images %}
+            <img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
+        {% else %}
+            <img src="{{asset('assets/img/default.jpg')}}" alt="">
+        {% endif %}
+        
+        
+    </div>
+    <div class="container-panel position-absolute">
+        {# <div class="modify-panel ">
+            <a href="{{path('modifyTrick',{slug:trick.slug})}}">
+                <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+            </a>
+
+            <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}}>
+                <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+            </span>
+            
+        </div> #}
+    </div>
 </div>
+<div class="container">
 
 <div class="input">
     <label for="trick_description">Description de la figure</label>
