@@ -276,4 +276,28 @@ class TrickController extends AbstractController
         }
         return new JsonResponse(['error' => 'Invalid Token'],400);
     }
+
+    #[Route('/trick/delete/video/{id}', name: 'deleteTrickVideo')]
+    public function deleteVideo(Video $video, Request $request, EntityManagerInterface $entityManager){
+        /**
+         * Get data from request
+         */
+        
+        $data = json_decode($request->getContent(), true);
+
+        //if($this->isCsrfTokenValid('delete' . $video->getId(), $data['_token'])){
+
+                /**
+                 * Delete video from database
+                 */
+
+                $entityManager->remove($video);
+                $entityManager->flush();
+                return new JsonResponse(['success' => true], 200);
+            /**
+             * Delete failed
+             */
+        //}
+        return new JsonResponse(['error' => 'Invalid Token'],400);
+    }
 }

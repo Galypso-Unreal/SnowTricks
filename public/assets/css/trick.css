@@ -44,16 +44,6 @@
     width: 100%;
 }
 
-.trick-single .image a{
-    width: 2rem;
-    height: 2rem;
-}
-
-
-
-
-
-
 .trick-single .gallery img,.trick-single .gallery iframe{
     width: 100%;
     max-width: calc(100%);
@@ -145,22 +135,46 @@
 
 /* When on edit page */
 
-.trick-single .image a > img{
+.trick-single .image a > img,
+.trick-single .video a > img{
     width: 100% !important;
     height: auto !important;
     max-width: none !important;
 }
 
-.image > img{
+.image > img,
+.video > iframe{
     width: 100% !important;
     max-width: none !important;
 }
 
-.image .delete{
+.image .delete, 
+.video .delete{
     position: absolute;
     right: 2rem;
     top: 2rem;
     z-index: 1000;
+    width: 4rem;
+}
+
+.video .modify{
+    position: absolute;
+    right: 8rem;
+    top: 2rem;
+    z-index: 1000;
+    width: 4rem;
+    
+}
+
+.video .modify img{
+    max-width: none;
+    object-fit: unset;
+    width: 4rem !important;
+    height: 4rem !important;
+}
+
+.gallery .video{
+    position: relative;
 }
 
 @media screen and (min-width: 992px) {
@@ -189,6 +203,13 @@
 .input-form{
     display: none;
 }
+
+.trick-single .input-form{
+    color: black;
+    padding: 2rem;
+    gap: 2rem;
+}
+
 .modifing{
     position: fixed;
     top: 50%;
@@ -202,4 +223,23 @@
     width: 50vw;
     background-color: white;
     z-index: 10000000;
+}
+
+#trick_videos fieldset{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    width: 50vw;
+    height: 50vh;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    z-index: 10000;
+}
+
+#trick_videos fieldset .close{
+    align-self: center;
 }

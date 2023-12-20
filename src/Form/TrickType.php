@@ -45,7 +45,7 @@ class TrickType extends AbstractType
                 'by_reference' => false
 
             ])
-            ->add('Sauvegarder',SubmitType::class,[
+            ->add('save',SubmitType::class,[
                 'attr'=>[
                     'clas'=> 'btn btn-submit'
                 ]

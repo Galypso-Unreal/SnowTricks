@@ -22,13 +22,16 @@
                 {{trick.name}}
             </h1>
             <div class="input">
-                    <div class="modify">
-                        <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+                    <div class="modify text-center">
+                        <img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}">
                     </div>
                     <div class="input-form">
                         <label for="trick_name">Nom de la figure</label>
                         {{ form_widget(form.name) }}
                         {{ form_errors(form.name) }}
+                        <div class="close-form btn btn-dark" data-close>
+                            Close
+                        </div>
                     </div>
                     
             </div>
@@ -56,6 +59,37 @@
 </div>
 <div class="container">
 
+<div class="gallery">
+        {% for image in images %}
+            <span class="image">
+                <img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
+                <a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
+            </span>
+        {% endfor %}
+
+
+
+        {% for video in videos %}
+            <span class="video">
+                {{video.embed|raw}}
+                <span class="modify" data-index="{{loop.index - 1}}" data-modify-video><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></span>
+                <a href="{{path('deleteTrickVideo', {id: video.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete-video data-token="{{csrf_token('delete' ~ video.id )}}"></a>
+            </span>
+        {% endfor %}
+
+</div>
+
+<div class="input">
+    <label for="images">Trick images : </label>
+    {{ form_widget(form.images) }}
+    {{ form_errors(form.images) }}
+</div>
+
+<div id="videos" class="py-3" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
+    {{form_row(form.videos)}}
+    <span></span>
+</div>
+
 <div class="input">
     <label for="trick_description">Description de la figure</label>
     {{ form_widget(form.description) }}
@@ -68,40 +102,17 @@
     {{ form_errors(form.trickGroup) }}
 </div>
 
-
-<div class="gallery">
-        {% for image in images %}
-            <span class="image">
-                <img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
-                <a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
-            </span>
-        {% endfor %}
-
-
-
-        {% for video in videos %}
-                {{video.embed|raw}}
-        {% endfor %}
-
+<div class="input py-5 text-end">
+    {{ form_widget(form.save) }}
+    <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}} >
+        <span class="btn btn-danger">Delete</span>
+    </span>
 </div>
-
-<div class="input">
-    <label for="images">Trick images : </label>
-    {{ form_widget(form.images) }}
-    {{ form_errors(form.images) }}
-</div>
-
-
-<div id="videos" class="py-3" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
-    {{form_row(form.videos)}}
-    <span></span>
-</div>
-
 
 {{ form_end(form) }}
 </div>
 </div>
-
+{% include 'component/modal.html.twig'%}
 {% endblock %}
 
 {% block javascripts %}
