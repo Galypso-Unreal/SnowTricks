@@ -70,9 +70,9 @@
 
 
         {% for video in videos %}
-            <span class="video">
+            <span class="video" data-index="{{loop.index - 1}}">
                 {{video.embed|raw}}
-                <span class="modify" data-index="{{loop.index - 1}}" data-modify-video><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></span>
+                <span class="modify" data-modify-video><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></span>
                 <a href="{{path('deleteTrickVideo', {id: video.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete-video data-token="{{csrf_token('delete' ~ video.id )}}"></a>
             </span>
         {% endfor %}

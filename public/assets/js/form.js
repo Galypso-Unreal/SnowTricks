@@ -55,10 +55,9 @@ $(document).ready(function (){
             link.addEventListener("click", function(e){
 
                 e.preventDefault();
-                console.log(this.parentElement.parentElement)
+
                 if(confirm("Do you want to delete this video?")){
 
-                    
                     fetch(this.parentElement.getAttribute("href"), {
                         method: "DELETE",
                         headers: {
@@ -69,7 +68,9 @@ $(document).ready(function (){
                     }).then(response => response.json())
                     .then(data => {
                         if(data.success){
-                            
+                            let index = this.parentElement.parentElement.dataset.index
+                            let elementDelete = $('#trick_videos fieldset[data-index='+ index +']');
+                            elementDelete.remove();
                             this.parentElement.parentElement.remove();
                         }else{
                             alert(data.error);
@@ -87,7 +88,7 @@ $(document).ready(function (){
     })
     
     $('[data-modify-video]').on('click',function(){
-        let element = $('#trick_videos fieldset[data-index='+ $(this).data('index')+']');
+        let element = $('#trick_videos fieldset[data-index='+ $(this).parent().data('index')+']');
         element.css('display','flex');
         element.find('.close').on('click',function(){
             element.css('display','none');
