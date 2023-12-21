@@ -4,6 +4,7 @@
     transform: translate(-50%, -50%);
 }
 
+
 .container-panel{
     top: 2rem;
     right: 2rem;
@@ -38,9 +39,10 @@
     margin: 5rem auto;
 }
 
-
-
-
+.trick-single .image{
+    position: relative;
+    width: 100%;
+}
 
 .trick-single .gallery img,.trick-single .gallery iframe{
     width: 100%;
@@ -129,4 +131,115 @@
     .trick-single .gallery{
         display: flex;
     }
+}
+
+/* When on edit page */
+
+.trick-single .image a > img,
+.trick-single .video a > img{
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
+}
+
+.image > img,
+.video > iframe{
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.image .delete, 
+.video .delete{
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    z-index: 1000;
+    width: 4rem;
+}
+
+.video .modify{
+    position: absolute;
+    right: 8rem;
+    top: 2rem;
+    z-index: 1000;
+    width: 4rem;
+    
+}
+
+.video .modify img{
+    max-width: none;
+    object-fit: unset;
+    width: 4rem !important;
+    height: 4rem !important;
+}
+
+.gallery .video{
+    position: relative;
+}
+
+@media screen and (min-width: 992px) {
+    .trick-single .gallery .image{
+        max-width: calc(33% - 1.7rem);
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .trick-single .gallery .image{
+        max-width: calc(50% - 1.5rem);
+    }
+}
+
+.trick-single form{
+    width: 100%;
+}
+
+.modify .icon{
+    width: 2rem;
+    height: 2rem;
+}
+.modify .icon img{
+    width: 100%;
+}
+
+.input-form{
+    display: none;
+}
+
+.trick-single .input-form{
+    color: black;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.modifing{
+    position: fixed;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 50vh;
+    width: 50vw;
+    background-color: white;
+    z-index: 10000000;
+}
+
+#trick_videos fieldset{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    width: 50vw;
+    height: 50vh;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    z-index: 10000;
+}
+
+#trick_videos fieldset .close{
+    align-self: center;
 }

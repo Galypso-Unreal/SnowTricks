@@ -1,98 +1,122 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% block title %}{{trick.name}}{% endblock %}
+{% block title %}
+    Ajouter une nouvelle figure
+{% endblock %}
 
 {% block body %}
 
 <div class="trick-single">
-    <div class="hero">
-        <div class="content">
-            <div class="hero_background"></div>
-            <div class="text_hero column flex position-absolute">
-                <h1 class="title">
-                    {{trick.name}}
-                </h1>
+        {{ form_start(form, {
+                    'attr': {
+                        'novalidate': 'novalidate',
+                        'class': 'col-lg-5'
+                        }
+                    })
+                }}
+<div class="hero inmodifie">
+    <div class="content">
+        <div class="hero_background"></div>
+        <div class="text_hero column flex position-absolute">
+            <h1 class="title">
+                {{trick.name}}
+            </h1>
+            <div class="input">
+                    <div class="modify text-center">
+                        <img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}">
+                    </div>
+                    <div class="input-form">
+                        <label for="trick_name">Nom de la figure</label>
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                        <div class="close-form btn btn-dark" data-close>
+                            Close
+                        </div>
+                    </div>
+                    
             </div>
-            {% if images %}
-                <img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
-            {% else %}
-                <img src="{{asset('assets/img/default.jpg')}}" alt="">
-            {% endif %}
-            
-            
         </div>
-        {# {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
-        <div class="container-panel position-absolute">
-            <div class="modify-panel ">
-                <a href="{{path('modifyTrick',{slug:trick.slug})}}">
-                    <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
-                </a>
-
-                <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}}>
-                    <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
-                </span>
-                
-            </div>
-        </div>
+        {% if images %}
+            <img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
+        {% else %}
+            <img src="{{asset('assets/img/default.jpg')}}" alt="">
+        {% endif %}
         
-    {% endif %} #}
+        
     </div>
+    <div class="container-panel position-absolute">
+        {# <div class="modify-panel ">
+            <a href="{{path('modifyTrick',{slug:trick.slug})}}">
+                <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+            </a>
 
-    <div class="container">
+            <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}}>
+                <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+            </span>
+            
+        </div> #}
+    </div>
+</div>
+<div class="container">
 
-        <div class="see_media btn-primary btn">
-            See medias
-        </div>
-
-        <div class="no_see_media btn-primary btn">
-            Hide medias
-        </div>
-
-        <div class="gallery">
-            {% for image in images %}
+<div class="gallery">
+        {% for image in images %}
+            <span class="image">
                 <img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
-            {% endfor %}
+                <a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
+            </span>
+        {% endfor %}
 
-            
 
-            {% for video in videos %}
-                    {{video.embed|raw}}
-            {% endfor %}
 
-        </div>
+        {% for video in videos %}
+            <span class="video" data-index="{{loop.index - 1}}">
+                {{video.embed|raw}}
+                <span class="modify" data-modify-video><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></span>
+                <a href="{{path('deleteTrickVideo', {id: video.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete-video data-token="{{csrf_token('delete' ~ video.id )}}"></a>
+            </span>
+        {% endfor %}
 
-        <div class="description">
-            {{trick.description}}
-        </div>
-
-        <div class="meta">
-
-            {% if trick.trickGroup %}
-            <div class="group-trick">
-                group trick : {{trick.trickGroup.name}}
-            </div>
-            {% endif %}
-
-            <div class="created-at">
-                create at : {{trick.createdAt|date('d-M-Y')}}
-            </div>
-            
-            {% if trick.createdAt != trick.modifiedAt %}
-                <div class="modified-at">
-                    modified at : {{trick.modifiedAt|date('d-M-Y')}}
-                </div>
-            {% endif %}
-            
-        </div>
-
-    </div>
-    {% include 'component/modal.html.twig'%}
 </div>
 
+<div class="input">
+    <label for="images">Trick images : </label>
+    {{ form_widget(form.images) }}
+    {{ form_errors(form.images) }}
+</div>
 
+<div id="videos" class="py-3" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
+    {{form_row(form.videos)}}
+    <span></span>
+</div>
 
+<div class="input">
+    <label for="trick_description">Description de la figure</label>
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
+</div>
 
-        
+<div class="input">
+    <label for="trick_group">Trick group : </label>
+    {{ form_widget(form.trickGroup) }}
+    {{ form_errors(form.trickGroup) }}
+</div>
 
+<div class="input py-5 text-end">
+    {{ form_widget(form.save) }}
+    <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}} >
+        <span class="btn btn-danger">Delete</span>
+    </span>
+</div>
 
+{{ form_end(form) }}
+</div>
+</div>
+{% include 'component/modal.html.twig'%}
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('assets/js/form.js')}}"></script>
+    <script src="{{asset('assets/js/image.js')}}" defer></script>
+{% endblock %}
+

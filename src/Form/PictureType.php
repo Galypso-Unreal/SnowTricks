@@ -14,7 +14,10 @@ class PictureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('picture', FileType::class);
+        $builder->add('name', FileType::class,array(
+            'label'=>'Picture',
+            'data_class' => null
+        ));
     }
      
 
@@ -22,6 +25,9 @@ class PictureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Picture::class,
+            'attr'=> array(
+                "class"=>'py-3'
+            )
         ]);
     }
 }
