@@ -11,9 +11,7 @@ use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
-
-;
+use Symfony\Component\String\Slugger\SluggerInterface;;
 
 class TrickFixtures extends Fixture
 {
@@ -24,7 +22,6 @@ class TrickFixtures extends Fixture
     {
         $this->slugger = $slugger;
         $this->userPasswordHasher = $userPasswordHasher;
-        
     }
 
     public function load(ObjectManager $manager): void
@@ -36,7 +33,8 @@ class TrickFixtures extends Fixture
         $user->setRoles(array('ROLE_USER'));
         $user->setPicture('default.webp');
         $user->setPassword($this->userPasswordHasher->hashPassword(
-            $user,"john"
+            $user,
+            "john"
         ));
 
         $trickGroup = new TrickGroup();
@@ -52,19 +50,17 @@ class TrickFixtures extends Fixture
             $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
 
             $utc_timezone = new \DateTimeZone("Europe/Paris");
-            $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count.'day')),$utc_timezone);
+            $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count . 'day')), $utc_timezone);
 
             $trick->setCreatedAt($date);
 
-            if($count < 5){
+            if ($count < 5) {
                 $image = new Picture();
                 $image->setName('firstpicture.jpg');
                 $image->setTrick($trick);
-                
-                
             }
 
-            if($count < 10){
+            if ($count < 10) {
 
                 $video = new Video();
                 $video->setEmbed('<iframe width="1280" height="720" src="https://www.youtube.com/embed/mBB7CznvSPQ" title="Comment débuter le freestyle en snowboard (Les Basiques - snowsurf.com)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>');
@@ -84,10 +80,9 @@ class TrickFixtures extends Fixture
                 $video->setTrick($trick);
 
                 $manager->persist($video);
-                
             }
 
-            
+
 
             for ($count2 = 0; $count2 < 30; $count2++) {
 
@@ -98,11 +93,10 @@ class TrickFixtures extends Fixture
                 $comment->setUser($user);
                 $manager->persist($comment);
             }
-            
+
             $trick->setTrickGroup($trickGroup);
             $manager->persist($trick);
             $manager->persist($image);
-            
         }
         $manager->flush();
     }

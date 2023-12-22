@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $sendMailService, JWTService $jwtService, AuthorizedService $authorizedService): Response
     {
-        if($authorizedService->isUserConnected() === true){
+        if ($authorizedService->isUserConnected() === true) {
             return $this->redirectToRoute('index');
         }
 
@@ -57,8 +57,8 @@ class RegistrationController extends AbstractController
             /* Send mail to register user */
             /* Create Header for JWT doc : https://jwt.io/ */
             $header = [
-                'alg'=>'HS256',
-                'typ'=>'JWT'
+                'alg' => 'HS256',
+                'typ' => 'JWT'
             ];
 
             /* Create Payload */
@@ -67,7 +67,7 @@ class RegistrationController extends AbstractController
             ];
 
             /* Generate Token */
-            $token = $jwtService->generate($header,$payload,$this->getParameter('app.jwtsecret'));
+            $token = $jwtService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
             /* Generate JWT user token */
 
@@ -78,9 +78,9 @@ class RegistrationController extends AbstractController
                 $user->getEmail(),
                 'SnowTricks Account Confirmation',
                 'register',
-                compact('user','token')
+                compact('user', 'token')
             );
-            $this->addFlash('success','Your account has been created ! Check your e-mail address to confirm your account');
+            $this->addFlash('success', 'Your account has been created ! Check your e-mail address to confirm your account');
             return $this->redirectToRoute('index');
         }
 
@@ -93,7 +93,7 @@ class RegistrationController extends AbstractController
     public function verifyUserEmail(JWTService $jwtService, string $token, UserRepository $userRepository, EntityManagerInterface $entityManagerInterface): Response
     {
         /* Check if token is not modified, expired and invalid  */
-        if($jwtService->isValid($token) && !$jwtService->isExpired($token) && $jwtService->check($token, $this->getParameter('app.jwtsecret'))){
+        if ($jwtService->isValid($token) && !$jwtService->isExpired($token) && $jwtService->check($token, $this->getParameter('app.jwtsecret'))) {
             /* Get payload */
             $payload = $jwtService->getPayload($token);
 
@@ -101,7 +101,7 @@ class RegistrationController extends AbstractController
             $user = $userRepository->find($payload['user_id']);
 
             /* Check if user exist and doesn't confirm account */
-            if($user && !$user->isVerified()){
+            if ($user && !$user->isVerified()) {
                 $user->setIsVerified(true);
                 $user->setRoles(['ROLE_USER']);
                 $entityManagerInterface->flush($user);
@@ -119,49 +119,49 @@ class RegistrationController extends AbstractController
     {
         $user = $this->getUser();
 
-        if(!$user){
-            $this->addFlash('danger','You need to be connected!');
+        if (!$user) {
+            $this->addFlash('danger', 'You need to be connected!');
             return $this->redirectToRoute('app_login');
         }
 
-        if($user->isVerified()){
-            $this->addFlash('warning','This user is already activated');
+        if ($user->isVerified()) {
+            $this->addFlash('warning', 'This user is already activated');
             return $this->redirectToRoute('index');
         }
 
         /* Send mail to register user */
         /* Create Header for JWT doc : https://jwt.io/ */
-            $header = [
-                'alg'=>'HS256',
-                'typ'=>'JWT'
-            ];
+        $header = [
+            'alg' => 'HS256',
+            'typ' => 'JWT'
+        ];
 
-            /* Create Payload */
-            $payload = [
-                'user_id' => $user->getId(),
-            ];
+        /* Create Payload */
+        $payload = [
+            'user_id' => $user->getId(),
+        ];
 
-            /* Generate Token */
-            $token = $jwtService->generate($header,$payload,$this->getParameter('app.jwtsecret'));
+        /* Generate Token */
+        $token = $jwtService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            /* Generate JWT user token */
+        /* Generate JWT user token */
 
 
 
-            $sendMailService->send(
-                'no-reply@snowtricks.com',
-                $user->getEmail(),
-                'SnowTricks Account Confirmation',
-                'register',
-                compact('user','token')
-            );
-        $this->addFlash('success','Email has been send');
+        $sendMailService->send(
+            'no-reply@snowtricks.com',
+            $user->getEmail(),
+            'SnowTricks Account Confirmation',
+            'register',
+            compact('user', 'token')
+        );
+        $this->addFlash('success', 'Email has been send');
         return $this->redirectToRoute('index');
     }
     #[Route('/forget-password', name: 'app_forget_password')]
-    public function forgetPassword(): Response{
+    public function forgetPassword(): Response
+    {
 
         return $this->render('security/reset_password_request.html.twig');
     }
-    
 }

@@ -19,12 +19,12 @@
 			</div>
 
 			<div class="menu d-flex align-items-center justify-content-evenly">
-{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
-				<div class="trick">
-					<a href="{{path('createTrick')}}" class="btn btn-primary">
-						Create a new trick
-					</a>
-				</div>
+				{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+					<div class="trick">
+						<a href="{{path('createTrick')}}" class="btn btn-primary">
+							Create a new trick
+						</a>
+					</div>
 				{% endif %}
 
 				<div class="picture">

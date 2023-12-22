@@ -1,9 +1,8 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
-
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
 # app_create_trick:
 #   path: trick/new
 #   controller: App\Controller\TrickController::new

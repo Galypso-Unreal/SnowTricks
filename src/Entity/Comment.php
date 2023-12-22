@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 
-#[ORM\Table(name:"st_comment")]
+#[ORM\Table(name: "st_comment")]
 class Comment
 {
     #[ORM\Id]
@@ -28,7 +28,7 @@ class Comment
     #[ORM\Column]
     private ?\DateTime $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments',cascade:['persist'])]
+    #[ORM\ManyToOne(inversedBy: 'comments', cascade: ['persist'])]
     private ?Trick $trick = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
@@ -38,7 +38,7 @@ class Comment
     public function __construct()
     {
         $utc_timezone = new \DateTimeZone("Europe/Paris");
-        $date = new \DateTime("now",$utc_timezone);
+        $date = new \DateTime("now", $utc_timezone);
 
         $this->setCreatedAt($date);
         $this->setIsValid(1);

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Form;
 
@@ -22,38 +22,40 @@ class TrickType extends AbstractType
         $builder
             ->add('name')
             ->add('description', TextareaType::class)
-            ->add('trickGroup',EntityType::class,[
-                'class'=>TrickGroup::class,
-                'choice_label'=>'name',
-                'label'=>'Choose a group trick : ',
-                
+            ->add('trickGroup', EntityType::class, [
+                'class' => TrickGroup::class,
+                'choice_label' => 'name',
+                'label' => 'Choose a group trick : ',
+
             ])
-            
+
             // ->add('videos', TextType::class)
-            ->add('images',FileType::class,[
-                'label'=>'Pictures for the trick',
-                'multiple'=> true,
-                'mapped'=>false,
-                'required'=>false,
+            ->add('images', FileType::class, [
+                'label' => 'Pictures for the trick',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
             ])
-            ->add('videos',CollectionType::class,[
-                'entry_type'=>VideoFormType::class,
-                'label'=>'videos',
-                'entry_options'=>['label' =>false],
+            ->add('videos', CollectionType::class, [
+                'entry_type' => VideoFormType::class,
+                'label' => 'videos',
+                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false
 
             ])
-            ->add('save',SubmitType::class,[
-                'attr'=>[
-                    'clas'=> 'btn btn-submit'
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'attr' => [
+                        'clas' => 'btn btn-submit'
+                    ]
                 ]
-            ]
             );
-            
     }
-    
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

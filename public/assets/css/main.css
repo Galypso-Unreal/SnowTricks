@@ -9,7 +9,7 @@
 
 
 /* hero css */
-.hero_background{
+.hero_background {
     position: absolute;
     content: "";
     top: 0;
@@ -21,7 +21,7 @@
     z-index: 1;
 }
 
-.hero .content > img{
+.hero .content>img {
     max-width: 100%;
     width: 100%;
     max-height: 100vh;
@@ -29,27 +29,30 @@
     object-fit: cover;
 }
 
-.hero .text_hero{
+.hero .text_hero {
     z-index: 2;
     top: 50%;
     left: 50%;
     color: white;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
-.hero .text_hero .title{
+.hero .text_hero .title {
     font-size: 6rem;
     text-align: center;
 }
-.hero{
+
+.hero {
     position: relative;
 }
 
 @media screen and (min-width: 992px) {
-    .hero .text_hero .title{
+    .hero .text_hero .title {
         font-size: 9rem;
     }
-    header .close-menu, header .open-menu{
+
+    header .close-menu,
+    header .open-menu {
         display: none;
     }
 }
@@ -58,14 +61,14 @@
     height: 200vh;
 } */
 
-.arrow-go-down{
+.arrow-go-down {
     position: fixed;
     right: 2rem;
     bottom: 2rem;
     z-index: 100;
 }
 
-.arrow-go-up{
+.arrow-go-up {
     position: fixed;
     right: 2rem;
     bottom: 2rem;
@@ -73,20 +76,20 @@
     z-index: 100;
 }
 
-.arrow-go-up svg{
+.arrow-go-up svg {
     transform: rotate(180deg);
 }
 
 /* homepage tricks*/
 
-#tricks-homepage .container{
+#tricks-homepage .container {
     padding: 5rem 2rem;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-#tricks-homepage .tricks{
+#tricks-homepage .tricks {
     gap: 5rem;
     margin-bottom: 2rem;
 }

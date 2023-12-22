@@ -21,8 +21,8 @@ class VideoFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Video::class,
-            'attr'=> array(
-                "class"=>'py-3'
+            'attr' => array(
+                "class" => 'py-3'
             )
         ]);
     }

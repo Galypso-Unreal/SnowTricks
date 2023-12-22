@@ -14,8 +14,8 @@ class CommentFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content',TextareaType::class,[
-                'label'=>false
+            ->add('content', TextareaType::class, [
+                'label' => false
             ])
             // ->add('is_valid')
             // ->add('deletedAt')
@@ -23,8 +23,7 @@ class CommentFormType extends AbstractType
             // ->add('trick')
             ->add('save', SubmitType::class, [
                 'label' => 'Leave a comment'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

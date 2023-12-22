@@ -1,9 +1,9 @@
 .profile .picture .btn,
-.profile .trick .btn{
+.profile .trick .btn {
     width: 25rem;
 }
 
-.profile .picture form{
+.profile .picture form {
     position: fixed;
     display: none;
     top: 50%;
@@ -19,25 +19,25 @@
     padding: 4rem;
 }
 
-.profile .btn-row{
+.profile .btn-row {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-.profile .picture-profile{
+.profile .picture-profile {
     text-align: center;
 }
 
 .profile .picture-profile img,
-.profile .picture-profile svg{
+.profile .picture-profile svg {
     width: 14rem;
     height: 14rem;
     object-fit: cover;
     border-radius: 100%;
 }
 
-.profile .picture form .input{
+.profile .picture form .input {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,16 +45,17 @@
     gap: 5rem;
 }
 
-.profile .menu{
+.profile .menu {
     gap: 5rem;
     flex-direction: column;
 }
 
 @media screen and (min-width: 992px) {
-    .profile .menu{
+    .profile .menu {
         flex-direction: row;
     }
-    .profile .btn-row{
+
+    .profile .btn-row {
         flex-direction: row;
     }
 }

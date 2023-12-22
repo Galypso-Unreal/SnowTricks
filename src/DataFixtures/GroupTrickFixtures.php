@@ -4,8 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\TrickGroup;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
-;
+use Doctrine\Persistence\ObjectManager;;
 
 class GroupTrickFixtures extends Fixture
 {
@@ -23,15 +22,15 @@ class GroupTrickFixtures extends Fixture
         $flips = new TrickGroup;
         $flips->setName('Flips');
         $manager->persist($flips);
-        
+
         $off = new TrickGroup;
         $off->setName('Off-axis rotations');
         $manager->persist($off);
-        
+
         $slides = new TrickGroup;
         $slides->setName('Slides');
         $manager->persist($slides);
-        
+
         $one = new TrickGroup;
         $one->setName('One foot tricks');
         $manager->persist($one);

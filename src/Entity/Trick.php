@@ -8,53 +8,51 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\TrickRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[ORM\Table(name:"st_trick")]
+#[ORM\Table(name: "st_trick")]
+#[UniqueEntity('name', message: "Name is arlready exist")]
 class Trick
-{   
+{
     #[ORM\Id()]
-    #[ORM\GeneratedValue(strategy:"AUTO")]
-    #[ORM\Column(type:"integer")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(type:"string",unique:true)]
-    #[Assert\NotBlank(message:"Le nom ne doit pas être vide")]
+    #[ORM\Column(type: "string", unique: true)]
+    #[Assert\NotBlank(message: "The name must not be empty")]
     private string $name;
 
-    #[ORM\Column(type:"string")]
-    #[Assert\NotBlank(message:"La description ne doit pas être vide")]
+    #[ORM\Column(type: "string")]
+    #[Assert\NotBlank(message: "Description must not be empty")]
     private string $description;
-
-
-
-
 
     // #[ORM\Column(type:"string")]
     // private string $videos;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, type: "string", unique: true)]
     private ?string $slug = null;
 
-    #[ORM\Column(type:"datetime")]
+    #[ORM\Column(type: "datetime")]
     private datetime $created_at;
 
-    #[ORM\Column(type:"datetime")]
+    #[ORM\Column(type: "datetime")]
     private datetime $modified_at;
 
-    #[ORM\Column(type:"datetime",nullable:true)]
+    #[ORM\Column(type: "datetime", nullable: true)]
     private datetime $deleted_at;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class,cascade:['persist'])]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class, cascade: ['persist'])]
     private Collection $pictures;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade:['persist'])]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist'])]
     private Collection $videos;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks',cascade:['persist'])]
+    #[ORM\ManyToOne(inversedBy: 'tricks', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?TrickGroup $trick_group = null;
 
@@ -62,9 +60,9 @@ class Trick
 
     public function __construct()
     {
-        
+
         $utc_timezone = new \DateTimeZone("Europe/Paris");
-        $date = new \DateTime("now",$utc_timezone);
+        $date = new \DateTime("now", $utc_timezone);
 
         $this->setCreatedAt($date);
         $this->setModifiedAt($date);
@@ -73,27 +71,33 @@ class Trick
         $this->videos = new ArrayCollection();
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getDescription(){
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    public function setDescription($description){
+    public function setDescription($description)
+    {
         $this->description = $description;
     }
 
@@ -106,27 +110,33 @@ class Trick
     //     $this->videos = $videos;
     // }
 
-    public function getCreatedAt(){
+    public function getCreatedAt()
+    {
         return $this->created_at;
     }
 
-    public function setCreatedAt($created_at){
+    public function setCreatedAt($created_at)
+    {
         $this->created_at = $created_at;
     }
 
-    public function getModifiedAt(){
+    public function getModifiedAt()
+    {
         return $this->modified_at;
     }
 
-    public function setModifiedAt($modified_at){
+    public function setModifiedAt($modified_at)
+    {
         $this->modified_at = $modified_at;
     }
 
-    public function getDeletedAt(){
+    public function getDeletedAt()
+    {
         return $this->deleted_at;
     }
 
-    public function setDeletedAt($deleted_at){
+    public function setDeletedAt($deleted_at)
+    {
         $this->deleted_at = $deleted_at;
     }
 
@@ -243,6 +253,4 @@ class Trick
 
         return $this;
     }
-
-
 }

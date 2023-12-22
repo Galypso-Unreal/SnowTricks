@@ -1,4 +1,4 @@
-.comment-teaser{
+.comment-teaser {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -6,36 +6,40 @@
     width: 100%;
     gap: 2rem;
 }
-.comment-teaser .left{
+
+.comment-teaser .left {
     width: 30%;
     max-width: 30%;
     min-width: calc(30% - 2rem);
     display: flex;
     justify-content: center;
 }
-.comment-teaser .left img{
+
+.comment-teaser .left img {
     width: 8rem;
     height: 8rem;
     object-fit: cover;
     border-radius: 100%;
 }
-.comment-teaser .right{
+
+.comment-teaser .right {
     width: 70%;
     max-width: 70%;
     min-width: calc(70% - 2rem);
     overflow-wrap: break-word;
 }
 
-.comment-teaser .user-name{
+.comment-teaser .user-name {
     font-weight: bold;
 }
-.comment-teaser .created-at{
+
+.comment-teaser .created-at {
     font-weight: 300;
     font-size: 1.4rem;
 }
 
 @media screen and (min-width: 992px) {
-    .comment-teaser .left img{
+    .comment-teaser .left img {
         width: 10rem;
         height: 10rem;
     }

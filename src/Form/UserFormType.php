@@ -14,9 +14,8 @@ class UserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('picture',FileType::class)
-            ->add('save',SubmitType::class)
-        ;
+            ->add('picture', FileType::class)
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
