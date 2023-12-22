@@ -50,26 +50,4 @@ class CommentController extends AbstractController
         }
         return new JsonResponse($exit);
     }
-    // #[Route('/comment/add/{trick_id}', name: 'createComment')]
-    // public function createComment(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository){
-
-    //     $comment = new Comment();
-
-    //     $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
-
-    //     $form = $this->createForm(CommentFormType::class, $comment);
-    //     $form->handleRequest($request);
-        
-    //     if ($form->isSubmitted() && $form->isValid()) {
-            
-    //         $comment->setContent($form->get('content')->getData());
-
-    //         $entityManager->persist($comment);
-    //         $entityManager->flush();
-    //         $this->addFlash('success','the new comment has been correctly added');
-    //         return $this->redirectToRoute('trick',array('slug'=>$trick->getSlug()));
-    //     }
-
-        
-    // }
 }

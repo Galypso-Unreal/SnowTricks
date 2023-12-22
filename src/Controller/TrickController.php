@@ -70,6 +70,7 @@ class TrickController extends AbstractController
                 'form' => $form->createView(),
             ));
         }
+        $this->addFlash('danger','You need to be connected and verified user to add a new tricks');
         return $this->redirectToRoute('app_login');
         
     }
@@ -77,9 +78,17 @@ class TrickController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(EntityManagerInterface $entityManager){
         $repository = $entityManager->getRepository(Trick::class);
+        $repositoryPicture = $entityManager->getRepository(Picture::class);
         $page=1;
         $all_tricks_count = $repository->getAllTricksCount() / 15;
-        $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY); 
+        $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        foreach ($tricks as $id=>$trick) {
+            $image = $repositoryPicture->onePictureByTrickId($trick['id']);
+            if($image){
+                $trick['image'] = $image[0]['name'];
+                $tricks[$id] = $trick;
+            }
+        }
         return $this->render('index.html.twig',array("tricks"=>$tricks, 'number_page'=>$all_tricks_count));
     }
 
@@ -139,20 +148,25 @@ class TrickController extends AbstractController
     public function getTricksPaged(EntityManagerInterface $entityManager, Request $request, AuthorizedService $authorizedService){
         $repository = $entityManager->getRepository(Trick::class);
         $page=$request->attributes->get('page');
+        $repositoryPicture = $entityManager->getRepository(Picture::class);
         $tricks = $repository->findByLimitTrick($page);
         $response = $tricks->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
         $exitall = array();
 
         foreach ($response as $key) {
+            $image = $repositoryPicture->onePictureByTrickId($key['id']);
             $exit = "
-            <div class='trick-teaser col-md-2 col-lg-2'>
-                <a class='name h3_style' href='". $this->generateUrl('trick',array('slug'=>$key['slug'])) ."'>
+            <div class='trick-teaser col-md-2 col-lg-2'>";
+            if($image){
+                $exit .= '<img src="assets/img/tricks/mini/300x300-'. $image[0]["name"].'>';
+            }
+            else{
+                $exit .= '<img src="assets/img/tricks/default.webp">';
+            }
+                $exit .= "<a class='name h3_style' href='". $this->generateUrl('trick',array('slug'=>$key['slug'])) ."'>
                     <h2>". $key['name'] ."</h2>
-                </a>
-                <div>".
-                    $key['description'] ."
-                </div>";
+                </a>";
             if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
                 $exit .=    
                 "<div class='modify-panel'>
@@ -174,8 +188,9 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/modify/{slug}', name: 'modifyTrick')]
-    public function modifyTrick(EntityManagerInterface $entityManager, Request $request, string $slug, PictureService $pictureService){
+    public function modifyTrick(EntityManagerInterface $entityManager, Request $request, string $slug, PictureService $pictureService, AuthorizedService $authorizedService){
 
+        if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
         $slug = $request->attributes->get('slug');
         
         $repository = $entityManager->getRepository(Trick::class);
@@ -227,10 +242,14 @@ class TrickController extends AbstractController
                 "videos"=>$videos,
             )
         );
+        }
+        $this->addFlash('danger','You need to be connected and verified user to modify a trick');
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/trick/delete/{slug}', name: 'deleteTrick')]
-    public function deleteTrick(EntityManagerInterface $entityManager, Request $request, string $slug){
+    public function deleteTrick(EntityManagerInterface $entityManager, Request $request, string $slug, AuthorizedService $authorizedService){
+        if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
         $slug = $request->attributes->get('slug');
         
         $repository = $entityManager->getRepository(Trick::class);
@@ -244,13 +263,18 @@ class TrickController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('index');
+        }
+        $this->addFlash('danger','You need to be connected and verified user to remove a trick');
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/trick/delete/image/{id}', name: 'deleteTrickImage', methods:['DELETE'])]
-    public function deleteImage(Picture $image, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService){
+    public function deleteImage(Picture $image, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService,AuthorizedService $authorizedService){
         /**
          * Get data from request
          */
+
+         if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
         
         $data = json_decode($request->getContent(), true);
 
@@ -275,14 +299,17 @@ class TrickController extends AbstractController
             return new JsonResponse(['error' => 'Failed to delete picture'],400);
         }
         return new JsonResponse(['error' => 'Invalid Token'],400);
+        }
+        $this->addFlash('danger','You need to be connected and verified user to remove a picture trick');
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/trick/delete/video/{id}', name: 'deleteTrickVideo')]
-    public function deleteVideo(Video $video, Request $request, EntityManagerInterface $entityManager){
+    public function deleteVideo(Video $video, Request $request, EntityManagerInterface $entityManager,AuthorizedService $authorizedService){
         /**
          * Get data from request
          */
-        
+        if($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true){
         $data = json_decode($request->getContent(), true);
 
         //if($this->isCsrfTokenValid('delete' . $video->getId(), $data['_token'])){
@@ -299,5 +326,8 @@ class TrickController extends AbstractController
              */
         //}
         return new JsonResponse(['error' => 'Invalid Token'],400);
+        }
+        $this->addFlash('danger','You need to be connected and verified user to remove a video trick');
+        return $this->redirectToRoute('app_login');
     }
 }

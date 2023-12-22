@@ -36,7 +36,17 @@ body,html{
 
 body .form-control{
     padding: 0.5rem;
+    font-size: 1.8rem;
 }
+
+body textarea.form-control{
+  min-height: 15rem;
+}
+
+body .form-select{
+  font-size: 1.8rem;
+}
+
 
 h1,.h1_style{
 font-size: 4rem;
@@ -212,7 +222,7 @@ p,div,.text_style{
 
   /* header */
   header{
-    z-index: 1000;
+    z-index: 10000;
     position: relative;
     padding: 1rem 0;
     background-color: white;

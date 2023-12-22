@@ -1,7 +1,10 @@
-.trick-teaser{
-}
-
 .modify-panel a{
     text-decoration: none;
 }
 
+.trick-teaser > img{
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+    height: 12rem;
+}

@@ -11,15 +11,13 @@ class AuthorizedService extends AbstractController{
     public function isAuthorizedUserAndVerified($user){
 
         if($this->isGranted('ROLE_USER') === false){
-                
-            if(isset($user) && $user->isVerified() === false){
-                return false;
-            }
-            
             return false;
             
         }
         else{
+            if(isset($user) && $user->isVerified() === false){
+                return false;
+            }
             return true;
         }
     }

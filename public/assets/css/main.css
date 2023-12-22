@@ -91,4 +91,9 @@
     margin-bottom: 2rem;
 }
 
+#tricks-homepage {
+    padding-top: 10rem;
+    margin-top: -10rem;
+}
+
 /* end homepage tricks */
