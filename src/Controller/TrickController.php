@@ -158,7 +158,7 @@ class TrickController extends AbstractController
             if ($key && is_array($key) === true) {
                 $image = $repositoryPicture->onePictureByTrickId($key['id']);
                 $exit = "
-            <div class='trick-teaser col-md-2 col-lg-2'>";
+            <div class='trick-teaser col-12 col-sm-6 col-md-6 col-lg-3'>";
                 if ($image) {
                     $exit .= '<img src="assets/img/tricks/mini/300x300-' . $image[0]["name"] . '>';
                 } else {

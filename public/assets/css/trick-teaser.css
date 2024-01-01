@@ -2,6 +2,10 @@
     text-decoration: none;
 }
 
+.trick-teaser{
+    padding: 0 1rem;
+}
+
 .trick-teaser>img {
     max-width: 100%;
     width: 100%;
