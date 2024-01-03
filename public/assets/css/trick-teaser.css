@@ -6,6 +6,12 @@
     padding: 0 1rem;
 }
 
+@media screen and (min-width: 992px) {
+    .trick-teaser{
+        width: 20%;
+    }
+}
+
 .trick-teaser>img {
     max-width: 100%;
     width: 100%;

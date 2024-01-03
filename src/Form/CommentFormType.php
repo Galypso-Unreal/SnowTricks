@@ -22,7 +22,7 @@ class CommentFormType extends AbstractType
             // ->add('createdAt')
             // ->add('trick')
             ->add('save', SubmitType::class, [
-                'label' => 'Leave a comment'
+                'label' => 'Leave a comment',
             ]);
     }
 

@@ -50,7 +50,7 @@
     width: 100%;
     max-width: calc(100%);
     max-height: 20rem !important;
-    max-width: calc(100% - 2.25rem);
+    max-width: 100%;
     height: 20rem !important;
     object-fit: cover;
     position: relative !important;
@@ -83,12 +83,14 @@
 
 .trick-single .description {
     margin: 5rem 0;
+    text-align: center;
 }
 
 .trick-single .meta {
     display: flex;
     text-align: center;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 2rem;
     align-items: center;
     justify-content: space-around;
 }
@@ -147,6 +149,14 @@
     .trick-single .gallery {
         display: flex;
     }
+
+    .trick-single .description{
+        text-align: unset;
+    }
+
+    .trick-single .meta{
+        flex-direction: row;
+    }
 }
 
 /* When on edit page */
@@ -189,19 +199,38 @@
     height: 4rem !important;
 }
 
-.gallery .video {
+.trick-single .gallery .video {
     position: relative;
+    width: 100%;
+}
+
+.trick-single .input.send{
+    text-align: center;
 }
 
 @media screen and (min-width: 992px) {
     .trick-single .gallery .image {
         max-width: calc(33% - 1.7rem);
     }
+
+    .trick-single .gallery .video {
+        position: relative;
+        width: calc(33% - 1.7rem);
+    }
+
+    .trick-single .input.send{
+        text-align: unset;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .trick-single .gallery .image {
         max-width: calc(50% - 1.5rem);
+    }
+
+    .trick-single .gallery .video {
+        position: relative;
+        width: calc(50% - 1.5rem);
     }
 }
 
@@ -260,4 +289,8 @@
 
 #trick_videos fieldset .close {
     align-self: center;
+}
+
+.input.save{
+    text-align: end;
 }
