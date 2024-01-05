@@ -20,12 +20,10 @@ class Trick
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(type: "string", unique: true)]
-    #[Assert\NotBlank(message: "The name must not be empty")]
+    #[ORM\Column(length:200, type: "string", unique: true)]
     private string $name;
 
-    #[ORM\Column(type: "string")]
-    #[Assert\NotBlank(message: "Description must not be empty")]
+    #[ORM\Column(length:5000, type: "string")]
     private string $description;
 
     // #[ORM\Column(type:"string")]
