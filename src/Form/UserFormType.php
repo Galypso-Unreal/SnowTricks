@@ -8,15 +8,28 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('picture',FileType::class)
-            ->add('save',SubmitType::class)
-        ;
+            ->add('picture', FileType::class,[
+                'constraints'=>[
+                    new File([
+                        'maxSize' => '5M',
+                        'extensions' => [
+                            'jpeg',
+                            'png',
+                            'jpg'
+                        ],
+                        'extensionsMessage' => 'Please upload a valid file (jpg / png / jpeg',
+                    ]),
+                ],
+            ])
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

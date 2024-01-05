@@ -21,34 +21,36 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    public function findByLimitComment($page, $value){
+    public function findByLimitComment($page, $value)
+    {
         $page = $page;
         $limit = 10;
         $start = ($page * $limit) - $limit;
         $query = $this
-               ->createQueryBuilder('c')
-               ->select('c.id, c.content, c.is_valid, c.deleted_at, c.created_at,u.username, u.picture')
-               ->innerJoin('c.user','u')
-               ->andWhere('c.trick = :val')
-               ->setParameter('val', $value)
-               ->orderBy('c.created_at','DESC')
-               ->getQuery();
+            ->createQueryBuilder('c')
+            ->select('c.id, c.content, c.is_valid, c.deleted_at, c.created_at,u.username, u.picture')
+            ->innerJoin('c.user', 'u')
+            ->andWhere('c.trick = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.created_at', 'DESC')
+            ->getQuery();
         $result = $query->setFirstResult($start)->setMaxResults($limit);
         return $result;
     }
 
-    
 
-    public function getAllCommentCount($value){
+
+    public function getAllCommentCount($value)
+    {
 
         $query = $this
-               ->createQueryBuilder('c')
-               ->select('count(c.id)')
-               ->andWhere('c.trick = :val')
-               ->setParameter('val', $value)
-               ->orderBy('c.created_at','DESC')
-               ->getQuery()
-               ->getSingleScalarResult();
+            ->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->andWhere('c.trick = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.created_at', 'DESC')
+            ->getQuery()
+            ->getSingleScalarResult();
         return $query;
     }
 }

@@ -1,134 +1,143 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{trick.name}}{% endblock %}
+{% block title %}
+	{{trick.name}}
+{% endblock %}
 
 {% block body %}
 
-<div class="trick-single">
-    <div class="hero">
-        <div class="content">
-            <div class="hero_background"></div>
-            <div class="text_hero column flex position-absolute">
-                <h1 class="title">
-                    {{trick.name}}
-                </h1>
-            </div>
-            {% if images %}
-                <img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
-            {% else %}
-                <img src="{{asset('assets/img/default.jpg')}}" alt="">
-            {% endif %}
-            
-            
-        </div>
-        {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
-        <div class="container-panel position-absolute">
-            <div class="modify-panel ">
-                <a href="{{path('modifyTrick',{slug:trick.slug})}}">
-                    <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
-                </a>
-
-                <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}}>
-                    <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
-                </span>
-                
-            </div>
-        </div>
-        
-    {% endif %}
-    </div>
-
-    <div class="container">
-
-        <div class="see_media btn-primary btn">
-            See medias
-        </div>
-
-        <div class="no_see_media btn-primary btn">
-            Hide medias
-        </div>
-
-        <div class="gallery">
-            {% for image in images %}
-                <img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
-            {% endfor %}
-
-            
-
-            {% for video in videos %}
-                    {{video.embed|raw}}
-            {% endfor %}
-
-        </div>
-
-        <div class="description">
-            {{trick.description}}
-        </div>
-
-        <div class="meta">
-
-            {% if trick.trickGroup %}
-            <div class="group-trick">
-                group trick : {{trick.trickGroup.name}}
-            </div>
-            {% endif %}
-
-            <div class="created-at">
-                create at : {{trick.createdAt|date('d-M-Y')}}
-            </div>
-            
-            {% if trick.createdAt != trick.modifiedAt %}
-                <div class="modified-at">
-                    modified at : {{trick.modifiedAt|date('d-M-Y')}}
-                </div>
-            {% endif %}
-            
-        </div>
-
-        <div class="comments-trick" id="comments-trick">
-
-                
-                {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
-                <div class="add_comment">
-                    {{form(form)}}
-                </div>
-                {% endif %}
-
-                <div class="h2_style text-center title">
-                    All Comments
-                </div>
-                
-                <div class="d-flex flex-row flex-wrap comments">
-                    {% for comment in comments %}
-                        {% include "teasers/comment.html.twig" with {'comment' : comment} %}
-                    {% endfor %}
-                    
-    
-                </div>
-    
-                <div class="loader-container">
-                    
-                    <div class="inner-container">
-                        <span class="loader"></span>
-                        <div class="h2_style">Loading the following comments ...</div>
-                    </div>
-                </div>
-                
-    
-                <div class="btn btn-primary loadmore text_style"  data-page="1" data-trick="{{trick.id}}" data-all-page="{{number_page}}">See more comments ! </div>
-                
-            
-    
-        </div>
-
-    </div>
-    {% include 'component/modal.html.twig'%}
-</div>
+	<div class="trick-single">
+		<div class="hero">
+			<div class="content">
+				<div class="hero_background"></div>
+				<div class="text_hero column flex position-absolute">
+					<h1 class="title">
+						{{trick.name}}
+					</h1>
+				</div>
+				{% if images %}
+					<img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
+				{% else %}
+					<img src="{{asset('assets/img/default.jpg')}}" alt="">
+				{% endif %}
 
 
+			</div>
+			{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+				<div class="container-panel position-absolute">
+					<div class="modify-panel ">
+						<a href="{{path('modifyTrick',{slug:trick.slug})}}">
+							<img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+						</a>
+
+						<span class="open-modal" data-url={{path('deleteTrick',{slug:trick.slug} )}}>
+							<img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+						</span>
+
+					</div>
+				</div>
+
+			{% endif %}
+		</div>
+
+		<div class="container">
+
+			<div class="see_media btn-primary btn">
+				See medias
+			</div>
+
+			<div class="no_see_media btn-primary btn">
+				Hide medias
+			</div>
+
+			<div class="gallery">
+				{% for image in images %}
+					<img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
+				{% endfor %}
 
 
-        
+				{% for video in videos %}
+					{{video.embed|raw}}
+				{% endfor %}
+
+			</div>
+
+			<div class="description">
+				{{trick.description}}
+			</div>
+
+			<div class="meta">
+
+				{% if trick.trickGroup %}
+					<div class="group-trick">
+						group trick :
+						{{trick.trickGroup.name}}
+					</div>
+				{% endif %}
+
+				<div class="created-at">
+					create at :
+					{{trick.createdAt|date('d-M-Y')}}
+				</div>
+
+				{% if trick.createdAt != trick.modifiedAt %}
+					<div class="modified-at">
+						modified at :
+						{{trick.modifiedAt|date('d-M-Y')}}
+					</div>
+				{% endif %}
+
+			</div>
+
+			<div class="comments-trick" id="comments-trick">
+
+
+				{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+					<div class="add_comment">
+						{{ form_start(form) }}
+
+						<div class="input">
+							{{form_row(form.content)}}
+						</div>
+
+						<div class="input send">
+							{{form_row(form.save)}}
+						</div>
+
+						{{ form_end(form) }}
+					</div>
+				{% endif %}
+
+				<div class="h2_style text-center title">
+					All Comments
+				</div>
+
+				<div class="d-flex flex-row flex-wrap comments">
+					{% for comment in comments %}
+						{% include "teasers/comment.html.twig" with {'comment' : comment} %}
+					{% endfor %}
+
+
+				</div>
+
+				<div class="loader-container">
+
+					<div class="inner-container">
+						<span class="loader"></span>
+						<div class="h2_style">Loading the following comments ...</div>
+					</div>
+				</div>
+
+
+				<div class="btn btn-primary loadmore text_style" data-page="1" data-trick="{{trick.id}}" data-all-page="{{number_page}}">See more comments !
+				</div>
+
+
+			</div>
+
+		</div>
+		{% include 'component/modal.html.twig'%}
+	</div>
 
 
 {% endblock %}

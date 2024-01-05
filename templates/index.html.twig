@@ -1,55 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Bienvenue sur SnowTricks
+	Bienvenue sur SnowTricks
 {% endblock %}
 
 {% block body %}
-    {% include "elements/arrow.html.twig" %}
-    <div class="hero">
-        <div class="content">
-            <div class="hero_background"></div>
-            <div class="text_hero column flex position-absolute">
-                <h1 class="title">
-                    SnowTricks
-                </h1>
-                <h2 class="subtitle h4_style">
-                    Découvrez la magie des figures mystérieuses dans la neige et laissez-vous emporter par leur beauté éphémère.
-                </h2>
-            </div>
-            <img src="{{asset('assets/img/homepage.jpg')}}">
-        </div>
-    </div>
+	{% include "elements/arrow.html.twig" %}
+	<div class="hero">
+		<div class="content">
+			<div class="hero_background"></div>
+			<div class="text_hero column flex position-absolute">
+				<h1 class="title">
+					SnowTricks
+				</h1>
+				<h2 class="subtitle h4_style">
+					Discover the magic of mysterious figures in the snow and let yourself be carried away by their ephemeral beauty.
+				</h2>
+			</div>
+			<img src="{{asset('assets/img/homepage.jpg')}}">
+		</div>
+	</div>
 
-    <div class="tricks-homepage" id="tricks-homepage">
+	<div class="tricks-homepage" id="tricks-homepage">
 
-        <div class="container">
-            
-            <div class="d-flex flex-row flex-wrap tricks">
+		<div class="container">
 
-                {% for trick in tricks %}
-                    {% include "teasers/trick.html.twig" with {'trick' : trick} %}
-                {% endfor %}
+			<div class="d-flex flex-row flex-wrap tricks">
 
-            </div>
+				{% for trick in tricks %}
+					{% include "teasers/trick.html.twig" with {'trick' : trick} %}
+				{% endfor %}
 
-            <div class="loader-container">
-                
-                <div class="inner-container">
-                    <span class="loader"></span>
-                    <div class="h2_style">Chargement en cours des figures suivantes ...</div>
-                </div>
-            </div>
-            
+			</div>
 
-            <div class="btn btn-primary loadmore text_style"  data-page="1" data-all-page="{{number_page}}">Voir plus de tricks ! </div>
-            
-        
-        </div>
-        
+			<div class="loader-container">
 
-    </div>
+				<div class="inner-container">
+					<span class="loader"></span>
+					<div class="h2_style">Loading the following figures ...</div>
+				</div>
+			</div>
 
-    {% include 'component/modal.html.twig'%}
+
+			<div class="btn btn-primary loadmore text_style" data-page="1" data-all-page="{{number_page}}">See more tricks!
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+	{% include 'component/modal.html.twig'%}
 
 {% endblock %}

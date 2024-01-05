@@ -23,27 +23,29 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    public function findByLimitTrick($page){
+    public function findByLimitTrick($page)
+    {
         $page = $page;
         $limit = 15;
         $start = ($page * $limit) - $limit;
         $query = $this
-               ->createQueryBuilder('t')
-               ->andWhere('t.deleted_at IS NULL')
-               ->orderBy('t.created_at','DESC')
-               ->getQuery();
+            ->createQueryBuilder('t')
+            ->andWhere('t.deleted_at IS NULL')
+            ->orderBy('t.created_at', 'DESC')
+            ->getQuery();
         $result = $query->setFirstResult($start)->setMaxResults($limit);
         return $result;
     }
 
-    public function getAllTricksCount(){
+    public function getAllTricksCount()
+    {
 
         $query = $this
-               ->createQueryBuilder('t')
-               ->select('count(t.id)')
-               ->andWhere('t.deleted_at IS NULL')
-               ->getQuery()
-               ->getSingleScalarResult();
+            ->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->andWhere('t.deleted_at IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
         return $query;
     }
 
@@ -53,8 +55,7 @@ class TrickRepository extends ServiceEntityRepository
             ->andWhere('t.slug = :val and t.deleted_at IS NULL')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
     public function findOneById($value): ?Trick
@@ -63,24 +64,23 @@ class TrickRepository extends ServiceEntityRepository
             ->andWhere('t.id = :val and t.deleted_at IS NULL')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
-//    /**
-//     * @return Trick[] Returns an array of Trick objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Trick[] Returns an array of Trick objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
 
 }

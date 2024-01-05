@@ -4,7 +4,8 @@ namespace App\Service;
 
 use DateTimeImmutable;
 
-class JWTService{
+class JWTService
+{
 
     /* Generate token (ex : for email validation) */
 
@@ -26,11 +27,12 @@ class JWTService{
      * 
      * @return string a JSON Web Token (JWT) as a string.
      */
-    public function generate(array $header, array $payload, string $secret, int $validity = 14400 ): string{
-        if($validity > 0){
+    public function generate(array $header, array $payload, string $secret, int $validity = 14400): string
+    {
+        if ($validity > 0) {
             $now = new DateTimeImmutable();
             $exp = $now->getTimestamp() + $validity;
-    
+
             $payload['iat'] = $now->getTimestamp();
             $payload['exp'] = $exp;
         }
@@ -62,7 +64,8 @@ class JWTService{
     }
 
     /* Checking if token is correct */
-    public function isValid(string $token):bool{
+    public function isValid(string $token): bool
+    {
         return preg_match(
             '/^[a-zA-Z0-9\-\_\=]+\.[a-zA-Z0-9\-\_\=]+\.[a-zA-Z0-9\-\_\=]+$/',
             $token
@@ -70,31 +73,34 @@ class JWTService{
     }
 
     /* Get Header */
-    public function getHeader($token){
+    public function getHeader($token)
+    {
 
         /* Get data Header from token */
         $array = explode('.', $token);
 
         /* Decode Header */
-        $header = json_decode(base64_decode($array[0]),true);
+        $header = json_decode(base64_decode($array[0]), true);
 
         return $header;
     }
 
     /* Get payload */
-    public function getPayload($token){
+    public function getPayload($token)
+    {
 
         /* Get data payload from token */
         $array = explode('.', $token);
 
         /* Decode Payload */
-        $payload = json_decode(base64_decode($array[1]),true);
+        $payload = json_decode(base64_decode($array[1]), true);
 
         return $payload;
     }
 
     /* Check if JWT is expired */
-    public function isExpired(string $token){
+    public function isExpired(string $token)
+    {
         $payload = $this->getPayload($token);
 
         $now = new DateTimeImmutable();
@@ -103,7 +109,8 @@ class JWTService{
     }
 
     /* Check JWT signature */
-    public function check(string $token, string $secret){
+    public function check(string $token, string $secret)
+    {
 
         /* Get Header and payload */
         $header = $this->getHeader($token);
@@ -113,7 +120,5 @@ class JWTService{
         $VerifToken = $this->generate($header, $payload, $secret, 0);
 
         return $token === $VerifToken;
-
-
     }
 }

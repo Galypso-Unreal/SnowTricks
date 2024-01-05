@@ -1,36 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in!
+{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    
-    <div class="container d-flex justify-content-center py-5 min-height align-items-center">
-        <div class="col-10 col-sm-10 col-md-6 col-lg-6">
-            <h1 class="text-center">Login</h1>
-            <div class="d-flex align-items-center flex-column form-custom">
-                <label for="inputUsername">Username</label>
-            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-            <label for="inputPassword">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-            <input type="hidden" name="_csrf_token"
-                value="{{ csrf_token('authenticate') }}"
-            >
-            <a href="{{ path('app_forget_password') }}" class="py-3">Forget password?</a>
+		<div class="container d-flex justify-content-center py-5 min-height align-items-center">
+			<div class="col-12 col-sm-12 col-md-8 col-lg-6">
+				<h1 class="text-center">Login</h1>
+				<div class="d-flex align-items-center flex-column form-custom">
+					<label for="inputUsername">Username</label>
+					<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+					<label for="inputPassword">Password</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-            <button class="btn btn-lg btn-primary" type="submit">
-                Sign in
-            </div>
-            
-            </button>
-            </div>
-            
-        </div>
-    </div>
-    
-</form>
-{% endblock %}
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<a href="{{ path('app_register') }}">No account ?</a>
+					<a href="{{ path('app_forget_password') }}" class="py-3">Forget password?</a>
+
+					<button class="btn btn-lg btn-primary" type="submit">
+						Login
+					</div>
+
+				</button>
+			</div>
+
+		</div>
+	</div>
+
+</form>{% endblock %}

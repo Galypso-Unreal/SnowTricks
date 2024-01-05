@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
-#[ORM\Table(name:"st_video")]
+#[ORM\Table(name: "st_video")]
 class Video
 {
     #[ORM\Id]
@@ -15,7 +15,7 @@ class Video
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, length:1000)]
     private ?string $embed = null;
 
     #[ORM\ManyToOne(inversedBy: 'videos')]

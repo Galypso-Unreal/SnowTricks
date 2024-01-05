@@ -17,38 +17,39 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route(path: '/profile', name: 'app_profile')]
-    public function profile(AuthorizedService $authorizedService, Request $request, PictureService $pictureService, EntityManagerInterface $entityManager){
-        if($authorizedService->isUserConnected($this->getUser()) === true){
+    public function profile(AuthorizedService $authorizedService, Request $request, PictureService $pictureService, EntityManagerInterface $entityManager)
+    {
+        if ($authorizedService->isUserConnected($this->getUser()) === true) {
 
             $form = $this->createForm(UserFormType::class);
             $form->handleRequest($request);
-            
-            
+
+
             if ($form->isSubmitted() && $form->isValid()) {
-                
+
                 /* Get all input pictures */
                 $image = $form->get('picture')->getData();
-                
+
                 /* Destination folder */
                 $folder = 'users';
 
-                $fichier = $pictureService->add($image,$folder,300,300);
-                
+                $fichier = $pictureService->add($image, $folder, 300, 300);
+
                 $user = $this->getUser();
                 $user->setPicture($fichier);
-                    
+
                 $entityManager->flush();
 
-                $this->addFlash('success','Update picture has been done');
+                $this->addFlash('success', 'Update picture has been done');
                 return $this->redirectToRoute('app_profile');
             }
 
-            return $this->render('user/profile.html.twig',array(
-                "user"=>$this->getUser(),
-                "form"=>$form->createView()
+            return $this->render('user/profile.html.twig', array(
+                "user" => $this->getUser(),
+                "form" => $form->createView()
             ));
         }
-        $this->addFlash('danger','you are not connected to see your profile');
+        $this->addFlash('danger', 'you are not connected to see your profile');
         return $this->redirectToRoute(('app_login'));
     }
 }

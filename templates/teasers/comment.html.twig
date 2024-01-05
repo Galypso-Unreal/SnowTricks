@@ -1,17 +1,17 @@
 <div class="comment-teaser col-md-12 col-lg-12">
-    <div class="left">
-        <img src="{{asset('assets/img/users/')}}{{comment.picture}}">
-    </div>
+	<div class="left">
+		<img src="{{asset('assets/img/users/')}}{{comment.picture}}">
+	</div>
 
-    <div class="right">
-        <div class="user-name">
-            {{comment.username}}
-        </div>
-        <div class="created-at">
-            {{comment.created_at|date('d-M-Y')}}
-        </div>
-        <div class="content">
-            {{comment.content}}
-        </div>
-    </div>
+	<div class="right">
+		<div class="user-name">
+			{{comment.username}}
+		</div>
+		<div class="created-at">
+			{{comment.created_at|date('d-M-Y')}}
+		</div>
+		<div class="content">
+			{{comment.content}}
+		</div>
+	</div>
 </div>

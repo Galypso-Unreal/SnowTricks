@@ -1,21 +1,24 @@
-<div class="trick-teaser col-md-2 col-lg-2">
-    <a class="name h3_style" href="{{path('trick', {slug: trick.slug })}}">
-        <h2>{{trick.name}}</h2>
-    </a>
-    <div>
-        {{ trick.description|length > 80 ? trick.description|slice(0, 80) ~ '...' : trick.description  }}
-    </div>
-    {% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
-        <div class="modify-panel">
-            <a href="{{path('modifyTrick',{slug:trick.slug})}}">
-                <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
-            </a>
+<div class="trick-teaser col-12 col-sm-6 col-md-6">
 
-            <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}}>
-                <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
-            </span>
-            
-        </div>
-    {% endif %}
+	{% if trick.image is defined %}
+		<img src="{{asset('assets/img/tricks/mini/300x300-' ~ trick.image)}}">
+	{% else %}
+		<img src="{{asset('assets/img/tricks/default.webp')}}">
+	{% endif %}
+	<a class="name h3_style" href="{{path('trick', {slug: trick.slug })}}">
+		<h2>{{trick.name}}</h2>
+	</a>
+	{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+		<div class="modify-panel">
+			<a href="{{path('modifyTrick',{slug:trick.slug})}}">
+				<img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
+			</a>
+
+			<span class="open-modal" data-url={{path('deleteTrick',{slug:trick.slug} )}}>
+				<img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
+			</span>
+
+		</div>
+	{% endif %}
 
 </div>
