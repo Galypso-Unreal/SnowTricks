@@ -10,7 +10,8 @@
 		{{ form_start(form, {
                     'attr': {
                         'novalidate': 'novalidate',
-                        'class': 'col-lg-5'
+                        'class': 'col-lg-5',
+                        'id': 'trick-modify-form'
                         }
                     })
                 }}
@@ -109,6 +110,13 @@
 				</label>
 				{{ form_widget(form.trickGroup) }}
 				{{ form_errors(form.trickGroup) }}
+			</div>
+
+            <div class="input">
+				<label for="trick_group">Trick image modify :
+				</label>
+				{{ form_widget(form.image) }}
+				{{ form_errors(form.image) }}
 			</div>
 
 			<div class="input py-5 text-end">

@@ -11,6 +11,7 @@ use App\Entity\Video;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use PictureType;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MediaController extends AbstractController
@@ -81,16 +82,31 @@ class MediaController extends AbstractController
     }
 
     #[Route('/trick/modify/image/{id}', name: 'modifyTrickImage')]
-    public function modifyImage(Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
+    public function modifyImage(LoggerInterface $logger, Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
     {
         if ($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true) {
-            $data = json_decode($request->getContent(), true);
-            if($this->isCsrfTokenValid('modify' . $picture->getId(), $data['_token'])){
+
+            // $data = $request->request->get('file');
+            $data = $request->files->get('image');
+            // $array = json_decode($data);
+            // $files = $request->files->all();
+
+            // $logger->info('DEBUG ------------------------ DEBUG');
+            // foreach ($files as $item) {
+            //     $logger->debug(getimagesize($item));
+            // }
+            
+            // $data->get('picture');
+
+            return new JsonResponse($data);
+
+
+            // if($this->isCsrfTokenValid('modify' . $picture->getId(), $data['_token'])){
                 
-                    return new JsonResponse(['success' => true], 200);
+            //         return new JsonResponse(['success' => true], 200);
                 
-            }
-            return new JsonResponse(['error' => 'Invalid Token'], 400);
+            // }
+            // return new JsonResponse(['error' => 'Invalid Token'], 400);
         }
         $this->addFlash('danger', 'You need to be connected and verified user to modify an image trick');
         return $this->redirectToRoute('app_login');

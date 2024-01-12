@@ -81,6 +81,35 @@ $(document).ready(function () {
     }
 
     /**
+     * Change image
+     */
+
+
+    $('#trick_image').on('change', function(){
+        console.log(document.querySelector('#trick_image').files[0])
+        if (confirm("Do you want to modify this image?")) {
+            const formdata = new FormData();
+            formdata.append('picture',document.querySelector('#trick_image').files[0],'tesenvoie.jpg')
+            formdata.append('id',33)
+            fetch("/trick/modify/image/33", {
+                method: "POST",
+                body: formdata
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    // if (data.success) {
+                    //     let index = this.parentElement.parentElement.dataset.index
+                    //     let elementDelete = $('#trick_videos fieldset[data-index=' + index + ']');
+                    //     elementDelete.remove();
+                    //     this.parentElement.parentElement.remove();
+                    // } else {
+                    //     alert(data.error);
+                    // }
+                })
+        }
+    })
+
+    /**
      * Open modal for modify video iframe
      */
     $('#trick_videos fieldset').each(function () {
