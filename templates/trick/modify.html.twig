@@ -71,7 +71,8 @@
 			<div class="gallery">
 				{% for image in images %}
 					<span class="image">
-						<img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
+						<img class="image-visual" src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
+						<a href="{{path('modifyTrickImage', {id: image.id})}}" class="modify" data-modify-picture data-image-id="{{image.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
 						<a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
 					</span>
 				{% endfor %}
@@ -112,11 +113,12 @@
 				{{ form_errors(form.trickGroup) }}
 			</div>
 
-            <div class="input">
+            <div class="input modify-image-form">
 				<label for="trick_group">Trick image modify :
 				</label>
 				{{ form_widget(form.image) }}
 				{{ form_errors(form.image) }}
+				<div class="btn btn-dark" data-close-modify>Cancel</div>
 			</div>
 
 			<div class="input py-5 text-end">

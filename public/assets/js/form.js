@@ -84,27 +84,58 @@ $(document).ready(function () {
      * Change image
      */
 
+    $('[data-modify-picture]').on('click',function(e){
+        e.preventDefault();
+        let link = $(this).attr('href')
+        let imageId = $(this).attr('data-image-id')
+        
+        $('#trick_image').attr('data-current-link',link);
+        $('#trick_image').attr('data-current-id',imageId);
+
+        $('.modify-image-form').css('display','flex');
+    })
+
+    $('[data-close-modify]').on('click',function(e){
+        e.preventDefault();
+        $('.modify-image-form').hide();
+        $('#trick_image').removeAttr('data-current-link');
+        $('#trick_image').removeAttr('data-current-id');
+    })
+
 
     $('#trick_image').on('change', function(){
         console.log(document.querySelector('#trick_image').files[0])
+        let file = document.querySelector('#trick_image').files[0];
+        let fileName = "newPictureSend";
+        if(file.name){
+            fileName = file.name;
+        }
+
         if (confirm("Do you want to modify this image?")) {
             const formdata = new FormData();
-            formdata.append('picture',document.querySelector('#trick_image').files[0],'tesenvoie.jpg')
-            formdata.append('id',33)
-            fetch("/trick/modify/image/33", {
+            formdata.append('picture',file,fileName)
+            formdata.append('trickImageId', $(this).attr('data-current-id'))
+            fetch($(this).attr('data-current-link'), {
                 method: "POST",
                 body: formdata
             }).then(response => response.json())
                 .then(data => {
                     console.log(data)
-                    // if (data.success) {
-                    //     let index = this.parentElement.parentElement.dataset.index
-                    //     let elementDelete = $('#trick_videos fieldset[data-index=' + index + ']');
-                    //     elementDelete.remove();
-                    //     this.parentElement.parentElement.remove();
-                    // } else {
-                    //     alert(data.error);
-                    // }
+                    if (data.success) {
+                        console.log($('#trick_image').val(''));
+                        $('#trick_image').removeAttr('data-current-link');
+                        $('#trick_image').removeAttr('data-current-id');
+                        $('.modify-image-form').hide();
+                        let urlImage = $('.gallery .image [data-image-id="' + data.id + '"]').parent().find('.image-visual');
+                        let assetUrl = urlImage.attr('src').split('-',1);
+                        urlImage.attr('src',assetUrl + "-" + data.url);
+                        // let index = this.parentElement.parentElement.dataset.index
+                        // let elementDelete = $('#trick_videos fieldset[data-index=' + index + ']');
+                        // elementDelete.remove();
+                        // this.parentElement.parentElement.remove();
+                    } else {
+                        alert(data.error);
+                    }
                 })
         }
     })

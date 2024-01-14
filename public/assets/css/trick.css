@@ -183,7 +183,8 @@
     width: 4rem;
 }
 
-.video .modify {
+.video .modify,
+.image .modify {
     position: absolute;
     right: 8rem;
     top: 2rem;
@@ -294,3 +295,21 @@
 .input.save{
     text-align: end;
 }
+
+.modify-image-form{
+    display: none;
+    position: fixed;
+    background-color: white;
+    height: 20rem;
+    z-index: 1000;
+    width: 50vw;
+    top: 50%;
+    gap: 1rem;
+    padding: 2rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+

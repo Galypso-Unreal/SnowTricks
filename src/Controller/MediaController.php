@@ -8,6 +8,8 @@ use App\Service\AuthorizedService;
 use App\Entity\Picture;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Video;
+use App\Repository\PictureRepository;
+use App\Repository\TrickRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use PictureType;
@@ -82,31 +84,25 @@ class MediaController extends AbstractController
     }
 
     #[Route('/trick/modify/image/{id}', name: 'modifyTrickImage')]
-    public function modifyImage(LoggerInterface $logger, Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
+    public function modifyImage(PictureRepository $pictureRepository, Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
     {
         if ($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true) {
 
-            // $data = $request->request->get('file');
-            $data = $request->files->get('image');
-            // $array = json_decode($data);
-            // $files = $request->files->all();
+            $image = $request->files->get('picture');
+            $trickImageId = $request->get('trickImageId');
 
-            // $logger->info('DEBUG ------------------------ DEBUG');
-            // foreach ($files as $item) {
-            //     $logger->debug(getimagesize($item));
-            // }
-            
-            // $data->get('picture');
+            $picture = $pictureRepository->find($trickImageId);
 
-            return new JsonResponse($data);
+            $pictureService->delete($picture->getName(), 'tricks', 300, 300);
 
+            $fichier = $pictureService->add($image, 'tricks', 300, 300);
 
-            // if($this->isCsrfTokenValid('modify' . $picture->getId(), $data['_token'])){
-                
-            //         return new JsonResponse(['success' => true], 200);
-                
-            // }
-            // return new JsonResponse(['error' => 'Invalid Token'], 400);
+            $picture->setName($fichier);
+
+            $entityManager->flush();
+
+            return new JsonResponse(['success' => true, 'url'=>$picture->getName(), 'id'=>$picture->getId()], 200);
+
         }
         $this->addFlash('danger', 'You need to be connected and verified user to modify an image trick');
         return $this->redirectToRoute('app_login');
