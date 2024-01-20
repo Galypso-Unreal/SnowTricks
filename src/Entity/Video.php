@@ -21,6 +21,24 @@ class Video
     #[ORM\ManyToOne(inversedBy: 'videos')]
     private ?Trick $trick = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created_at = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $modified_at = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $delete_at = null;
+
+    public function __construct()
+    {
+        $utc_timezone = new \DateTimeZone("Europe/Paris");
+        $date = new \DateTime("now", $utc_timezone);
+
+        $this->setCreatedAt($date);
+        $this->setModifiedAt($date);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +64,42 @@ class Video
     public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modified_at;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $modified_at): static
+    {
+        $this->modified_at = $modified_at;
+
+        return $this;
+    }
+
+    public function getDeleteAt(): ?\DateTimeInterface
+    {
+        return $this->delete_at;
+    }
+
+    public function setDeleteAt(?\DateTimeInterface $delete_at): static
+    {
+        $this->delete_at = $delete_at;
 
         return $this;
     }
