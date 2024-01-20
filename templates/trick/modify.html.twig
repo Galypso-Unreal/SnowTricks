@@ -37,7 +37,7 @@
 
 					</div>
 				</div>
-				{% if images %}
+				{% if images.0 is defined %}
 					<img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
 				{% else %}
 					<img src="{{asset('assets/img/default.jpg')}}" alt="">
@@ -45,18 +45,14 @@
 
 
 			</div>
-			<div
-				class="container-panel position-absolute">{# <div class="modify-panel ">
-					            <a href="{{path('modifyTrick',{slug:trick.slug})}}">
-					                <img class="icon" src="{{asset('assets/img/svg/crayon.svg')}}">
-					            </a>
-					
-					            <span class="open-modal" data-url = {{path('deleteTrick',{slug:trick.slug})}}>
-					                <img class="icon" src="{{asset('assets/img/svg/trash.svg')}}">
-					            </span>
-					            
-					        </div> #}
+
+			{% if images.0 is defined %}
+			<div class="container-panel position-absolute">
+				<a href="{{path('modifyTrickImage', {id: images.0.id})}}" class="modify" data-modify-picture data-image-id="{{images.0.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
+						<a href="{{path('deleteTrickImage', {id: images.0.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ images.0.id )}}"></a>    
 			</div>
+			{% endif %}
+
 		</div>
 		<div class="container">
 
@@ -69,13 +65,17 @@
 			</div>
 
 			<div class="gallery">
+			{% if images %}
 				{% for image in images %}
+					{% if loop.index != 1 %}
 					<span class="image">
 						<img class="image-visual" src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
 						<a href="{{path('modifyTrickImage', {id: image.id})}}" class="modify" data-modify-picture data-image-id="{{image.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
 						<a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
 					</span>
+					{% endif %}
 				{% endfor %}
+			{% endif %}
 
 
 				{% for video in videos %}
@@ -118,6 +118,7 @@
 				</label>
 				{{ form_widget(form.image) }}
 				{{ form_errors(form.image) }}
+				<div class="btn btn-primary" data-save-picture>Change</div>
 				<div class="btn btn-dark" data-close-modify>Cancel</div>
 			</div>
 
@@ -132,6 +133,8 @@
 		</div>
 	</div>
 	{% include 'component/modal.html.twig'%}
+	{% include 'component/modal_image.html.twig' with {data_to_delete:'data-delete-image', text:'Are you sure to delete this image ?', del_btn_text:'Delete image', cancel_btn_text:'Cancel'} %}
+	{% include 'component/modal_image.html.twig' with {data_to_delete:'data-delete-video-trick', text:'Are you sure to delete this video ?', del_btn_text:'Delete video', cancel_btn_text:'Cancel'} %}
 {% endblock %}
 
 {% block javascripts %}

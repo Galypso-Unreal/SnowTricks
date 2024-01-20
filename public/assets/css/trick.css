@@ -313,3 +313,6 @@
     justify-content: center;
 }
 
+[data-save-picture]{
+    display: none;
+}

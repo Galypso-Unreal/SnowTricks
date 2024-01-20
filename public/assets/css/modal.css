@@ -2,7 +2,7 @@
     cursor: pointer;
 }
 
-.modal-trick {
+.modal-trick,.modal-trick-delete {
     top: 50%;
     left: 50%;
     width: 75vw;
@@ -16,12 +16,12 @@
 }
 
 @media screen and (min-width: 992px) {
-    .modal-trick {
+    .modal-trick, .modal-trick-delete {
         width: 25vw;
     }
 }
 
-.modal-trick .modal-container {
+.modal-trick .modal-container, .modal-trick-delete .modal-container{
     height: 100%;
     width: 100%;
     display: flex;
@@ -31,7 +31,7 @@
     justify-content: space-evenly;
 }
 
-.modal-trick .text-modal {
+.modal-trick .text-modal, .modal-trick-delete .text-modal{
     text-align: center;
     font-size: 2.4rem;
     text-transform: uppercase;
@@ -39,7 +39,7 @@
     font-weight: bold;
 }
 
-.modal-trick .control-modal {
+.modal-trick .control-modal, .modal-trick-delete .control-modal{
     display: flex;
     flex-direction: row;
     align-items: center;
