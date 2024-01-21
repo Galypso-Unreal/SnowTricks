@@ -28,7 +28,7 @@ class CommentRepository extends ServiceEntityRepository
         $start = ($page * $limit) - $limit;
         $query = $this
             ->createQueryBuilder('c')
-            ->select('c.id, c.content, c.is_valid, c.deleted_at, c.created_at,u.username, u.picture')
+            ->select('c.id, c.content, c.is_valid, c.created_at,u.username, u.picture')
             ->innerJoin('c.user', 'u')
             ->andWhere('c.trick = :val')
             ->setParameter('val', $value)

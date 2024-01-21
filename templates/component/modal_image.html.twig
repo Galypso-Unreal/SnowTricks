@@ -1,0 +1,14 @@
+{% if is_granted('ROLE_USER') and app.user.isVerified == 1 %}
+	<div class="modal-trick-delete position-fixed" {{data_to_delete}}>
+		<div class="modal-container">
+			<div class="text-modal">
+				{{text}}
+			</div>
+
+			<div class="control-modal display-flex flex-direction-column">
+				<a href="#" class="btn btn-danger">{{del_btn_text}}</a>
+				<span class="close-modal btn btn-dark">{{cancel_btn_text}}</span>
+			</div>
+		</div>
+	</div>
+{% endif %}

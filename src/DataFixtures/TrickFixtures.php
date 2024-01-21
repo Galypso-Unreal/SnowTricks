@@ -51,12 +51,14 @@ class TrickFixtures extends Fixture
 
             $utc_timezone = new \DateTimeZone("Europe/Paris");
             $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count . 'day')), $utc_timezone);
+            $date_now = new \DateTime();
 
             $trick->setCreatedAt($date);
+            $trick->setModifiedAt($date);
 
             if ($count < 5) {
                 $image = new Picture();
-                $image->setName('firstpicture.jpg');
+                $image->setName('default.jpg');
                 $image->setTrick($trick);
             }
 
@@ -91,6 +93,7 @@ class TrickFixtures extends Fixture
                 $comment->setIsValid(1);
                 $comment->setTrick($trick);
                 $comment->setUser($user);
+                $comment->setCreatedAt($date);
                 $manager->persist($comment);
             }
 

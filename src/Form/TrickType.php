@@ -80,6 +80,25 @@ class TrickType extends AbstractType
                     
                 ],
             ])
+            ->add('image', FileType::class, [
+                'label' => 'Pictures modify for the trick',
+                'mapped' => false,
+                'required' => false,
+                'constraints'=>[
+                    new All(
+                        new File([
+                            'maxSize' => '5M',
+                            'extensions' => [
+                                'jpeg',
+                                'png',
+                                'jpg'
+                            ],
+                            'extensionsMessage' => 'Please upload a valid file (jpg / png / jpeg',
+                        ]),
+                    )
+                    
+                ],
+            ])
             ->add('videos', CollectionType::class, [
                 'entry_type' => VideoFormType::class,
                 'label' => 'videos',

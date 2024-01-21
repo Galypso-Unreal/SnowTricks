@@ -23,27 +23,33 @@ $(document).ready(function () {
         link.addEventListener("click", function (e) {
 
             e.preventDefault();
+            let picture = $(this).parent().parent();
+            let link = $(this).parent().attr('href');
+            let modal = $('[data-delete-image]');
+            let token = $(this).data('token');
 
-            if (confirm("Do you want to delete this picture?")) {
+            modal.show();
 
-                console.log(this.parentElement.parentElement)
-                fetch(this.parentElement.getAttribute("href"), {
+            $(modal.find('a')).on('click',function(e){
+                e.preventDefault();
+
+                fetch(link, {
                     method: "DELETE",
                     headers: {
                         "X-Requested-With": "XMLHttpRequest",
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ "_token": this.dataset.token })
+                    body: JSON.stringify({ "_token": token })
                 }).then(response => response.json())
                     .then(data => {
                         if (data.success) {
-
-                            this.parentElement.parentElement.remove();
+                            modal.hide();
+                            picture.remove();
                         } else {
                             alert(data.error);
                         }
                     })
-            }
+            })
         });
     }
 
@@ -56,29 +62,98 @@ $(document).ready(function () {
 
             e.preventDefault();
 
-            if (confirm("Do you want to delete this video?")) {
+            let video = $(this).parent().parent();
+            let link = $(this).parent().attr('href');
+            let modal = $('[data-delete-video-trick]');
+            let token = $(this).data('token');
 
-                fetch(this.parentElement.getAttribute("href"), {
+            modal.show();
+
+            $(modal.find('a')).on('click',function(e){
+
+                e.preventDefault();
+
+                fetch(link, {
                     method: "DELETE",
                     headers: {
                         "X-Requested-With": "XMLHttpRequest",
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ "_token": this.dataset.token })
+                    body: JSON.stringify({ "_token": token })
                 }).then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            let index = this.parentElement.parentElement.dataset.index
-                            let elementDelete = $('#trick_videos fieldset[data-index=' + index + ']');
-                            elementDelete.remove();
-                            this.parentElement.parentElement.remove();
+                            modal.hide();
+                            video.remove();
                         } else {
                             alert(data.error);
                         }
                     })
-            }
+            })
         });
     }
+
+    /**
+     * Change image
+     */
+
+    $('[data-modify-picture]').on('click',function(e){
+        e.preventDefault();
+        let link = $(this).attr('href')
+        let imageId = $(this).attr('data-image-id')
+        
+        $('#trick_image').attr('data-current-link',link);
+        $('#trick_image').attr('data-current-id',imageId);
+
+        $('.modify-image-form').css('display','flex');
+    })
+
+    $('[data-close-modify]').on('click',function(e){
+        e.preventDefault();
+        $('#trick_image').val('');
+        $('[data-save-picture]').hide();
+        $('.modify-image-form').hide();
+        $('#trick_image').removeAttr('data-current-link');
+        $('#trick_image').removeAttr('data-current-id');
+    })
+
+
+    $('#trick_image').on('change', function(){
+        $('[data-save-picture]').show();
+        let file = document.querySelector('#trick_image').files[0];
+        let fileName = "newPictureSend";
+        if(file.name){
+            fileName = file.name;
+        }
+
+        $('[data-save-picture]').on('click',function(){
+            
+            const formdata = new FormData();
+            formdata.append('picture',file,fileName)
+            formdata.append('trickImageId', $('#trick_image').attr('data-current-id'))
+            fetch($('#trick_image').attr('data-current-link'), {
+                method: "POST",
+                body: formdata
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if (data.success) {
+                        $('[data-save-picture]').hide();
+                        $('#trick_image').val('');
+                        $('#trick_image').removeAttr('data-current-link');
+                        $('#trick_image').removeAttr('data-current-id');
+                        $('.modify-image-form').hide();
+                        let urlImage = $('.gallery .image [data-image-id="' + data.id + '"]').parent().find('.image-visual');
+                        let assetUrl = urlImage.attr('src').split('-',1);
+                        urlImage.attr('src',assetUrl + "-" + data.url);
+                    } else {
+                        alert(data.error);
+                    }
+                })
+        })
+            
+        
+    })
 
     /**
      * Open modal for modify video iframe

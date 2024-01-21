@@ -22,16 +22,13 @@ class Comment
     #[ORM\Column]
     private ?bool $is_valid = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTime $deleted_at = null;
-
     #[ORM\Column]
     private ?\DateTime $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments', cascade: ['persist'])]
     private ?Trick $trick = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\ManyToOne(inversedBy: 'comments', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -69,18 +66,6 @@ class Comment
     public function setIsValid(bool $is_valid): static
     {
         $this->is_valid = $is_valid;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTime
-    {
-        return $this->deleted_at;
-    }
-
-    public function setDeletedAt(?\DateTime $deleted_at): static
-    {
-        $this->deleted_at = $deleted_at;
 
         return $this;
     }
