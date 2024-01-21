@@ -26,15 +26,6 @@
 						<div class="modify text-center">
 							<img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}">
 						</div>
-						<div class="input-form">
-							<label for="trick_name">Nom de la figure</label>
-							{{ form_widget(form.name) }}
-							{{ form_errors(form.name) }}
-							<div class="close-form btn btn-dark" data-close>
-								Close
-							</div>
-						</div>
-
 					</div>
 				</div>
 				{% if images.0 is defined %}
@@ -46,11 +37,20 @@
 
 			</div>
 
-			{% if images.0 is defined %}
-			<div class="container-panel position-absolute">
-				<a href="{{path('modifyTrickImage', {id: images.0.id})}}" class="modify" data-modify-picture data-image-id="{{images.0.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
-						<a href="{{path('deleteTrickImage', {id: images.0.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ images.0.id )}}"></a>    
+			<div class="input-form trick-name-input">
+				<label for="trick_name">Nom de la figure</label>
+				{{ form_widget(form.name) }}
+				{{ form_errors(form.name) }}
+				<div class="close-form btn btn-dark" data-close>
+					Close
+				</div>
 			</div>
+
+			{% if images.0 is defined %}
+				<div class="container-panel position-absolute">
+					<a href="{{path('modifyTrickImage', {id: images.0.id})}}" class="modify" data-modify-picture data-image-id="{{images.0.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
+					<a href="{{path('deleteTrickImage', {id: images.0.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ images.0.id )}}"></a>
+				</div>
 			{% endif %}
 
 		</div>
@@ -65,17 +65,17 @@
 			</div>
 
 			<div class="gallery">
-			{% if images %}
-				{% for image in images %}
-					{% if loop.index != 1 %}
-					<span class="image">
-						<img class="image-visual" src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
-						<a href="{{path('modifyTrickImage', {id: image.id})}}" class="modify" data-modify-picture data-image-id="{{image.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
-						<a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
-					</span>
-					{% endif %}
-				{% endfor %}
-			{% endif %}
+				{% if images %}
+					{% for image in images %}
+						{% if loop.index != 1 %}
+							<span class="image">
+								<img class="image-visual" src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
+								<a href="{{path('modifyTrickImage', {id: image.id})}}" class="modify" data-modify-picture data-image-id="{{image.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
+								<a href="{{path('deleteTrickImage', {id: image.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ image.id )}}"></a>
+							</span>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
 
 
 				{% for video in videos %}
@@ -113,7 +113,7 @@
 				{{ form_errors(form.trickGroup) }}
 			</div>
 
-            <div class="input modify-image-form">
+			<div class="input modify-image-form">
 				<label for="trick_group">Trick image modify :
 				</label>
 				{{ form_widget(form.image) }}
