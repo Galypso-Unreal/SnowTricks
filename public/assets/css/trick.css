@@ -9,7 +9,6 @@
     top: 2rem;
     right: 2rem;
     background-color: white;
-    padding: 1rem 2rem;
     z-index: 10;
 }
 
@@ -222,6 +221,18 @@
     .trick-single .input.send{
         text-align: unset;
     }
+
+    .modify-image-form{
+        width: 50vw;
+    }
+
+    #trick_videos fieldset{
+        width: 50vw;
+    }
+
+    .modifing{
+        width: 50vw;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -250,6 +261,7 @@
 
 .input-form {
     display: none;
+    max-width: 85rem;
 }
 
 .trick-single .input-form {
@@ -267,10 +279,10 @@
     justify-content: center;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 50vh;
-    width: 50vw;
+    width: 80vw;
     background-color: white;
     z-index: 10000000;
+    max-width: 85rem;
 }
 
 #trick_videos fieldset {
@@ -280,12 +292,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 2rem;
-    width: 50vw;
-    height: 50vh;
+    width: 80vw;
     flex-direction: column;
     justify-content: center;
     background-color: white;
     z-index: 10000;
+    max-width: 85rem;
 }
 
 #trick_videos fieldset .close {
@@ -300,9 +312,8 @@
     display: none;
     position: fixed;
     background-color: white;
-    height: 20rem;
     z-index: 1000;
-    width: 50vw;
+    width: 80vw;
     top: 50%;
     gap: 1rem;
     padding: 2rem;
@@ -311,6 +322,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width: 85rem;
 }
 
 [data-save-picture]{

@@ -16,7 +16,7 @@ html {
 }
 
 form .container{
-  padding: 2rem 0;
+  padding: 0 2rem;
 }
 
 .btn-lg{
@@ -279,6 +279,10 @@ header {
   width: 100%;
 }
 
+header li{
+  list-style: none;
+}
+
 header .container {
   margin: 0 auto;
   align-items: center;
@@ -338,6 +342,7 @@ header .close-menu {
 header .right {
   display: flex;
   justify-content: end;
+  gap: 2rem;
 }
 
 footer {
@@ -346,7 +351,29 @@ footer {
   box-shadow: rgba(0, 0, 0, 0.2) 0 0.2rem 0.4rem 0 inset;
 }
 
+.desktop-display{
+  display: none;
+}
+
+.mobile-display{
+  display: block;
+}
+
+.open-menu,
+.close-menu{
+  cursor: pointer;
+}
+
 @media screen and (min-width: 992px) {
+
+  .desktop-display{
+    display: block;
+  }
+
+  .mobile-display{
+    display: none;
+  }
+
   header .menu {
     display: flex;
     position: relative;

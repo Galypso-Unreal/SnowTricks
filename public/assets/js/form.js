@@ -2,11 +2,11 @@ $(document).ready(function () {
 
     /* Start modify form */
     $('.input .modify .icon').on('click', function () {
-        $(this).parent().parent().find('.input-form').addClass('modifing')
+        $('.trick-name-input').addClass('modifing')
     })
 
     $('[data-close]').on('click', function () {
-        $(this).parent().removeClass('modifing');
+        $('.trick-name-input').removeClass('modifing');
     })
     /* End modify form */
 
