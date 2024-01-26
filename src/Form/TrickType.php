@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -32,7 +33,8 @@ class TrickType extends AbstractType
                     ]),
                     new Length([
                         'maxMessage' => 'Your trick name should be max {{ limit }} characters',
-                        'max' => 200
+                        'max' => 200,
+                        'min'=> 1
                     ]),
                 ],
             ])
@@ -43,7 +45,8 @@ class TrickType extends AbstractType
                     ]),
                     new Length([
                         'maxMessage' => 'Your trick description should be max {{ limit }} characters',
-                        'max' => 5000
+                        'max' => 5000,
+                        'min'=> 1
                     ]),
                 ],
             ])
@@ -59,7 +62,6 @@ class TrickType extends AbstractType
 
             ])
 
-            // ->add('videos', TextType::class)
             ->add('images', FileType::class, [
                 'label' => 'Pictures for the trick',
                 'multiple' => true,
@@ -67,35 +69,29 @@ class TrickType extends AbstractType
                 'required' => false,
                 'constraints'=>[
                     new All(
-                        new File([
+                        new Image([
                             'maxSize' => '5M',
-                            'extensions' => [
-                                'jpeg',
-                                'png',
-                                'jpg'
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/x-png',
                             ],
-                            'extensionsMessage' => 'Please upload a valid file (jpg / png / jpeg',
                         ]),
                     )
                     
                 ],
             ])
             ->add('image', FileType::class, [
-                'label' => 'Pictures modify for the trick',
+                'label' => 'Modify the trick picture',
                 'mapped' => false,
                 'required' => false,
                 'constraints'=>[
-                    new All(
-                        new File([
-                            'maxSize' => '5M',
-                            'extensions' => [
-                                'jpeg',
-                                'png',
-                                'jpg'
-                            ],
-                            'extensionsMessage' => 'Please upload a valid file (jpg / png / jpeg',
-                        ]),
-                    )
+                    new Image([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/x-png',
+                        ],
+                    ]),
                     
                 ],
             ])

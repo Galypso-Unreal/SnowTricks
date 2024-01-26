@@ -23,7 +23,9 @@ class ResetPasswordUserFormType extends AbstractType
                     ]),
                     new Length([
                         'maxMessage' => 'Your username should be max {{ limit }} characters',
-                        'max' => 180
+                        'max' => 180,
+                        'minMessage' => 'Your username should be at least {{ limit }} characters',
+                        'min' => 1
                     ]),
                 ],
             ])
@@ -36,8 +38,8 @@ class ResetPasswordUserFormType extends AbstractType
                     new Length([
                         'min' => 12,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'max' => 100,
+                        'maxMessage' => 'Your password should be not more {{ limit }} characters',
                     ]),
                 ],
             ]);

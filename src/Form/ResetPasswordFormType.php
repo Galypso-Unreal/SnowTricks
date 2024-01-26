@@ -20,7 +20,7 @@ class ResetPasswordFormType extends AbstractType
                         'message' => 'Please enter a username',
                     ]),
                     new Length([
-                        'maxMessage' => 'Your password should be max {{ limit }} characters',
+                        'maxMessage' => 'Your username should be max {{ limit }} characters',
                         'max' => 180
                     ]),
                 ],

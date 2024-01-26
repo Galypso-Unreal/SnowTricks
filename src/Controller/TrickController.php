@@ -37,7 +37,9 @@ class TrickController extends AbstractController
 
             $trick = new Trick();
 
+            
             $form = $this->createForm(TrickType::class, $trick);
+            $form->remove('image');
             $form->handleRequest($request);
 
 
@@ -63,6 +65,8 @@ class TrickController extends AbstractController
                 $this->addFlash('success', 'the new trick has been correctly added');
                 return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));
             }
+
+            
 
             return $this->render('trick/new.html.twig', array(
                 'form' => $form->createView(),

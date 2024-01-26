@@ -23,7 +23,6 @@ class VideoFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('trick')
         ;
     }
 

@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\TrickRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -23,11 +24,8 @@ class Trick
     #[ORM\Column(length:200, type: "string", unique: true)]
     private string $name;
 
-    #[ORM\Column(length:5000, type: "string")]
+    #[ORM\Column(length:5000, type: Types::TEXT)]
     private string $description;
-
-    // #[ORM\Column(type:"string")]
-    // private string $videos;
 
     #[ORM\Column(length: 255, type: "string", unique: true)]
     private ?string $slug = null;
