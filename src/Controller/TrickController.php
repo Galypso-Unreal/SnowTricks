@@ -252,15 +252,6 @@ class TrickController extends AbstractController
                 //     }
                 // }
 
-                
-
-                // foreach($trick->getVideos() as $video){
-                //     $videoOriginal = $repositoryVideo->find($video->getId());
-                //     dd($videoOriginal);
-                //     // dd($video);
-                // }
-                $trick->setModifiedAt($date);
-
                 $entityManager->flush();
                 $this->addFlash('success', 'Trick has been correctly modified');
                 return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));

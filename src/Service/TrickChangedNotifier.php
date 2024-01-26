@@ -2,6 +2,7 @@
 namespace App\EventListener;
 
 use App\Entity\Trick;
+use App\Repository\TrickRepository;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
@@ -19,6 +20,13 @@ class TrickChangedNotifier
 
         $changeArray = $eventArgs->getEntityChangeSet();
 
-        dd($changeArray);
+        if(isset($changeArray) && !empty($changeArray)){
+            $utc_timezone = new \DateTimeZone("Europe/Paris");
+            $date = new \DateTime("now", $utc_timezone);
+            $trick->setModifiedAt($date);
+        }
+        else{
+            return;
+        }
     }
 }
