@@ -16,6 +16,7 @@ use App\Repository\TrickRepository;
 use App\Service\PictureService;
 use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -146,6 +147,7 @@ class TrickController extends AbstractController
 
         return $this->render('trick/trick.html.twig', array("trick" => $trick, 'images' => $images, 'videos' => $videos, 'comments' => $comments, 'number_page' => $all_comments_count, 'form' => $form));
     }
+    
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
     public function getTricksPaged(EntityManagerInterface $entityManager, Request $request, AuthorizedService $authorizedService)
@@ -200,6 +202,7 @@ class TrickController extends AbstractController
             $slug = $request->attributes->get('slug');
 
             $repository = $entityManager->getRepository(Trick::class);
+
             $trick = $repository->findOneBySomeField($slug);
 
             $trickId = $trick->getId();
@@ -216,6 +219,9 @@ class TrickController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
+                $utc_timezone = new \DateTimeZone("Europe/Paris");
+                $date = new \DateTime("now", $utc_timezone);
+
                 /* Get all input pictures */
                 $images = $form->get('images')->getData();
 
@@ -231,7 +237,30 @@ class TrickController extends AbstractController
                     $trick->addPicture($picture);
                 }
                 $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
-                $entityManager->persist($trick);
+
+                /* get computed change for videos */
+                // $uow = $entityManager->getUnitOfWork();
+                // $uow->computeChangeSets();
+                
+                // check if modified has been effected
+                // foreach($videos as $video){
+                //     $changeSetVideo = $uow->getEntityChangeSet($video);
+                //     if(isset($changeSetVideo) && !empty($changeSetVideo)){
+                //         $videoOne = $repositoryVideo->find($video);
+                //         $videoOne->setModifiedAt($date);
+                //         $entityManager->persist($videoOne);
+                //     }
+                // }
+
+                
+
+                // foreach($trick->getVideos() as $video){
+                //     $videoOriginal = $repositoryVideo->find($video->getId());
+                //     dd($videoOriginal);
+                //     // dd($video);
+                // }
+                $trick->setModifiedAt($date);
+
                 $entityManager->flush();
                 $this->addFlash('success', 'Trick has been correctly modified');
                 return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));
