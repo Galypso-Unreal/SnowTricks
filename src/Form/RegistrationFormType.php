@@ -33,8 +33,10 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a username',
                     ]),
                     new Length([
-                        'maxMessage' => 'Your password should be max {{ limit }} characters',
-                        'max' => 180
+                        'maxMessage' => 'Your username should be max {{ limit }} characters',
+                        'max' => 180,
+                        'minMessage' => 'Your username should be at least {{ limit }} characters',
+                        'min' => 1
                     ]),
                 ],
             ])
