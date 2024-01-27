@@ -35,8 +35,12 @@ class UserController extends AbstractController
 
                 $fichier = $pictureService->add($image, $folder, 300, 300);
 
+                $utc_timezone = new \DateTimeZone("Europe/Paris");
+                $date = new \DateTime("now", $utc_timezone);
+
                 $user = $this->getUser();
                 $user->setPicture($fichier);
+                $user->setModifiedAt($date);
 
                 $entityManager->flush();
 

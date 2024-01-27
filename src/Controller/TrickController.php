@@ -118,11 +118,6 @@ class TrickController extends AbstractController
         $all_comments_count = $repositoryComment->getAllCommentCount($trickId) / 10;
         $comments = $repositoryComment->findByLimitComment($page, $trickId)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
-        //dd($comments);
-
-
-        // $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
-
 
         $form = $this->createForm(CommentFormType::class);
         $form->handleRequest($request);
@@ -136,7 +131,7 @@ class TrickController extends AbstractController
             }
 
             $comment = new Comment();
-            // $comment->setUser($this->getUser());
+            $comment->setUser($this->getUser());
             $comment->setContent($form->get('content')->getData());
             $comment->setTrick($trick);
             $entityManager->persist($comment);
@@ -237,21 +232,6 @@ class TrickController extends AbstractController
                     $trick->addPicture($picture);
                 }
                 $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
-
-                /* get computed change for videos */
-                // $uow = $entityManager->getUnitOfWork();
-                // $uow->computeChangeSets();
-                
-                // check if modified has been effected
-                // foreach($videos as $video){
-                //     $changeSetVideo = $uow->getEntityChangeSet($video);
-                //     if(isset($changeSetVideo) && !empty($changeSetVideo)){
-                //         $videoOne = $repositoryVideo->find($video);
-                //         $videoOne->setModifiedAt($date);
-                //         $entityManager->persist($videoOne);
-                //     }
-                // }
-
                 $entityManager->flush();
                 $this->addFlash('success', 'Trick has been correctly modified');
                 return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));
