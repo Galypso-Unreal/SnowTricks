@@ -56,12 +56,6 @@ class TrickFixtures extends Fixture
             $trick->setCreatedAt($date);
             $trick->setModifiedAt($date);
 
-            if ($count < 5) {
-                $image = new Picture();
-                $image->setName('default.jpg');
-                $image->setTrick($trick);
-            }
-
             if ($count < 10) {
 
                 $video = new Video();
@@ -99,7 +93,6 @@ class TrickFixtures extends Fixture
 
             $trick->setTrickGroup($trickGroup);
             $manager->persist($trick);
-            $manager->persist($image);
         }
         $manager->flush();
     }

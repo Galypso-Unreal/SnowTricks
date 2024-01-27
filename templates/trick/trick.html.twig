@@ -52,7 +52,9 @@
 
 			<div class="gallery">
 				{% for image in images %}
+					{% if loop.index != 1 %}
 					<img src="{{asset('assets/img/tricks/mini/300x300-')}}{{image.name}}" alt="" srcset="">
+					{% endif %}
 				{% endfor %}
 
 

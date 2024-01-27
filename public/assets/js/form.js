@@ -101,9 +101,11 @@ $(document).ready(function () {
         e.preventDefault();
         let link = $(this).attr('href')
         let imageId = $(this).attr('data-image-id')
+        let bool_primary = $(this).hasClass('primary-image');
         
         $('#trick_image').attr('data-current-link',link);
         $('#trick_image').attr('data-current-id',imageId);
+        $('#trick_image').attr('data-primary-image',bool_primary);
 
         $('.modify-image-form').css('display','flex');
     })
@@ -115,6 +117,7 @@ $(document).ready(function () {
         $('.modify-image-form').hide();
         $('#trick_image').removeAttr('data-current-link');
         $('#trick_image').removeAttr('data-current-id');
+        $('#trick_image').removeAttr('data-primary-image');
     })
 
 
@@ -136,16 +139,26 @@ $(document).ready(function () {
                 body: formdata
             }).then(response => response.json())
                 .then(data => {
-                    console.log(data)
                     if (data.success) {
                         $('[data-save-picture]').hide();
                         $('#trick_image').val('');
                         $('#trick_image').removeAttr('data-current-link');
                         $('#trick_image').removeAttr('data-current-id');
                         $('.modify-image-form').hide();
-                        let urlImage = $('.gallery .image [data-image-id="' + data.id + '"]').parent().find('.image-visual');
-                        let assetUrl = urlImage.attr('src').split('-',1);
-                        urlImage.attr('src',assetUrl + "-" + data.url);
+                        if($('#trick_image').attr('data-primary-image') == "true"){
+                            console.log('truer')
+                            let urlImage = $('.hero .primary-image-hero');
+                            let assetUrl = urlImage.attr('src').split('/');
+                            assetUrl.pop();
+                            urlImage.attr('src',assetUrl.join('/') + '/' + data.url);
+                        }
+                        else{
+                            console.log('falser')
+                            let urlImage = $('.gallery .image [data-image-id="' + data.id + '"]').parent().find('.image-visual');
+                            let assetUrl = urlImage.attr('src').split('-',1);
+                            urlImage.attr('src',assetUrl + "-" + data.url);
+                        }
+                        
                     } else {
                         alert(data.error);
                     }

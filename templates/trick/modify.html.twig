@@ -29,9 +29,9 @@
 					</div>
 				</div>
 				{% if images.0 is defined %}
-					<img src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
+					<img class="primary-image-hero" src="{{asset('assets/img/tricks/')}}{{images.0.name}}" alt="">
 				{% else %}
-					<img src="{{asset('assets/img/default.jpg')}}" alt="">
+					<img class="primary-image-hero" src="{{asset('assets/img/default.jpg')}}" alt="">
 				{% endif %}
 
 
@@ -48,7 +48,7 @@
 
 			{% if images.0 is defined %}
 				<div class="container-panel position-absolute">
-					<a href="{{path('modifyTrickImage', {id: images.0.id})}}" class="modify" data-modify-picture data-image-id="{{images.0.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
+					<a href="{{path('modifyTrickImage', {id: images.0.id})}}" class="modify primary-image" data-modify-picture data-image-id="{{images.0.id}}"><img class="icon white" src="{{asset('assets/img/svg/crayon.svg')}}"></a>
 					<a href="{{path('deleteTrickImage', {id: images.0.id})}}" class="delete"><img class="icon white" src="{{asset('assets/img/svg/trash.svg')}}" data-delete data-token="{{csrf_token('delete' ~ images.0.id )}}"></a>
 				</div>
 			{% endif %}
