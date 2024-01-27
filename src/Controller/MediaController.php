@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Video;
 use App\Repository\PictureRepository;
 use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use PictureType;
@@ -69,8 +70,10 @@ class MediaController extends AbstractController
             /**
              * Delete video from database
              */
+            $utc_timezone = new \DateTimeZone("Europe/Paris");
+            $date = new \DateTime("now", $utc_timezone);
 
-            $entityManager->remove($video);
+            $video->setDeletedAt($date);
             $entityManager->flush();
             return new JsonResponse(['success' => true], 200);
             /**
@@ -84,7 +87,7 @@ class MediaController extends AbstractController
     }
 
     #[Route('/trick/modify/image/{id}', name: 'modifyTrickImage')]
-    public function modifyImage(PictureRepository $pictureRepository, Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
+    public function modifyImage(PictureRepository $pictureRepository, TrickRepository $trickRepository,Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
     {
         if ($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true) {
 
@@ -93,15 +96,23 @@ class MediaController extends AbstractController
 
             $picture = $pictureRepository->find($trickImageId);
 
+            
+
             $pictureService->delete($picture->getName(), 'tricks', 300, 300);
 
             $fichier = $pictureService->add($image, 'tricks', 300, 300);
 
             $picture->setName($fichier);
 
+            $utc_timezone = new \DateTimeZone("Europe/Paris");
+            $date = new \DateTime("now", $utc_timezone);
+
+            $picture->setModifiedAt($date);
+            $picture->getTrick()->setModifiedAt($date);
+
             $entityManager->flush();
 
-            return new JsonResponse(['success' => true, 'url'=>$picture->getName(), 'id'=>$picture->getId()], 200);
+            return new JsonResponse(['success' => '200', 'url'=>$picture->getName(), 'id'=>$picture->getId()], 200);
 
         }
         $this->addFlash('danger', 'You need to be connected and verified user to modify an image trick');

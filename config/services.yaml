@@ -7,6 +7,20 @@ parameters:
   app.jwtsecret: "%env(JWT_SECRET)%"
   images_directory: "%kernel.project_dir%/public/assets/img/"
 services:
+  App\EventListener\TrickListener:
+    tags:
+        -
+            # these are the options required to define the entity listener
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\Trick'
+  App\EventListener\VideoListener:
+    tags:
+        -
+            # these are the options required to define the entity listener
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\Video'
   # default configuration for services in *this* file
   _defaults:
     autowire: true # Automatically injects dependencies in your services.

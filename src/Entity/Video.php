@@ -28,7 +28,7 @@ class Video
     private ?\DateTimeInterface $modified_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $delete_at = null;
+    private ?\DateTimeInterface $deleted_at = null;
 
     public function __construct()
     {
@@ -92,14 +92,14 @@ class Video
         return $this;
     }
 
-    public function getDeleteAt(): ?\DateTimeInterface
+    public function getDeletedAt(): ?\DateTimeInterface
     {
-        return $this->delete_at;
+        return $this->deleted_at;
     }
 
-    public function setDeleteAt(?\DateTimeInterface $delete_at): static
+    public function setDeletedAt(?\DateTimeInterface $deleted_at): static
     {
-        $this->delete_at = $delete_at;
+        $this->deleted_at = $deleted_at;
 
         return $this;
     }

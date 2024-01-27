@@ -16,6 +16,7 @@ use App\Repository\TrickRepository;
 use App\Service\PictureService;
 use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -117,11 +118,6 @@ class TrickController extends AbstractController
         $all_comments_count = $repositoryComment->getAllCommentCount($trickId) / 10;
         $comments = $repositoryComment->findByLimitComment($page, $trickId)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
-        //dd($comments);
-
-
-        // $trick = $trickRepository->findOneById($request->attributes->get('trick_id'));
-
 
         $form = $this->createForm(CommentFormType::class);
         $form->handleRequest($request);
@@ -135,7 +131,7 @@ class TrickController extends AbstractController
             }
 
             $comment = new Comment();
-            // $comment->setUser($this->getUser());
+            $comment->setUser($this->getUser());
             $comment->setContent($form->get('content')->getData());
             $comment->setTrick($trick);
             $entityManager->persist($comment);
@@ -146,6 +142,7 @@ class TrickController extends AbstractController
 
         return $this->render('trick/trick.html.twig', array("trick" => $trick, 'images' => $images, 'videos' => $videos, 'comments' => $comments, 'number_page' => $all_comments_count, 'form' => $form));
     }
+    
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
     public function getTricksPaged(EntityManagerInterface $entityManager, Request $request, AuthorizedService $authorizedService)
@@ -200,6 +197,7 @@ class TrickController extends AbstractController
             $slug = $request->attributes->get('slug');
 
             $repository = $entityManager->getRepository(Trick::class);
+
             $trick = $repository->findOneBySomeField($slug);
 
             $trickId = $trick->getId();
@@ -216,6 +214,9 @@ class TrickController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
+                $utc_timezone = new \DateTimeZone("Europe/Paris");
+                $date = new \DateTime("now", $utc_timezone);
+
                 /* Get all input pictures */
                 $images = $form->get('images')->getData();
 
@@ -231,7 +232,6 @@ class TrickController extends AbstractController
                     $trick->addPicture($picture);
                 }
                 $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
-                $entityManager->persist($trick);
                 $entityManager->flush();
                 $this->addFlash('success', 'Trick has been correctly modified');
                 return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));

@@ -28,6 +28,7 @@ class VideoRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.trick = :val')
+            ->andWhere('v.deleted_at is null')
             ->setParameter('val', $value)
             ->orderBy('v.id', 'ASC')
             ->getQuery()

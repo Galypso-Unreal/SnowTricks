@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\TrickRepository;
+use App\EventListener;
+use App\EventListener\TrickListener;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -96,15 +98,6 @@ class Trick
     {
         $this->description = $description;
     }
-
-
-    // public function getVideos(){
-    //     return $this->videos;
-    // }
-
-    // public function setVideos($videos){
-    //     $this->videos = $videos;
-    // }
 
     public function getCreatedAt()
     {
