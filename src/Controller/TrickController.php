@@ -83,7 +83,7 @@ class TrickController extends AbstractController
         $repository = $entityManager->getRepository(Trick::class);
         $repositoryPicture = $entityManager->getRepository(Picture::class);
         $page = 1;
-        $all_tricks_count = $repository->getAllTricksCount() / 15;
+        $all_tricks_count = intval(ceil($repository->getAllTricksCount() / 15));
         $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         foreach ($tricks as $id => $trick) {
             $image = $repositoryPicture->onePictureByTrickId($trick['id']);
@@ -156,6 +156,7 @@ class TrickController extends AbstractController
         $exitall = array();
 
         foreach ($response as $key) {
+            
             if ($key && is_array($key) === true) {
                 $image = $repositoryPicture->onePictureByTrickId($key['id']);
                 $exit = "
