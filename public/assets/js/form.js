@@ -1,243 +1,241 @@
 $(document).ready(function() {
 
-    /* Start modify form */
-    $(".input .modify .icon").on("click", function() {
-        $(".trick-name-input").addClass("modifing")
+/* Start modify form */
+$(".input .modify .icon").on("click", function() {
+    $(".trick-name-input").addClass("modifing")
+})
+
+$("[data-close]").on("click", function() {
+        $(".trick-name-input").removeClass("modifing");
     })
-
-    $("[data-close]").on("click", function() {
-            $(".trick-name-input").removeClass("modifing");
-        })
-        /* End modify form */
+    /* End modify form */
 
 
-    /**
-     * Delete picture and video in modify form
-     */
+/**
+ * Delete picture and video in modify form
+ */
 
-    let links = document.querySelectorAll("[data-delete]");
-
-
-    for (let link of links) {
-
-        link.addEventListener("click", function(e) {
-
-            e.preventDefault();
-            let picture = $(this).parent().parent();
-            let link = $(this).parent().attr("href");
-            let modal = $("[data-delete-image]");
-            let token = $(this).data("token");
-
-            modal.show();
-
-            $(modal.find("a")).on("click", function(e) {
-                e.preventDefault();
-
-                fetch(link, {
-                        method: "DELETE",
-                        headers: {
-                            "X-Requested-With": "XMLHttpRequest",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ "_token": token })
-                    }).then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            modal.hide();
-                            picture.remove();
-                        } else {
-                            alert(data.error);
-                        }
-                    })
-            })
-        });
-    }
-
-    let linksVideo = document.querySelectorAll("[data-delete-video]");
+let links = document.querySelectorAll("[data-delete]");
 
 
-    for (let link of linksVideo) {
+for (let link of links) {
 
-        link.addEventListener("click", function(e) {
+    link.addEventListener("click", function(e) {
 
+        e.preventDefault();
+        let picture = $(this).parent().parent();
+        let link = $(this).parent().attr("href");
+        let modal = $("[data-delete-image]");
+        let token = $(this).data("token");
+
+        modal.show();
+
+        $(modal.find("a")).on("click", function(e) {
             e.preventDefault();
 
-            let video = $(this).parent().parent();
-            let link = $(this).parent().attr("href");
-            let modal = $("[data-delete-video-trick]");
-            let token = $(this).data("token");
-
-            modal.show();
-
-            $(modal.find("a")).on("click", function(e) {
-
-                e.preventDefault();
-
-                fetch(link, {
-                        method: "DELETE",
-                        headers: {
-                            "X-Requested-With": "XMLHttpRequest",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ "_token": token })
-                    }).then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            modal.hide();
-                            video.remove();
-                        } else {
-                            alert(data.error);
-                        }
-                    })
-            })
-        });
-    }
-
-    /**
-     * Change image
-     */
-
-    $("[data-modify-picture]").on("click", function(e) {
-        e.preventDefault();
-        let link = $(this).attr("href")
-        let imageId = $(this).attr("data-image-id")
-        let bool_primary = $(this).hasClass("primary-image");
-
-        $("#trick_image").attr("data-current-link", link);
-        $("#trick_image").attr("data-current-id", imageId);
-        $("#trick_image").attr("data-primary-image", bool_primary);
-
-        $(".modify-image-form").css("display", "flex");
-    })
-
-    $("[data-close-modify]").on("click", function(e) {
-        e.preventDefault();
-        $("#trick_image").val("");
-        $("[data-save-picture]").hide();
-        $(".modify-image-form").hide();
-        $("#trick_image").removeAttr("data-current-link");
-        $("#trick_image").removeAttr("data-current-id");
-        $("#trick_image").removeAttr("data-primary-image");
-    })
-
-
-    $("#trick_image").on("change", function() {
-        $("[data-save-picture]").show();
-        let file = document.querySelector("#trick_image").files[0];
-        let fileName = "newPictureSend";
-        if (file.name) {
-            fileName = file.name;
-        }
-
-        $("[data-save-picture]").on("click", function() {
-
-            const formdata = new FormData();
-            formdata.append("picture", file, fileName)
-            formdata.append("trickImageId", $("#trick_image").attr("data-current-id"))
-            fetch($("#trick_image").attr("data-current-link"), {
-                    method: "POST",
-                    body: formdata
+            fetch(link, {
+                    method: "DELETE",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "_token": token })
                 }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        $("[data-save-picture]").hide();
-                        $("#trick_image").val("");
-                        $("#trick_image").removeAttr("data-current-link");
-                        $("#trick_image").removeAttr("data-current-id");
-                        $(".modify-image-form").hide();
-                        if ($("#trick_image").attr("data-primary-image") == "true") {
-                            let urlImage = $(".hero .primary-image-hero");
-                            let assetUrl = urlImage.attr("src").split("/");
-                            assetUrl.pop();
-                            urlImage.attr("src", assetUrl.join("/") + "/" + data.url);
-                        } else {
-                            let urlImage = $(".gallery .image [data-image-id='" + data.id + "']").parent().find(".image-visual");
-                            let assetUrl = urlImage.attr("src").split("-", 1);
-                            urlImage.attr("src", assetUrl + "-" + data.url);
-                        }
-
+                        modal.hide();
+                        picture.remove();
                     } else {
                         alert(data.error);
                     }
                 })
         })
+    });
+}
+
+let linksVideo = document.querySelectorAll("[data-delete-video]");
 
 
-    })
+for (let link of linksVideo) {
 
-    /**
-     * Open modal for modify video iframe
-     */
-    $("#trick_videos fieldset").each(function() {
-        $(this).append("<span class='close btn btn-dark'>Close</span>")
-    })
+    link.addEventListener("click", function(e) {
 
-    $("[data-modify-video]").on("click", function() {
-        let element = $("#trick_videos fieldset[data-index=" + $(this).parent().data("index") + "]");
-        element.css("display", "flex");
-        element.find(".close").on("click", function() {
-            element.css("display", "none");
+        e.preventDefault();
+
+        let video = $(this).parent().parent();
+        let link = $(this).parent().attr("href");
+        let modal = $("[data-delete-video-trick]");
+        let token = $(this).data("token");
+
+        modal.show();
+
+        $(modal.find("a")).on("click", function(e) {
+
+            e.preventDefault();
+
+            fetch(link, {
+                    method: "DELETE",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "_token": token })
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        modal.hide();
+                        video.remove();
+                    } else {
+                        alert(data.error);
+                    }
+                })
         })
-    })
+    });
+}
 
-    /* Start collection videos */
+/**
+ * Change image
+ */
 
-    let collection, buttonAdd, span;
-    collection = document.querySelector("#videos");
-    span = collection.querySelector("#videos > span");
+$("[data-modify-picture]").on("click", function(e) {
+    e.preventDefault();
+    let link = $(this).attr("href")
+    let imageId = $(this).attr("data-image-id")
+    let bool_primary = $(this).hasClass("primary-image");
 
-    buttonAdd = document.createElement("div");
-    buttonAdd.className = "add-video btn btn-dark";
-    buttonAdd.innerText = "Add video";
+    $("#trick_image").attr("data-current-link", link);
+    $("#trick_image").attr("data-current-id", imageId);
+    $("#trick_image").attr("data-primary-image", bool_primary);
+
+    $(".modify-image-form").css("display", "flex");
+})
+
+$("[data-close-modify]").on("click", function(e) {
+    e.preventDefault();
+    $("#trick_image").val("");
+    $("[data-save-picture]").hide();
+    $(".modify-image-form").hide();
+    $("#trick_image").removeAttr("data-current-link");
+    $("#trick_image").removeAttr("data-current-id");
+    $("#trick_image").removeAttr("data-primary-image");
+})
 
 
-    let newButton = span.append(buttonAdd);
-
-    collection.dataset.index = collection.querySelectorAll("input").length;
-
-    if ($("#trick_videos fieldset")) {
-        collection.dataset.index = collection.querySelectorAll("fieldset").length;
-        let fields = collection.querySelectorAll("#trick_videos fieldset")
-        fields.forEach(function(elm, index) {
-            elm.dataset.index = index;
-        })
+$("#trick_image").on("change", function() {
+    $("[data-save-picture]").show();
+    let file = document.querySelector("#trick_image").files[0];
+    let fileName = "newPictureSend";
+    if (file.name) {
+        fileName = file.name;
     }
 
+    $("[data-save-picture]").on("click", function() {
 
-    buttonAdd.addEventListener("click", function() {
-        addButton(collection, newButton);
+        const formdata = new FormData();
+        formdata.append("picture", file, fileName)
+        formdata.append("trickImageId", $("#trick_image").attr("data-current-id"))
+        fetch($("#trick_image").attr("data-current-link"), {
+                method: "POST",
+                body: formdata
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $("[data-save-picture]").hide();
+                    $("#trick_image").val("");
+                    $("#trick_image").removeAttr("data-current-link");
+                    $("#trick_image").removeAttr("data-current-id");
+                    $(".modify-image-form").hide();
+                    if ($("#trick_image").attr("data-primary-image") == "true") {
+                        let urlImage = $(".hero .primary-image-hero");
+                        let assetUrl = urlImage.attr("src").split("/");
+                        assetUrl.pop();
+                        urlImage.attr("src", assetUrl.join("/") + "/" + data.url);
+                    } else {
+                        let urlImage = $(".gallery .image [data-image-id='" + data.id + "']").parent().find(".image-visual");
+                        let assetUrl = urlImage.attr("src").split("-", 1);
+                        urlImage.attr("src", assetUrl + "-" + data.url);
+                    }
+
+                } else {
+                    alert(data.error);
+                }
+            })
     })
 
-    function addButton(collection, newButton) {
-        let prototype = collection.dataset.prototype;
-        let index = collection.dataset.index;
 
-        prototype = prototype.replace(/__name__/g, index);
+})
 
-        let content = document.createElement("html");
-        content.innerHTML = prototype;
-        let newForm = content.querySelector("div");
+/**
+ * Open modal for modify video iframe
+ */
+$("#trick_videos fieldset").each(function() {
+    $(this).append("<span class='close btn btn-dark'>Close</span>")
+})
 
-        let buttonRemove = document.createElement("div");
-        buttonRemove.type = "button";
-        buttonRemove.className = "btn btn-danger";
-        buttonRemove.id = "delete-video-" + index;
-        buttonRemove.innerText = "Remove video";
+$("[data-modify-video]").on("click", function() {
+    let element = $("#trick_videos fieldset[data-index=" + $(this).parent().data("index") + "]");
+    element.css("display", "flex");
+    element.find(".close").on("click", function() {
+        element.css("display", "none");
+    })
+})
 
-        newForm.append(buttonRemove);
+/* Start collection videos */
 
-        collection.dataset.index++;
+let collection, buttonAdd, span;
+collection = document.querySelector("#videos");
+span = collection.querySelector("#videos > span");
 
-        let buttonAdd = collection.querySelector(".add-video");
-
-        span.insertBefore(newForm, buttonAdd);
-
-        buttonRemove.addEventListener("click", function() {
-            this.previousElementSibling.parentElement.remove();
-        })
-    }
-    /* End collection videos */
+buttonAdd = document.createElement("div");
+buttonAdd.className = "add-video btn btn-dark";
+buttonAdd.innerText = "Add video";
 
 
+let newButton = span.append(buttonAdd);
+
+collection.dataset.index = collection.querySelectorAll("input").length;
+
+if ($("#trick_videos fieldset")) {
+    collection.dataset.index = collection.querySelectorAll("fieldset").length;
+    let fields = collection.querySelectorAll("#trick_videos fieldset")
+    fields.forEach(function(elm, index) {
+        elm.dataset.index = index;
+    })
+}
+
+
+buttonAdd.addEventListener("click", function() {
+    addButton(collection, newButton);
+})
+
+function addButton(collection, newButton) {
+    let prototype = collection.dataset.prototype;
+    let index = collection.dataset.index;
+
+    prototype = prototype.replace(/__name__/g, index);
+
+    let content = document.createElement("html");
+    content.innerHTML = prototype;
+    let newForm = content.querySelector("div");
+
+    let buttonRemove = document.createElement("div");
+    buttonRemove.type = "button";
+    buttonRemove.className = "btn btn-danger";
+    buttonRemove.id = "delete-video-" + index;
+    buttonRemove.innerText = "Remove video";
+
+    newForm.append(buttonRemove);
+
+    collection.dataset.index++;
+
+    let buttonAdd = collection.querySelector(".add-video");
+
+    span.insertBefore(newForm, buttonAdd);
+
+    buttonRemove.addEventListener("click", function() {
+        this.previousElementSibling.parentElement.remove();
+    })
+}
+/* End collection videos */
 
 });
