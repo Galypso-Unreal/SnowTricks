@@ -18,228 +18,228 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity('name', message: "Name is arlready exist")]
 class Trick
 {
-    #[ORM\Id()]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+  #[ORM\Id()]
+  #[ORM\GeneratedValue(strategy: "AUTO")]
+  #[ORM\Column(type: "integer")]
+  private int $id;
 
-    #[ORM\Column(length: 200, type: "string", unique: true)]
-    private string $name;
+  #[ORM\Column(length: 200, type: "string", unique: true)]
+  private string $name;
 
-    #[ORM\Column(length: 5000, type: Types::TEXT)]
-    private string $description;
+  #[ORM\Column(length: 5000, type: Types::TEXT)]
+  private string $description;
 
-    #[ORM\Column(length: 255, type: "string", unique: true)]
-    private ?string $slug = null;
+  #[ORM\Column(length: 255, type: "string", unique: true)]
+  private ?string $slug = null;
 
-    #[ORM\Column(type: "datetime")]
-    private datetime $created_at;
+  #[ORM\Column(type: "datetime")]
+  private datetime $created_at;
 
-    #[ORM\Column(type: "datetime")]
-    private datetime $modified_at;
+  #[ORM\Column(type: "datetime")]
+  private datetime $modified_at;
 
-    #[ORM\Column(type: "datetime", nullable: true)]
-    private datetime $deleted_at;
+  #[ORM\Column(type: "datetime", nullable: true)]
+  private datetime $deleted_at;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class, cascade: ['persist'])]
-    private Collection $pictures;
+  #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class, cascade: ['persist'])]
+  private Collection $pictures;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
-    private Collection $comments;
+  #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
+  private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist'])]
-    private Collection $videos;
+  #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist'])]
+  private Collection $videos;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks', cascade: ['persist'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TrickGroup $trick_group = null;
+  #[ORM\ManyToOne(inversedBy: 'tricks', cascade: ['persist'])]
+  #[ORM\JoinColumn(nullable: false)]
+  private ?TrickGroup $trick_group = null;
 
 
 
-    public function __construct()
-    {
+  public function __construct()
+  {
 
-        $utc_timezone = new \DateTimeZone("Europe/Paris");
-        $date = new \DateTime("now", $utc_timezone);
+    $utc_timezone = new \DateTimeZone("Europe/Paris");
+    $date = new \DateTime("now", $utc_timezone);
 
-        $this->setCreatedAt($date);
-        $this->setModifiedAt($date);
-        $this->pictures = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->videos = new ArrayCollection();
+    $this->setCreatedAt($date);
+    $this->setModifiedAt($date);
+    $this->pictures = new ArrayCollection();
+    $this->comments = new ArrayCollection();
+    $this->videos = new ArrayCollection();
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+
+  public function getDescription()
+  {
+    return $this->description;
+  }
+
+  public function setDescription($description)
+  {
+    $this->description = $description;
+  }
+
+  public function getCreatedAt()
+  {
+    return $this->created_at;
+  }
+
+  public function setCreatedAt($created_at)
+  {
+    $this->created_at = $created_at;
+  }
+
+  public function getModifiedAt()
+  {
+    return $this->modified_at;
+  }
+
+  public function setModifiedAt($modified_at)
+  {
+    $this->modified_at = $modified_at;
+  }
+
+  public function getDeletedAt()
+  {
+    return $this->deleted_at;
+  }
+
+  public function setDeletedAt($deleted_at)
+  {
+    $this->deleted_at = $deleted_at;
+  }
+
+  /**
+   * @return Collection<int, Picture>
+   */
+  public function getPictures(): Collection
+  {
+    return $this->pictures;
+  }
+
+  public function addPicture(Picture $picture): static
+  {
+    if (!$this->pictures->contains($picture)) {
+      $this->pictures->add($picture);
+      $picture->setTrick($this);
     }
 
-    public function getId()
-    {
-        return $this->id;
+    return $this;
+  }
+
+  public function removePicture(Picture $picture): static
+  {
+    if ($this->pictures->removeElement($picture)) {
+      // set the owning side to null (unless already changed)
+      if ($picture->getTrick() === $this) {
+        $picture->setTrick(null);
+      }
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
+    return $this;
+  }
+
+  public function getSlug(): ?string
+  {
+    return $this->slug;
+  }
+
+  public function setSlug(string $slug): static
+  {
+    $this->slug = $slug;
+
+    return $this;
+  }
+
+  /**
+   * @return Collection<int, Comment>
+   */
+  public function getComments(): Collection
+  {
+    return $this->comments;
+  }
+
+  public function addComment(Comment $comment): static
+  {
+    if (!$this->comments->contains($comment)) {
+      $this->comments->add($comment);
+      $comment->setTrick($this);
     }
 
-    public function getName()
-    {
-        return $this->name;
+    return $this;
+  }
+
+  public function removeComment(Comment $comment): static
+  {
+    if ($this->comments->removeElement($comment)) {
+      // set the owning side to null (unless already changed)
+      if ($comment->getTrick() === $this) {
+        $comment->setTrick(null);
+      }
     }
 
-    public function setName($name)
-    {
-        $this->name = $name;
+    return $this;
+  }
+
+  /**
+   * @return Collection<int, Video>
+   */
+  public function getVideos(): Collection
+  {
+    return $this->videos;
+  }
+
+  public function addVideo(Video $video): static
+  {
+    if (!$this->videos->contains($video)) {
+      $this->videos->add($video);
+      $video->setTrick($this);
     }
 
-    public function getDescription()
-    {
-        return $this->description;
+    return $this;
+  }
+
+  public function removeVideo(Video $video): static
+  {
+    if ($this->videos->removeElement($video)) {
+      // set the owning side to null (unless already changed)
+      if ($video->getTrick() === $this) {
+        $video->setTrick(null);
+      }
     }
 
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
+    return $this;
+  }
 
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
+  public function getTrickGroup(): ?TrickGroup
+  {
+    return $this->trick_group;
+  }
 
-    public function setCreatedAt($created_at)
-    {
-        $this->created_at = $created_at;
-    }
+  public function setTrickGroup(?TrickGroup $trick_group): static
+  {
+    $this->trick_group = $trick_group;
 
-    public function getModifiedAt()
-    {
-        return $this->modified_at;
-    }
-
-    public function setModifiedAt($modified_at)
-    {
-        $this->modified_at = $modified_at;
-    }
-
-    public function getDeletedAt()
-    {
-        return $this->deleted_at;
-    }
-
-    public function setDeletedAt($deleted_at)
-    {
-        $this->deleted_at = $deleted_at;
-    }
-
-    /**
-     * @return Collection<int, Picture>
-     */
-    public function getPictures(): Collection
-    {
-        return $this->pictures;
-    }
-
-    public function addPicture(Picture $picture): static
-    {
-        if (!$this->pictures->contains($picture)) {
-            $this->pictures->add($picture);
-            $picture->setTrick($this);
-        }
-
-        return $this;
-    }
-
-    public function removePicture(Picture $picture): static
-    {
-        if ($this->pictures->removeElement($picture)) {
-            // set the owning side to null (unless already changed)
-            if ($picture->getTrick() === $this) {
-                $picture->setTrick(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): static
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setTrick($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): static
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getTrick() === $this) {
-                $comment->setTrick(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Video>
-     */
-    public function getVideos(): Collection
-    {
-        return $this->videos;
-    }
-
-    public function addVideo(Video $video): static
-    {
-        if (!$this->videos->contains($video)) {
-            $this->videos->add($video);
-            $video->setTrick($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVideo(Video $video): static
-    {
-        if ($this->videos->removeElement($video)) {
-            // set the owning side to null (unless already changed)
-            if ($video->getTrick() === $this) {
-                $video->setTrick(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getTrickGroup(): ?TrickGroup
-    {
-        return $this->trick_group;
-    }
-
-    public function setTrickGroup(?TrickGroup $trick_group): static
-    {
-        $this->trick_group = $trick_group;
-
-        return $this;
-    }
+    return $this;
+  }
 }

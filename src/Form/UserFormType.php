@@ -14,29 +14,29 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('picture', FileType::class, [
-                'constraints' => [
-                    new File([
-                        'maxSize' => '5M',
-                        'extensions' => [
-                            'jpeg',
-                            'png',
-                            'jpg'
-                        ],
-                        'extensionsMessage' => 'Please upload a valid file (jpg / png / jpeg',
-                    ]),
-                ],
-            ])
-            ->add('save', SubmitType::class);
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options): void
+  {
+    $builder
+      ->add('picture', FileType::class, [
+        'constraints' => [
+          new File([
+            'maxSize' => '5M',
+            'extensions' => [
+              'jpeg',
+              'png',
+              'jpg'
+            ],
+            'extensionsMessage' => 'Please upload a valid file (jpg / png / jpeg',
+          ]),
+        ],
+      ])
+      ->add('save', SubmitType::class);
+  }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
+  public function configureOptions(OptionsResolver $resolver): void
+  {
+    $resolver->setDefaults([
+      'data_class' => User::class,
+    ]);
+  }
 }
