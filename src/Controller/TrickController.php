@@ -96,7 +96,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'trick')]
-    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository, AuthorizedService $authorizedService)
+    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, AuthorizedService $authorizedService)
     {
 
         $slug = $request->attributes->get('slug');
@@ -214,9 +214,6 @@ class TrickController extends AbstractController
 
 
             if ($form->isSubmitted() && $form->isValid()) {
-
-                $utc_timezone = new \DateTimeZone("Europe/Paris");
-                $date = new \DateTime("now", $utc_timezone);
 
                 /* Get all input pictures */
                 $images = $form->get('images')->getData();

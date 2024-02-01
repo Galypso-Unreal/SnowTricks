@@ -51,7 +51,6 @@ class TrickFixtures extends Fixture
 
             $utc_timezone = new \DateTimeZone("Europe/Paris");
             $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count . 'day')), $utc_timezone);
-            $date_now = new \DateTime();
 
             $trick->setCreatedAt($date);
             $trick->setModifiedAt($date);

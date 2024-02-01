@@ -10,11 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Video;
 use App\Repository\PictureRepository;
 use App\Repository\TrickRepository;
-use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
-use PictureType;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MediaController extends AbstractController
@@ -87,7 +84,7 @@ class MediaController extends AbstractController
     }
 
     #[Route('/trick/modify/image/{id}', name: 'modifyTrickImage')]
-    public function modifyImage(PictureRepository $pictureRepository, TrickRepository $trickRepository,Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
+    public function modifyImage(PictureRepository $pictureRepository,Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
     {
         if ($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true) {
 
