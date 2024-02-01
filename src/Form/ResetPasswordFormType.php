@@ -11,26 +11,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResetPasswordFormType extends AbstractType
 {
-  public function buildForm(FormBuilderInterface $builder, array $options): void
-  {
-    $builder
-      ->add('username', TextType::class, [
-        'constraints' => [
-          new NotBlank([
-            'message' => 'Please enter a username',
-          ]),
-          new Length([
-            'maxMessage' => 'Your username should be max {{ limit }} characters',
-            'max' => 180
-          ]),
-        ],
-      ]);
-  }
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('username', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a username',
+                    ]),
+                    new Length([
+                        'maxMessage' => 'Your username should be max {{ limit }} characters',
+                        'max' => 180
+                    ]),
+                ],
+            ]);
+    }
 
-  public function configureOptions(OptionsResolver $resolver): void
-  {
-    $resolver->setDefaults([
-      // Configure your form options here
-    ]);
-  }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            // Configure your form options here
+        ]);
+    }
 }

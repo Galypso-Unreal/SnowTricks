@@ -16,44 +16,44 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-  #[Route(path: '/profile', name: 'app_profile')]
-  public function profile(AuthorizedService $authorizedService, Request $request, PictureService $pictureService, EntityManagerInterface $entityManager)
-  {
-    if ($authorizedService->isUserConnected($this->getUser()) === true) {
+    #[Route(path: '/profile', name: 'app_profile')]
+    public function profile(AuthorizedService $authorizedService, Request $request, PictureService $pictureService, EntityManagerInterface $entityManager)
+    {
+        if ($authorizedService->isUserConnected($this->getUser()) === true) {
 
-      $form = $this->createForm(UserFormType::class);
-      $form->handleRequest($request);
+            $form = $this->createForm(UserFormType::class);
+            $form->handleRequest($request);
 
 
-      if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-        /* Get all input pictures */
-        $image = $form->get('picture')->getData();
+                /* Get all input pictures */
+                $image = $form->get('picture')->getData();
 
-        /* Destination folder */
-        $folder = 'users';
+                /* Destination folder */
+                $folder = 'users';
 
-        $fichier = $pictureService->add($image, $folder, 300, 300);
+                $fichier = $pictureService->add($image, $folder, 300, 300);
 
-        $utc_timezone = new \DateTimeZone("Europe/Paris");
-        $date = new \DateTime("now", $utc_timezone);
+                $utc_timezone = new \DateTimeZone("Europe/Paris");
+                $date = new \DateTime("now", $utc_timezone);
 
-        $user = $this->getUser();
-        $user->setPicture($fichier);
-        $user->setModifiedAt($date);
+                $user = $this->getUser();
+                $user->setPicture($fichier);
+                $user->setModifiedAt($date);
 
-        $entityManager->flush();
+                $entityManager->flush();
 
-        $this->addFlash('success', 'Update picture has been done');
-        return $this->redirectToRoute('app_profile');
-      }
+                $this->addFlash('success', 'Update picture has been done');
+                return $this->redirectToRoute('app_profile');
+            }
 
-      return $this->render('user/profile.html.twig', array(
-        "user" => $this->getUser(),
-        "form" => $form->createView()
-      ));
+            return $this->render('user/profile.html.twig', array(
+                "user" => $this->getUser(),
+                "form" => $form->createView()
+            ));
+        }
+        $this->addFlash('danger', 'you are not connected to see your profile');
+        return $this->redirectToRoute(('app_login'));
     }
-    $this->addFlash('danger', 'you are not connected to see your profile');
-    return $this->redirectToRoute(('app_login'));
-  }
 }
