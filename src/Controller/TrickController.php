@@ -34,7 +34,7 @@ class TrickController extends AbstractController
 
             $trick = new Trick();
 
-            
+
             $form = $this->createForm(TrickType::class, $trick);
             $form->remove('image');
             $form->handleRequest($request);
@@ -63,7 +63,7 @@ class TrickController extends AbstractController
                 return $this->redirect($this->generateUrl('index') . '#tricks-homepage');
             }
 
-            
+
 
             return $this->render('trick/new.html.twig', array(
                 'form' => $form->createView(),
@@ -138,7 +138,7 @@ class TrickController extends AbstractController
 
         return $this->render('trick/trick.html.twig', array("trick" => $trick, 'images' => $images, 'videos' => $videos, 'comments' => $comments, 'number_page' => $all_comments_count, 'form' => $form));
     }
-    
+
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
     public function getTricksPaged(EntityManagerInterface $entityManager, Request $request, AuthorizedService $authorizedService)
@@ -152,7 +152,7 @@ class TrickController extends AbstractController
         $exitall = array();
 
         foreach ($response as $key) {
-            
+
             if ($key && is_array($key) === true) {
                 $image = $repositoryPicture->onePictureByTrickId($key['id']);
                 $exit = "

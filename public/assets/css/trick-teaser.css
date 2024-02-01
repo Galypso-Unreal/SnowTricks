@@ -1,20 +1,20 @@
 .modify-panel a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-.trick-teaser{
-    padding: 0 1rem;
+.trick-teaser {
+  padding: 0 1rem;
 }
 
 @media screen and (min-width: 992px) {
-    .trick-teaser{
-        width: 20%;
-    }
+  .trick-teaser {
+    width: 20%;
+  }
 }
 
-.trick-teaser>img {
-    max-width: 100%;
-    width: 100%;
-    object-fit: cover;
-    height: 12rem;
+.trick-teaser > img {
+  max-width: 100%;
+  width: 100%;
+  object-fit: cover;
+  height: 12rem;
 }

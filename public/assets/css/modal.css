@@ -1,47 +1,52 @@
 .open-modal {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.modal-trick,.modal-trick-delete {
-    top: 50%;
-    left: 50%;
-    width: 75vw;
-    height: 25vh;
-    background-color: white;
-    display: block;
-    transform: translate(-50%, -50%);
-    padding: 2rem;
-    display: none;
-    z-index: 1000;
+.modal-trick,
+.modal-trick-delete {
+  top: 50%;
+  left: 50%;
+  width: 75vw;
+  height: 25vh;
+  background-color: white;
+  display: block;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  display: none;
+  z-index: 1000;
 }
 
 @media screen and (min-width: 992px) {
-    .modal-trick, .modal-trick-delete {
-        width: 25vw;
-    }
+  .modal-trick,
+  .modal-trick-delete {
+    width: 25vw;
+  }
 }
 
-.modal-trick .modal-container, .modal-trick-delete .modal-container{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-evenly;
+.modal-trick .modal-container,
+.modal-trick-delete .modal-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.modal-trick .text-modal, .modal-trick-delete .text-modal{
-    text-align: center;
-    font-size: 2.4rem;
-    text-transform: uppercase;
-    color: brown;
-    font-weight: bold;
+.modal-trick .text-modal,
+.modal-trick-delete .text-modal {
+  text-align: center;
+  font-size: 2.4rem;
+  text-transform: uppercase;
+  color: brown;
+  font-weight: bold;
 }
 
-.modal-trick .control-modal, .modal-trick-delete .control-modal{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
+.modal-trick .control-modal,
+.modal-trick-delete .control-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
 }

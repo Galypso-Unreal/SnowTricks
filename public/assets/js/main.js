@@ -102,7 +102,7 @@ $(document).ready(() => {
                     $(".loader-container").hide()
                     checkLoadMore();
                     current_page = $("#comments-trick .loadmore").attr("data-page")
-                }).fail(function(reponse) {console.log(reponse)})
+                }).fail(function(reponse) { console.log(reponse) })
 
         })
         // button go down to tricks homepage

@@ -14,7 +14,7 @@ class ResetPasswordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class,[
+            ->add('username', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a username',

@@ -13,43 +13,43 @@
                         }
                     })
                 }}
-				<div class="container">
-		<div class="input">
-			<label for="trick_name">Nom de la figure</label>
-			{{ form_widget(form.name) }}
-			{{ form_errors(form.name) }}
-		</div>
+		<div class="container">
+			<div class="input">
+				<label for="trick_name">Nom de la figure</label>
+				{{ form_widget(form.name) }}
+				{{ form_errors(form.name) }}
+			</div>
 
-		<div class="input">
-			<label for="trick_description">Description de la figure</label>
-			{{ form_widget(form.description) }}
-			{{ form_errors(form.description) }}
-		</div>
+			<div class="input">
+				<label for="trick_description">Description de la figure</label>
+				{{ form_widget(form.description) }}
+				{{ form_errors(form.description) }}
+			</div>
 
-		<div class="input">
-			<label for="trick_group">Trick group :
-			</label>
-			{{ form_widget(form.trickGroup) }}
-			{{ form_errors(form.trickGroup) }}
-		</div>
+			<div class="input">
+				<label for="trick_group">Trick group :
+				</label>
+				{{ form_widget(form.trickGroup) }}
+				{{ form_errors(form.trickGroup) }}
+			</div>
 
-		<div class="input">
-			<label for="images">Trick images :
-			</label>
-			{{ form_widget(form.images) }}
-			{{ form_errors(form.images) }}
-		</div>
+			<div class="input">
+				<label for="images">Trick images :
+				</label>
+				{{ form_widget(form.images) }}
+				{{ form_errors(form.images) }}
+			</div>
 
-		<div id="videos" class="py-3" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
-			{{form_row(form.videos)}}
-			<span></span>
-		</div>
+			<div id="videos" class="py-3" data-prototype="{{form_row(form.videos.vars.prototype)|e('html_attr') }}">
+				{{form_row(form.videos)}}
+				<span></span>
+			</div>
 
-		<div class="input save">
-			{{form_row(form.save)}}
-		</div>
+			<div class="input save">
+				{{form_row(form.save)}}
+			</div>
 
-		{{ form_end(form) }}
+			{{ form_end(form) }}
 		</div>
 	</div>
 

@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column(length:200)]
+    #[ORM\Column(length: 200)]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
