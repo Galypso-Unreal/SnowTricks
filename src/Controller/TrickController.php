@@ -12,12 +12,8 @@ use App\Form\TrickType;
 use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\CommentFormType;
-use App\Repository\TrickRepository;
 use App\Service\PictureService;
-use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -83,7 +79,7 @@ class TrickController extends AbstractController
         $repository = $entityManager->getRepository(Trick::class);
         $repositoryPicture = $entityManager->getRepository(Picture::class);
         $page = 1;
-        $all_tricks_count = intval(ceil($repository->getAllTricksCount() / 15));
+        $all_tricks_count = (int)ceil($repository->getAllTricksCount() / 15);
         $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         foreach ($tricks as $id => $trick) {
             $image = $repositoryPicture->onePictureByTrickId($trick['id']);
