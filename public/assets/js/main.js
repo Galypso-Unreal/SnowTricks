@@ -58,6 +58,9 @@ $(document).ready(() => {
 
     /* End see medias button display */
     let contentAjax = $("#tricks-homepage .container .tricks")
+    if($("#tricks-hoempage .loadmore")){
+        checkLoadMore();
+    }
     $("#tricks-homepage .loadmore").on("click", function(evt) {
         evt.preventDefault();
         let page = $(this).attr("data-page");

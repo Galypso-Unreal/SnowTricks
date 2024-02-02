@@ -151,14 +151,16 @@ class TrickController extends AbstractController
 
         $exitall = array();
 
+
         foreach ($response as $key) {
 
             if ($key && is_array($key) === true) {
                 $image = $repositoryPicture->onePictureByTrickId($key['id']);
+                
                 $exit = "
             <div class='trick-teaser col-12 col-sm-6 col-md-6'>";
                 if ($image) {
-                    $exit .= '<img src="assets/img/tricks/mini/300x300-' . $image[0]["name"] . '>';
+                    $exit .= '<img src="assets/img/tricks/mini/300x300-' . $image[0]["name"] . '">';
                 } else {
                     $exit .= '<img src="assets/img/tricks/default.webp">';
                 }
@@ -179,6 +181,7 @@ class TrickController extends AbstractController
                 </div>";
                 }
                 $exit .= "</div>";
+
                 $exitall[] = $exit;
             }
         }
