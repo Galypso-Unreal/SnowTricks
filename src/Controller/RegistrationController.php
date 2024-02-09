@@ -5,34 +5,22 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
-use App\Security\EmailVerifier;
 use App\Security\SecurityAuthenticator;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Service\AuthorizedService;
 
 class RegistrationController extends AbstractController
 {
-    // private EmailVerifier $emailVerifier;
-
-    // public function __construct(EmailVerifier $emailVerifier)
-    // {
-    //     $this->emailVerifier = $emailVerifier;
-    // }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $sendMailService, JWTService $jwtService, AuthorizedService $authorizedService): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager, SendMailService $sendMailService, JWTService $jwtService, AuthorizedService $authorizedService): Response
     {
         if ($authorizedService->isUserConnected() === true) {
             return $this->redirectToRoute('index');
@@ -115,7 +103,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/sendEmailVerif', name: 'app_send_email_verif')]
-    public function sendEmailVerif(UserRepository $userRepository, SendMailService $sendMailService, JWTService $jwtService): Response
+    public function sendEmailVerif(SendMailService $sendMailService, JWTService $jwtService): Response
     {
         $user = $this->getUser();
 

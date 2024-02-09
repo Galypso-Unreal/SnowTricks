@@ -1,330 +1,324 @@
 .trick-single .trick-name {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-
 .container-panel {
-    top: 2rem;
-    right: 2rem;
-    background-color: white;
-    z-index: 10;
+  top: 2rem;
+  right: 2rem;
+  background-color: white;
+  z-index: 10;
 }
 
 .container-panel a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .trick-single .gallery {
-    display: none;
-    margin: 5rem 0;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    gap: 3rem;
-    flex-wrap: wrap;
+  display: none;
+  margin: 5rem 0;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
 .see_media {
-    display: block;
-    max-width: 20rem;
-    margin: 5rem auto;
-
+  display: block;
+  max-width: 20rem;
+  margin: 5rem auto;
 }
 
 .no_see_media {
-    display: none;
-    max-width: 20rem;
-    margin: 5rem auto;
+  display: none;
+  max-width: 20rem;
+  margin: 5rem auto;
 }
 
 .trick-single .image {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .trick-single .gallery img,
 .trick-single .gallery iframe {
-    width: 100%;
-    max-width: calc(100%);
-    max-height: 20rem !important;
-    max-width: 100%;
-    height: 20rem !important;
-    object-fit: cover;
-    position: relative !important;
+  width: 100%;
+  max-width: calc(100%);
+  max-height: 20rem !important;
+  max-width: 100%;
+  height: 20rem !important;
+  object-fit: cover;
+  position: relative !important;
 }
 
 @media screen and (min-width: 992px) {
-
-    .trick-single .gallery img,
-    .trick-single .gallery iframe {
-        max-width: calc(33% - 1.7rem);
-    }
+  .trick-single .gallery img,
+  .trick-single .gallery iframe {
+    max-width: calc(33% - 1.7rem);
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
-
-    .trick-single .gallery img,
-    .trick-single .gallery iframe {
-        max-width: calc(50% - 1.5rem);
-    }
+  .trick-single .gallery img,
+  .trick-single .gallery iframe {
+    max-width: calc(50% - 1.5rem);
+  }
 }
 
-.trick-single .gallery>p,
-.trick-single .gallery>div {
-    display: none;
+.trick-single .gallery > p,
+.trick-single .gallery > div {
+  display: none;
 }
 
 .trick-single .gallery.visible {
-    display: flex;
+  display: flex;
 }
 
 .trick-single .description {
-    margin: 5rem 0;
-    text-align: center;
+  margin: 5rem 0;
+  text-align: center;
 }
 
 .trick-single .meta {
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .trick-single .comments {
-    max-width: 100%;
+  max-width: 100%;
+  width: 100%;
 }
 
 .trick-single .comments-trick {
-    max-width: 96rem;
-    margin: 10rem auto;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  max-width: 96rem;
+  margin: 10rem auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .comments-trick .title {
-    margin-bottom: 5rem;
+  margin-bottom: 5rem;
 }
 
 .trick-single .comments-trick .comments {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
 }
 
-
 .trick-single .comments-trick .loadmore {
-    margin-top: 5rem;
-    text-align: center;
+  margin-top: 5rem;
+  text-align: center;
 }
 
 .trick-single .add_comment {
-    width: 100%;
+  width: 100%;
 }
 
 .trick-single .add_comment textarea {
-    min-height: 20rem;
-    resize: none;
+  min-height: 20rem;
+  resize: none;
 }
 
 .trick-single .add_comment {
-    border-bottom: 0.1rem solid black;
-    border-top: 0.1rem solid black;
-    padding: 5rem 0rem 2rem;
+  border-bottom: 0.1rem solid black;
+  border-top: 0.1rem solid black;
+  padding: 5rem 0rem 2rem;
 }
 
 @media screen and (min-width: 992px) {
+  .trick-single .see_media,
+  .trick-single .no_see_media {
+    display: none;
+  }
 
-    .trick-single .see_media,
-    .trick-single .no_see_media {
-        display: none;
-    }
+  .trick-single .gallery {
+    display: flex;
+  }
 
-    .trick-single .gallery {
-        display: flex;
-    }
+  .trick-single .description {
+    text-align: unset;
+  }
 
-    .trick-single .description{
-        text-align: unset;
-    }
-
-    .trick-single .meta{
-        flex-direction: row;
-    }
+  .trick-single .meta {
+    flex-direction: row;
+  }
 }
 
 /* When on edit page */
 
-.trick-single .image a>img,
-.trick-single .video a>img {
-    width: 100% !important;
-    height: auto !important;
-    max-width: none !important;
+.trick-single .image a > img,
+.trick-single .video a > img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: none !important;
 }
 
-.image>img,
-.video>iframe {
-    width: 100% !important;
-    max-width: none !important;
+.image > img,
+.video > iframe {
+  width: 100% !important;
+  max-width: none !important;
 }
 
 .image .delete,
 .video .delete {
-    position: absolute;
-    right: 2rem;
-    top: 2rem;
-    z-index: 1000;
-    width: 4rem;
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  z-index: 1000;
+  width: 4rem;
 }
 
 .video .modify,
 .image .modify {
-    position: absolute;
-    right: 8rem;
-    top: 2rem;
-    z-index: 500;
-    width: 4rem;
-
+  position: absolute;
+  right: 8rem;
+  top: 2rem;
+  z-index: 500;
+  width: 4rem;
 }
 
 .video .modify img {
-    max-width: none;
-    object-fit: unset;
-    width: 4rem !important;
-    height: 4rem !important;
+  max-width: none;
+  object-fit: unset;
+  width: 4rem !important;
+  height: 4rem !important;
 }
 
 .trick-single .gallery .video {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
-.trick-single .input.send{
-    text-align: center;
+.trick-single .input.send {
+  text-align: center;
 }
 
 @media screen and (min-width: 992px) {
-    .trick-single .gallery .image {
-        max-width: calc(33% - 1.7rem);
-    }
+  .trick-single .gallery .image {
+    max-width: calc(33% - 1.7rem);
+  }
 
-    .trick-single .gallery .video {
-        position: relative;
-        width: calc(33% - 1.7rem);
-    }
+  .trick-single .gallery .video {
+    position: relative;
+    width: calc(33% - 1.7rem);
+  }
 
-    .trick-single .input.send{
-        text-align: unset;
-    }
+  .trick-single .input.send {
+    text-align: unset;
+  }
 
-    .modify-image-form{
-        width: 50vw;
-    }
+  .modify-image-form {
+    width: 50vw;
+  }
 
-    #trick_videos fieldset{
-        width: 50vw;
-    }
+  #trick_videos fieldset {
+    width: 50vw;
+  }
 
-    .modifing{
-        width: 50vw;
-    }
+  .modifing {
+    width: 50vw;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
-    .trick-single .gallery .image {
-        max-width: calc(50% - 1.5rem);
-    }
+  .trick-single .gallery .image {
+    max-width: calc(50% - 1.5rem);
+  }
 
-    .trick-single .gallery .video {
-        position: relative;
-        width: calc(50% - 1.5rem);
-    }
+  .trick-single .gallery .video {
+    position: relative;
+    width: calc(50% - 1.5rem);
+  }
 }
 
 .trick-single form {
-    width: 100%;
+  width: 100%;
 }
 
 .modify .icon {
-    width: 2rem;
-    height: 2rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .modify .icon img {
-    width: 100%;
+  width: 100%;
 }
 
 .input-form {
-    display: none;
-    max-width: 85rem;
+  display: none;
+  max-width: 85rem;
 }
 
 .trick-single .input-form {
-    color: black;
-    padding: 2rem;
-    gap: 2rem;
+  color: black;
+  padding: 2rem;
+  gap: 2rem;
 }
 
 .modifing {
-    position: fixed;
-    top: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80vw;
-    background-color: white;
-    z-index: 10000000;
-    max-width: 85rem;
+  position: fixed;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  background-color: white;
+  z-index: 10000000;
+  max-width: 85rem;
 }
 
 #trick_videos fieldset {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 2rem;
-    width: 80vw;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white;
-    z-index: 10000;
-    max-width: 85rem;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  width: 80vw;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  z-index: 10000;
+  max-width: 85rem;
 }
 
 #trick_videos fieldset .close {
-    align-self: center;
+  align-self: center;
 }
 
-.input.save{
-    text-align: end;
+.input.save {
+  text-align: end;
 }
 
-.modify-image-form{
-    display: none;
-    position: fixed;
-    background-color: white;
-    z-index: 1000;
-    width: 80vw;
-    top: 50%;
-    gap: 1rem;
-    padding: 2rem;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 85rem;
+.modify-image-form {
+  display: none;
+  position: fixed;
+  background-color: white;
+  z-index: 1000;
+  width: 80vw;
+  top: 50%;
+  gap: 1rem;
+  padding: 2rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 85rem;
 }
 
-[data-save-picture]{
-    display: none;
+[data-save-picture] {
+  display: none;
 }

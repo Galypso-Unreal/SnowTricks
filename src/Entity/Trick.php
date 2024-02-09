@@ -23,10 +23,10 @@ class Trick
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(length:200, type: "string", unique: true)]
+    #[ORM\Column(length: 200, type: "string", unique: true)]
     private string $name;
 
-    #[ORM\Column(length:5000, type: Types::TEXT)]
+    #[ORM\Column(length: 5000, type: Types::TEXT)]
     private string $description;
 
     #[ORM\Column(length: 255, type: "string", unique: true)]

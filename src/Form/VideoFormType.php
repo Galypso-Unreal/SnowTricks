@@ -15,15 +15,14 @@ class VideoFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('embed', TextareaType::class,[
+            ->add('embed', TextareaType::class, [
                 'constraints' => [
                     new Length([
                         'maxMessage' => 'Your trick embed should be max {{ limit }} characters',
                         'max' => 1000
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

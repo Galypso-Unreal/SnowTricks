@@ -10,11 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Video;
 use App\Repository\PictureRepository;
 use App\Repository\TrickRepository;
-use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
-use PictureType;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MediaController extends AbstractController
@@ -65,20 +62,20 @@ class MediaController extends AbstractController
         if ($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true) {
             $data = json_decode($request->getContent(), true);
 
-            if($this->isCsrfTokenValid('delete' . $video->getId(), $data['_token'])){
+            if ($this->isCsrfTokenValid('delete' . $video->getId(), $data['_token'])) {
 
-            /**
-             * Delete video from database
-             */
-            $utc_timezone = new \DateTimeZone("Europe/Paris");
-            $date = new \DateTime("now", $utc_timezone);
+                /**
+                 * Delete video from database
+                 */
+                $utc_timezone = new \DateTimeZone("Europe/Paris");
+                $date = new \DateTime("now", $utc_timezone);
 
-            $video->setDeletedAt($date);
-            $entityManager->flush();
-            return new JsonResponse(['success' => true], 200);
-            /**
-             * Delete failed
-             */
+                $video->setDeletedAt($date);
+                $entityManager->flush();
+                return new JsonResponse(['success' => true], 200);
+                /**
+                 * Delete failed
+                 */
             }
             return new JsonResponse(['error' => 'Invalid Token'], 400);
         }
@@ -87,7 +84,7 @@ class MediaController extends AbstractController
     }
 
     #[Route('/trick/modify/image/{id}', name: 'modifyTrickImage')]
-    public function modifyImage(PictureRepository $pictureRepository, TrickRepository $trickRepository,Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
+    public function modifyImage(PictureRepository $pictureRepository, Picture $picture, Request $request, EntityManagerInterface $entityManager, AuthorizedService $authorizedService, PictureService $pictureService)
     {
         if ($authorizedService->isAuthorizedUserAndVerified($this->getUser()) === true) {
 
@@ -96,7 +93,7 @@ class MediaController extends AbstractController
 
             $picture = $pictureRepository->find($trickImageId);
 
-            
+
 
             $pictureService->delete($picture->getName(), 'tricks', 300, 300);
 
@@ -112,11 +109,9 @@ class MediaController extends AbstractController
 
             $entityManager->flush();
 
-            return new JsonResponse(['success' => '200', 'url'=>$picture->getName(), 'id'=>$picture->getId()], 200);
-
+            return new JsonResponse(['success' => '200', 'url' => $picture->getName(), 'id' => $picture->getId()], 200);
         }
         $this->addFlash('danger', 'You need to be connected and verified user to modify an image trick');
         return $this->redirectToRoute('app_login');
-       
     }
 }

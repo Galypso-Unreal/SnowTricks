@@ -1,60 +1,59 @@
 /* globals */
 
-@import url('./globals.css');
-@import url('./trick-teaser.css');
-@import url('./trick.css');
-@import url('./comment-teaser.css');
-@import url('./modal.css');
-@import url('./profile.css');
-
+@import url("./globals.css");
+@import url("./trick-teaser.css");
+@import url("./trick.css");
+@import url("./comment-teaser.css");
+@import url("./modal.css");
+@import url("./profile.css");
 
 /* hero css */
 .hero_background {
-    position: absolute;
-    content: "";
-    top: 0;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    background-color: black;
-    opacity: 0.2;
-    z-index: 1;
+  position: absolute;
+  content: "";
+  top: 0;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  background-color: black;
+  opacity: 0.2;
+  z-index: 1;
 }
 
-.hero .content>img {
-    max-width: 100%;
-    width: 100%;
-    max-height: 100vh;
-    object-position: 0 35%;
-    object-fit: cover;
+.hero .content > img {
+  max-width: 100%;
+  width: 100%;
+  max-height: 100vh;
+  object-position: 0 35%;
+  object-fit: cover;
 }
 
 .hero .text_hero {
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    color: white;
-    transform: translate(-50%, -50%);
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  color: white;
+  transform: translate(-50%, -50%);
 }
 
 .hero .text_hero .title {
-    font-size: 6rem;
-    text-align: center;
+  font-size: 6rem;
+  text-align: center;
 }
 
 .hero {
-    position: relative;
+  position: relative;
 }
 
 @media screen and (min-width: 992px) {
-    .hero .text_hero .title {
-        font-size: 9rem;
-    }
+  .hero .text_hero .title {
+    font-size: 9rem;
+  }
 
-    header .close-menu,
-    header .open-menu {
-        display: none;
-    }
+  header .close-menu,
+  header .open-menu {
+    display: none;
+  }
 }
 
 /* #tricks-homepage{
@@ -62,42 +61,41 @@
 } */
 
 .arrow-go-down {
-    position: fixed;
-    right: 2rem;
-    bottom: 2rem;
-    z-index: 100;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 100;
 }
 
 .arrow-go-up {
-    position: fixed;
-    right: 2rem;
-    bottom: 2rem;
-    display: none;
-    z-index: 100;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  display: none;
+  z-index: 100;
 }
 
 .arrow-go-up svg {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 /* homepage tricks*/
 
 #tricks-homepage .container {
-    padding: 5rem 2rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    
+  padding: 5rem 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 #tricks-homepage .tricks {
-    margin-bottom: 2rem;
-    gap: 2rem 0;
+  margin-bottom: 2rem;
+  gap: 2rem 0;
 }
 
 #tricks-homepage {
-    padding-top: 10rem;
-    margin-top: -10rem;
+  padding-top: 10rem;
+  margin-top: -10rem;
 }
 
 /* end homepage tricks */

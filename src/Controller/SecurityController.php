@@ -94,7 +94,7 @@ class SecurityController extends AbstractController
 
             /* Add flash message to user when no username is found, return to login */
 
-            $this->addFlash('danger', 'Error');
+            $this->addFlash('danger', "The username doesn't exist");
             return $this->redirectToRoute('app_login');
         }
         return $this->render('security/reset_password.html.twig', [
@@ -138,7 +138,7 @@ class SecurityController extends AbstractController
                     $entityManagerInterface->persist($user);
                     $entityManagerInterface->flush();
                     $this->addFlash('success', 'Your password has been changed');
-                    return $this->redirectToRoute('app_login');
+                    return $this->redirectToRoute('index');
                 }
                 $this->addFlash('danger', 'Username is not correct');
 

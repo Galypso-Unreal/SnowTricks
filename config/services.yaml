@@ -9,18 +9,16 @@ parameters:
 services:
   App\EventListener\TrickListener:
     tags:
-        -
-            # these are the options required to define the entity listener
-            name: 'doctrine.orm.entity_listener'
-            event: 'preUpdate'
-            entity: 'App\Entity\Trick'
+      - # these are the options required to define the entity listener
+        name: "doctrine.orm.entity_listener"
+        event: "preUpdate"
+        entity: 'App\Entity\Trick'
   App\EventListener\VideoListener:
     tags:
-        -
-            # these are the options required to define the entity listener
-            name: 'doctrine.orm.entity_listener'
-            event: 'preUpdate'
-            entity: 'App\Entity\Video'
+      - # these are the options required to define the entity listener
+        name: "doctrine.orm.entity_listener"
+        event: "preUpdate"
+        entity: 'App\Entity\Video'
   # default configuration for services in *this* file
   _defaults:
     autowire: true # Automatically injects dependencies in your services.

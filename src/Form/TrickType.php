@@ -26,7 +26,7 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class,[
+            ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a trick name',
@@ -34,11 +34,11 @@ class TrickType extends AbstractType
                     new Length([
                         'maxMessage' => 'Your trick name should be max {{ limit }} characters',
                         'max' => 200,
-                        'min'=> 1
+                        'min' => 1
                     ]),
                 ],
             ])
-            ->add('description', TextareaType::class,[
+            ->add('description', TextareaType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a trick description',
@@ -46,7 +46,7 @@ class TrickType extends AbstractType
                     new Length([
                         'maxMessage' => 'Your trick description should be max {{ limit }} characters',
                         'max' => 5000,
-                        'min'=> 1
+                        'min' => 1
                     ]),
                 ],
             ])
@@ -67,7 +67,7 @@ class TrickType extends AbstractType
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,
-                'constraints'=>[
+                'constraints' => [
                     new All(
                         new Image([
                             'maxSize' => '5M',
@@ -77,14 +77,14 @@ class TrickType extends AbstractType
                             ],
                         ]),
                     )
-                    
+
                 ],
             ])
             ->add('image', FileType::class, [
                 'label' => 'Modify the trick picture',
                 'mapped' => false,
                 'required' => false,
-                'constraints'=>[
+                'constraints' => [
                     new Image([
                         'maxSize' => '5M',
                         'mimeTypes' => [
@@ -92,7 +92,7 @@ class TrickType extends AbstractType
                             'image/x-png',
                         ],
                     ]),
-                    
+
                 ],
             ])
             ->add('videos', CollectionType::class, [

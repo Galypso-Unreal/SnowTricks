@@ -12,12 +12,8 @@ use App\Form\TrickType;
 use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\CommentFormType;
-use App\Repository\TrickRepository;
 use App\Service\PictureService;
-use Doctrine\DBAL\Query;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -38,7 +34,7 @@ class TrickController extends AbstractController
 
             $trick = new Trick();
 
-            
+
             $form = $this->createForm(TrickType::class, $trick);
             $form->remove('image');
             $form->handleRequest($request);
@@ -64,10 +60,10 @@ class TrickController extends AbstractController
                 $entityManager->persist($trick);
                 $entityManager->flush();
                 $this->addFlash('success', 'the new trick has been correctly added');
-                return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));
+                return $this->redirect($this->generateUrl('index') . '#tricks-homepage');
             }
 
-            
+
 
             return $this->render('trick/new.html.twig', array(
                 'form' => $form->createView(),
@@ -83,7 +79,7 @@ class TrickController extends AbstractController
         $repository = $entityManager->getRepository(Trick::class);
         $repositoryPicture = $entityManager->getRepository(Picture::class);
         $page = 1;
-        $all_tricks_count = intval(ceil($repository->getAllTricksCount() / 15));
+        $all_tricks_count = (int)ceil($repository->getAllTricksCount() / 15);
         $tricks = $repository->findByLimitTrick($page)->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         foreach ($tricks as $id => $trick) {
             $image = $repositoryPicture->onePictureByTrickId($trick['id']);
@@ -96,7 +92,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'trick')]
-    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, TrickRepository $trickRepository, AuthorizedService $authorizedService)
+    public function trick(EntityManagerInterface $entityManager, Request $request, string $slug, AuthorizedService $authorizedService)
     {
 
         $slug = $request->attributes->get('slug');
@@ -142,7 +138,7 @@ class TrickController extends AbstractController
 
         return $this->render('trick/trick.html.twig', array("trick" => $trick, 'images' => $images, 'videos' => $videos, 'comments' => $comments, 'number_page' => $all_comments_count, 'form' => $form));
     }
-    
+
 
     #[Route('/trick/page/{page}', name: 'getTricksPaged')]
     public function getTricksPaged(EntityManagerInterface $entityManager, Request $request, AuthorizedService $authorizedService)
@@ -155,14 +151,16 @@ class TrickController extends AbstractController
 
         $exitall = array();
 
+
         foreach ($response as $key) {
-            
+
             if ($key && is_array($key) === true) {
                 $image = $repositoryPicture->onePictureByTrickId($key['id']);
+                
                 $exit = "
             <div class='trick-teaser col-12 col-sm-6 col-md-6'>";
                 if ($image) {
-                    $exit .= '<img src="assets/img/tricks/mini/300x300-' . $image[0]["name"] . '>';
+                    $exit .= '<img src="assets/img/tricks/mini/300x300-' . $image[0]["name"] . '">';
                 } else {
                     $exit .= '<img src="assets/img/tricks/default.webp">';
                 }
@@ -183,6 +181,7 @@ class TrickController extends AbstractController
                 </div>";
                 }
                 $exit .= "</div>";
+
                 $exitall[] = $exit;
             }
         }
@@ -214,9 +213,6 @@ class TrickController extends AbstractController
 
 
             if ($form->isSubmitted() && $form->isValid()) {
-
-                $utc_timezone = new \DateTimeZone("Europe/Paris");
-                $date = new \DateTime("now", $utc_timezone);
 
                 /* Get all input pictures */
                 $images = $form->get('images')->getData();

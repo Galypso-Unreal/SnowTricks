@@ -50,8 +50,7 @@ class TrickFixtures extends Fixture
             $trick->setSlug($this->slugger->slug(strtolower($trick->getName())));
 
             $utc_timezone = new \DateTimeZone("Europe/Paris");
-            $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count . 'day')), $utc_timezone);
-            $date_now = new \DateTime();
+            $date = new \DateTime(date('Y-m-d H:i:s', strtotime($count . 'seconds')), $utc_timezone);
 
             $trick->setCreatedAt($date);
             $trick->setModifiedAt($date);

@@ -16,7 +16,7 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length:1000, type: Types::TEXT)]
+    #[ORM\Column(length: 1000, type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column]

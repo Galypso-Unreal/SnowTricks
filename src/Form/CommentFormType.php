@@ -16,19 +16,22 @@ class CommentFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content', TextareaType::class, [
-                'label' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a comment',
-                    ]),
-                    new Length([
-                        'maxMessage' => 'Your comment should be max {{ limit }} characters',
-                        'max' => 1000
-                    ]),
+            ->add(
+                'content',
+                TextareaType::class,
+                [
+                    'label' => false,
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter a comment',
+                        ]),
+                        new Length([
+                            'maxMessage' => 'Your comment should be max {{ limit }} characters',
+                            'max' => 1000
+                        ]),
+                    ],
                 ],
-            ],
-            
+
             )
             ->add('save', SubmitType::class, [
                 'label' => 'Leave a comment',
