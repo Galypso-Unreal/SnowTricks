@@ -38,12 +38,12 @@ class TrickFixtures extends Fixture
         ));
 
         $trickGroup = new TrickGroup();
-        $trickGroup->setName('testinit');
+        $trickGroup->setName('Grabs-Line');
         for ($count = 0; $count < 50; $count++) {
             $trick = new Trick();
 
-            $name = "Figure " . $count + 1;
-            $description = "La descritpion de la figure " . $count + 1 . " est ici. Elle va permettre de voir cette figure.";
+            $name = "Trick " . $count + 1;
+            $description = "Description of the trick " . $count + 1 . " is here. You can tell all informations about the trick.";
 
             $trick->setName($name);
             $trick->setDescription($description);
@@ -82,7 +82,7 @@ class TrickFixtures extends Fixture
             for ($count2 = 0; $count2 < 30; $count2++) {
 
                 $comment = new Comment();
-                $comment->setContent('Je suis le commentaire numéro : ' . $count2);
+                $comment->setContent('Comment number : ' . $count2);
                 $comment->setIsValid(1);
                 $comment->setTrick($trick);
                 $comment->setUser($user);

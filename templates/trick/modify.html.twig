@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Ajouter une nouvelle figure
+	Modify trick
 {% endblock %}
 
 {% block body %}
@@ -38,7 +38,7 @@
 			</div>
 
 			<div class="input-form trick-name-input">
-				<label for="trick_name">Nom de la figure</label>
+				<label for="trick_name">Trick name</label>
 				{{ form_widget(form.name) }}
 				{{ form_errors(form.name) }}
 				<div class="close-form btn btn-dark" data-close>
@@ -101,7 +101,7 @@
 			</div>
 
 			<div class="input">
-				<label for="trick_description">Description de la figure</label>
+				<label for="trick_description">Trick description</label>
 				{{ form_widget(form.description) }}
 				{{ form_errors(form.description) }}
 			</div>
