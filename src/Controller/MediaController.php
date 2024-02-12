@@ -93,8 +93,6 @@ class MediaController extends AbstractController
 
             $picture = $pictureRepository->find($trickImageId);
 
-
-
             $pictureService->delete($picture->getName(), 'tricks', 300, 300);
 
             $fichier = $pictureService->add($image, 'tricks', 300, 300);
