@@ -123,46 +123,48 @@ $(document).ready(function() {
 
     $("#trick_image").on("change", function() {
         $("[data-save-picture]").show();
+    })
+
+    document.querySelector('[data-save-picture]').addEventListener("click", function() {
+
+        let formdata = new FormData();
+
         let file = document.querySelector("#trick_image").files[0];
+
         let fileName = "newPictureSend";
         if (file.name) {
             fileName = file.name;
         }
 
-        $("[data-save-picture]").on("click", function() {
+        formdata.append("picture", file, fileName)
+        formdata.append("trickImageId", $("#trick_image").attr("data-current-id"))
 
-            const formdata = new FormData();
-            formdata.append("picture", file, fileName)
-            formdata.append("trickImageId", $("#trick_image").attr("data-current-id"))
-            fetch($("#trick_image").attr("data-current-link"), {
-                    method: "POST",
-                    body: formdata
-                }).then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        $("[data-save-picture]").hide();
-                        $("#trick_image").val("");
-                        $("#trick_image").removeAttr("data-current-link");
-                        $("#trick_image").removeAttr("data-current-id");
-                        $(".modify-image-form").hide();
-                        if ($("#trick_image").attr("data-primary-image") == "true") {
-                            let urlImage = $(".hero .primary-image-hero");
-                            let assetUrl = urlImage.attr("src").split("/");
-                            assetUrl.pop();
-                            urlImage.attr("src", assetUrl.join("/") + "/" + data.url);
-                        } else {
-                            let urlImage = $(".gallery .image [data-image-id='" + data.id + "']").parent().find(".image-visual");
-                            let assetUrl = urlImage.attr("src").split("-", 1);
-                            urlImage.attr("src", assetUrl + "-" + data.url);
-                        }
-
+        fetch(document.querySelector('#trick_image').getAttribute("data-current-link"), {
+                method: "POST",
+                body: formdata
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $("[data-save-picture]").hide();
+                    $("#trick_image").val("");
+                    $("#trick_image").removeAttr("data-current-link");
+                    $("#trick_image").removeAttr("data-current-id");
+                    $(".modify-image-form").hide();
+                    if ($("#trick_image").attr("data-primary-image") == "true") {
+                        let urlImage = $(".hero .primary-image-hero");
+                        let assetUrl = urlImage.attr("src").split("/");
+                        assetUrl.pop();
+                        urlImage.attr("src", assetUrl.join("/") + "/" + data.url);
                     } else {
-                        alert(data.error);
+                        let urlImage = $(".gallery .image [data-image-id='" + data.id + "']").parent().find(".image-visual");
+                        let assetUrl = urlImage.attr("src").split("-", 1);
+                        urlImage.attr("src", assetUrl + "-" + data.url);
                     }
-                })
-        })
 
-
+                } else {
+                    alert(data.error);
+                }
+            })
     })
 
     /**
